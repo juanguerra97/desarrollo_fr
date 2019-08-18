@@ -13,3 +13,8 @@ cualquier duda me avisan
 
 
 <strong>INSTRUCCIONES GIT FLOW<strong>
+  1) descargan e instalan git flow
+  2) git clone ...
+  3) git flow init
+  4) git flow feature start <nombre cualquiera>
+
