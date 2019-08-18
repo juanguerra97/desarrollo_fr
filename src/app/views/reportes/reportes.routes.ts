@@ -2,6 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PlanificacionComponent} from './planificacion/planificacion.component';
 import {CatedraticosComponent} from './catedraticos/catedraticos.component';
+import {CursosComponent} from './cursos/cursos.component';
 
 export const REPORTES_ROUTES: Routes = [
   {
@@ -17,6 +18,13 @@ export const REPORTES_ROUTES: Routes = [
       title: 'Catedratico'
     },
     component: CatedraticosComponent
+  },
+  {
+    path: 'cursos',
+    data: {
+      title: 'Cursos'
+    },
+    component: CursosComponent
   }
 ];
 

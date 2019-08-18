@@ -52,5 +52,10 @@ export const navItems: NavData[] = [
     name: 'Catedraticos',
     url: '/reportes/catedraticos',
     icon: 'icon-pencil'
+  },
+  {
+    name: 'Cursos',
+    url: '/reportes/cursos',
+    icon: 'icon-pencil'
   }
 ];
