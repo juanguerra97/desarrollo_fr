@@ -46,6 +46,15 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
+    name: 'Bases'
+  },
+  {
+    name: 'Pensum',
+    url: '/bases/pensum',
+    icon: 'icon-drop'
+  },
+  {
+    title: true,
     name: 'Reportes'
   },
   {
