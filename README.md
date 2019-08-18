@@ -10,3 +10,6 @@ las vistas para los reportes estan en src/app/views/reportes, los scripts ban en
 para hacer inputs y demas pueden hechar un vistaso aca https://getbootstrap.com/docs/4.0/components/forms/
 
 cualquier duda me avisan
+
+
+<strong>INSTRUCCIONES GIT FLOW<strong>
