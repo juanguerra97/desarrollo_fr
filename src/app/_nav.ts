@@ -50,22 +50,39 @@ export const navItems: NavData[] = [
     icon: 'icon-drop'
   },
   {
-    title: true,
-    name: 'Reportes'
+    name: 'Bases',
+    children: [
+      {
+        name: 'Carreras',
+        url: '/bases/carreras',
+        icon: 'icon-drop'
+      },
+      {
+        name: 'Pensum',
+        url: '/bases/pensum',
+        icon: 'icon-drop'
+      }
+    ]
   },
+
   {
-    name: 'Planificaciones',
-    url: '/reportes/planificacion',
-    icon: 'icon-drop'
+    name: 'Reportes',
+    children: [
+      {
+        name: 'Planificaciones',
+        url: '/reportes/planificacion',
+        icon: 'icon-drop'
+      },
+      {
+        name: 'Catedraticos',
+        url: '/reportes/catedraticos',
+        icon: 'icon-pencil'
+      },
+      {
+        name: 'Cursos',
+        url: '/reportes/cursos',
+        icon: 'icon-pencil'
+      }
+    ]
   },
-  {
-    name: 'Catedraticos',
-    url: '/reportes/catedraticos',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Cursos',
-    url: '/reportes/cursos',
-    icon: 'icon-pencil'
-  }
 ];
