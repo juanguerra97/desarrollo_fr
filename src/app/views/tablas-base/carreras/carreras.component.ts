@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import {CarrerasService} from '../../../../services/carreras.service';
 
 @Component({
   selector: 'app-carreras',
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CarrerasComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) {
+  constructor(private _carreraService: CarrerasService) {
   }
 
   ngOnInit() {
@@ -20,16 +21,19 @@ export class CarrerasComponent implements OnInit {
       title: 'Nueva Carrera',
       html:
         '<form id="modal-form">' +
-          '<input name="codigo_carrera" placeholder="Codigo" class="swal2-input">' +
+          '<input id="codigo_carrera" placeholder="Codigo" class="swal2-input" value="1">' +
           '<input id="nombre_carrera"  placeholder="Nombre" class="swal2-input">' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
-        return [
-          document.getElementById('swal-input1').value,
-          document.getElementById('swal-input2').value
-        ];
-      }
+        return {
+          codigo_carrera: document.getElementById('codigo_carrera').value,
+          nombre_carrera: document.getElementById('nombre_carrera').value
+
+        };
+      },
+    }).then(res => {
+      this._carreraService.crearCarrera(res.value);
     });
   }
 }

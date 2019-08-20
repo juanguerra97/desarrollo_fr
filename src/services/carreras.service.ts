@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {CarreraInterface} from '../app/views/interfaces/carreraInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class CarrerasService {
   private urlComponente =  `${this.urlApi}/carreras`;
   constructor(private http: HttpClient) { }
 
-  crearCarrera(carrera) {
+  crearCarrera(carrera: CarreraInterface) {
     const url = `${this.urlComponente}`;
-    return this.http.put(url, carrera);
+    return this.http.post(url, carrera).subscribe(res => {alert(res)});
   }
 }
