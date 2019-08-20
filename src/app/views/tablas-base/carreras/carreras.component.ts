@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import {CarrerasService} from '../../../../services/carreras.service';
+import {CarreraInterface} from '../../interfaces/carreraInterface';
+
+declare var $: any;
 
 @Component({
   selector: 'app-carreras',
@@ -9,9 +11,9 @@ import {CarrerasService} from '../../../../services/carreras.service';
   styleUrls: ['./carreras.component.scss']
 })
 export class CarrerasComponent implements OnInit {
-
   constructor(private _carreraService: CarrerasService) {
   }
+  public playerName: CarreraInterface;
 
   ngOnInit() {
   }
@@ -21,14 +23,14 @@ export class CarrerasComponent implements OnInit {
       title: 'Nueva Carrera',
       html:
         '<form id="modal-form">' +
-          '<input id="codigo_carrera" placeholder="Codigo" class="swal2-input" value="1">' +
+          '<input id="codigo_carrera" placeholder="Codigo" class="swal2-input" >' +
           '<input id="nombre_carrera"  placeholder="Nombre" class="swal2-input">' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
-          codigo_carrera: document.getElementById('codigo_carrera').value,
-          nombre_carrera: document.getElementById('nombre_carrera').value
+          codigo_carrera: $('#codigo_carrera').val(),
+          nombre_carrera:  $('#nombre_carrera').val()
 
         };
       },

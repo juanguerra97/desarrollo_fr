@@ -5,7 +5,7 @@ import {TablasBaseRoutes} from './tablas_base.routes';
 import { CarrerasComponent } from './carreras/carreras.component';
 import { NuevaCarreraComponent } from './carreras/nueva-carrera/nueva-carrera.component';
 import {AppCommonModule} from '../app-common/app-common.module';
-
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import {AppCommonModule} from '../app-common/app-common.module';
   imports: [
     CommonModule,
     TablasBaseRoutes,
-    AppCommonModule
+    AppCommonModule,
+    FormsModule
   ],
 entryComponents: [NuevaCarreraComponent]
 })

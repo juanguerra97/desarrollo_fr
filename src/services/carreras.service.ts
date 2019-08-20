@@ -8,11 +8,11 @@ import {CarreraInterface} from '../app/views/interfaces/carreraInterface';
 })
 export class CarrerasService {
   private urlApi = environment.apiURL;
-  private urlComponente =  `${this.urlApi}/carreras`;
+  private urlComponente =  `${this.urlApi}/cruds/carreras`;
   constructor(private http: HttpClient) { }
 
   crearCarrera(carrera: CarreraInterface) {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera).subscribe(res => {alert(res)});
+    return this.http.post(url, carrera).subscribe(res => {alert(res);});
   }
 }
