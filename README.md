@@ -12,5 +12,13 @@ para hacer inputs y demas pueden hechar un vistaso aca https://getbootstrap.com/
 cualquier duda me avisan
 
 
-
-
+<strong>INSTRUCCIONES GIT FLOW</strong>
+  1) descargan e instalan git flow
+  2) git clone ...
+  3) git flow init
+  4) al darle a init les pedira los nombres para cada tipo de rama le dan enter a todas excepto a develop que le ponen devel
+  4) git flow feature start nombre_cualquiera
+  
+ <strong>AL TERMINAR </strong>
+  1) git flow feature finish nombre_cualquiera
+  2)subir devel al servidor con git normal
