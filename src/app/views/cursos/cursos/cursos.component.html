@@ -1,1 +1,11 @@
-<p>cursos works!</p>
+<div class="animated fadeIn">
+    <div class="card">
+        <app-nuevo-curso (oninsert)="onNuevoCurso($event)"></app-nuevo-curso>
+    </div>
+
+    <div class="card">
+      <app-listacursos (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"></app-listacursos>
+    </div>
+    
+  </div>
+  

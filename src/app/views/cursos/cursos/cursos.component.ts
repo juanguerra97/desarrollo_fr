@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CursosService } from '../../../services/cursos.service';
+import { ICurso } from '../../../models/icurso.model';
+
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CursosComponent implements OnInit {
 
-  constructor() { }
+  private cursos:ICurso[];
+
+  constructor(
+    private cursosService:CursosService
+  ) { 
+    this.cursos = this.cursosService.getAll();
+  }
 
   ngOnInit() {
+    
+  }
+
+  onNuevoCurso(nuevoCurso:ICurso){
+    this.cursos.push(nuevoCurso);
+  }
+
+  onBorrarCurso(curso:ICurso){
+    let indexCurso = this.cursos.findIndex(c=>c.codigo === curso.codigo);
+    this.cursos.splice(indexCurso,1);
   }
 
 }
