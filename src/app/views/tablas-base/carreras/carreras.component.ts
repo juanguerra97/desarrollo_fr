@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {CarrerasService} from '../../../../services/carreras.service';
-import {CarreraInterface} from '../../interfaces/carreraInterface';
 
 declare var $: any;
 
@@ -13,7 +12,6 @@ declare var $: any;
 export class CarrerasComponent implements OnInit {
   constructor(private _carreraService: CarrerasService) {
   }
-  public playerName: CarreraInterface;
 
   ngOnInit() {
   }
