@@ -13,6 +13,10 @@ export class CarrerasService {
 
   crearCarrera(carrera: CarreraInterface) {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera).subscribe(res => {alert(res);});
+    return this.http.post(url, carrera);
+  }
+  listCarreras() {
+    const url = `${this.urlComponente}`;
+    return this.http.get(url);
   }
 }

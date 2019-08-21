@@ -13,24 +13,23 @@
       <table class="table table-bordered">
         <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Id</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+        <tr *ngFor="let carrera of carreras; let i = index">
+          <th scope="row">{{carrera.za_carrera}}</th>
+          <td>{{carrera.codigo_carrera}}</td>
+          <td>{{carrera.codigo_carrera}}</td>
+          <td>{{carrera.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger" data-id="{{carrera.za_carrera}}" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
         </tr>
         </tbody>
       </table>
