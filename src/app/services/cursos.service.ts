@@ -8,14 +8,14 @@ import { SERVER_URLS } from '../serverurls';
 })
 export class CursosService {
 
-  private cursos:ICurso[];
+  private cursos:ICurso[]=[];
 
   constructor( 
     private http:HttpClient 
   ) {
     this.http.get<ICurso[]>(SERVER_URLS['GET_ALL_CURSOS'])
       .subscribe((cursos: ICurso[]) => {
-        this.cursos = cursos
+        this.cursos.push(...cursos);
       });
   }
 
