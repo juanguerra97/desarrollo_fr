@@ -15,8 +15,14 @@ export class CarrerasService {
     const url = `${this.urlComponente}`;
     return this.http.post(url, carrera);
   }
+
   listCarreras() {
     const url = `${this.urlComponente}`;
     return this.http.get(url);
+  }
+
+  eliminarCarrera(carrera: CarreraInterface) {
+    const url = `${this.urlComponente}`;
+    return this.http.post(url, carrera);
   }
 }

@@ -28,7 +28,7 @@
           <td>{{carrera.activo.data}}</td>
           <td>
             <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
-            <button class="btn btn-danger" data-id="{{carrera.za_carrera}}" title="eliminar"><em class="fa fa-trash"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
           </td>
         </tr>
         </tbody>
