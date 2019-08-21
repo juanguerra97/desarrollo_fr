@@ -27,8 +27,11 @@ export class CarrerasComponent implements OnInit {
       focusConfirm: false,
       preConfirm: () => {
         return {
+          za_carrera: 1,
           codigo_carrera: $('#codigo_carrera').val(),
-          nombre_carrera:  $('#nombre_carrera').val()
+          nombre_carrera:  $('#nombre_carrera').val(),
+          activo: true,
+          accion: 1
 
         };
       },
