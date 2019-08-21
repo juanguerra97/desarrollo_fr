@@ -34,12 +34,11 @@ export class CarrerasComponent implements OnInit {
       focusConfirm: false,
       preConfirm: () => {
         return {
-          za_carrera: this.carreras[index].id,
+          za_carrera: this.carreras[index].za_carrera,
           codigo_carrera: $('#codigo_carrera').val(),
           nombre_carrera:  $('#nombre_carrera').val(),
-          activo: $('#activo').val(),
+          activo: $('#activo')[0].checked ? 1 : 0,
           accion: 1
-
         };
       },
     }).then(res => {
