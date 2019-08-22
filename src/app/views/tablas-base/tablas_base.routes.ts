@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {PensumsComponent} from './pensums/pensums.component';
 import {CarrerasComponent} from './carreras/carreras.component';
 import {JornadasComponent} from './jornadas/jornadas.component';
+import {DiasJornadaComponent} from './dias-jornada/dias-jornada.component';
 
 export const TABLAS_BASES_ROUTES: Routes = [
   {
@@ -25,6 +26,13 @@ export const TABLAS_BASES_ROUTES: Routes = [
       title: 'Jornadas'
     },
     component: JornadasComponent
+  },
+  {
+    path: 'dias-jornada',
+    data: {
+      title: 'dias'
+    },
+    component: DiasJornadaComponent
   }
 ];
 

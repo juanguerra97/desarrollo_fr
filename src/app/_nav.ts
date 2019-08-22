@@ -58,6 +58,11 @@ export const navItems: NavData[] = [
         icon: 'icon-drop'
       },
       {
+        name: 'Dias',
+        url: '/bases/dias-jornada',
+        icon: 'icon-drop'
+      },
+      {
         name: 'Pensum',
         url: '/bases/pensum',
         icon: 'icon-drop'
