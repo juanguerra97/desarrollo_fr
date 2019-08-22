@@ -24,7 +24,7 @@
         <tr *ngFor="let carrera of carreras; let i = index">
           <th scope="row">{{carrera.za_carrera}}</th>
           <td>{{carrera.codigo_carrera}}</td>
-          <td>{{carrera.codigo_carrera}}</td>
+          <td>{{carrera.nombre_carrera}}</td>
           <td>{{carrera.activo.data}}</td>
           <td>
             <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>

@@ -9,11 +9,17 @@ import {JornadaInterface} from '../views/interfaces/jornada-interface';
 })
 export class JornadasService {
   private urlApi = environment.apiURL;
-  private urlComponente =  `${this.urlApi}/cruds/jornadas`;
+  private urlComponente =  `${this.urlApi}cruds/jornadas`;
   constructor(private http: HttpClient) { }
 
   crearJornada(carrera: JornadaInterface) {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera).subscribe(res => {alert(res); });
+    return this.http.post(url, carrera);
   }
+
+  listJornadas(carrera) {
+    const url = `${this.urlComponente}/${carrera}`;
+    return this.http.get(url);
+  }
+
 }

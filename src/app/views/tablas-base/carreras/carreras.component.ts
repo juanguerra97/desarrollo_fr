@@ -42,7 +42,9 @@ export class CarrerasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._carreraService.crearCarrera(res.value).subscribe();
+      this._carreraService.crearCarrera(res.value).subscribe(() => {
+        this._carreraService.listCarreras().subscribe(respuesta => { this.carreras = respuesta; });
+      });
     });
   }
 
@@ -72,7 +74,11 @@ export class CarrerasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._carreraService.crearCarrera(res.value).subscribe();
+      this._carreraService.crearCarrera(res.value).subscribe(
+        () => {
+          this._carreraService.listCarreras().subscribe(respuesta => { this.carreras = respuesta; });
+        }
+      );
     });
   }
 }
