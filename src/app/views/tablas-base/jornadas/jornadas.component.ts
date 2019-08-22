@@ -46,28 +46,35 @@ export class JornadasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._jornadaService.crearJornada(res.value).subscribe(() => {
+      this._jornadaService.crearJornada(res.value).subscribe(() => {location.reload();
+      }, error => () => { location.reload();
       });
     });
   }
 
   editar(index) {
     let options = '';
-    for (const key in this.jornadas) {
+    const jorn = this.jornadas[index];
+    for (const key in this.carreras) {
       if (this.carreras.hasOwnProperty(key)) {
         const carrera = this.carreras[key];
-        options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
+        if (jorn.za_carrera === carrera.za_carrera) {
+          options = options + '<option value="' + carrera.za_carrera + '" selected> ' + carrera.nombre_carrera + '</option>';
+        } else {
+          options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
+        }
       }
     }
     Swal.fire({
       title: 'Editar Jornada',
       html:
         '<form id="modal-form">' +
-        '<select id="za_carrera" placeholder="Carrera" class="swal2-select">' +
+        'jornada <select id="za_carrera" placeholder="Jornada" class="swal2-select">' +
         options +
         '</select>' +
-        '<input id="nombre_jornada"  placeholder="Nombre" class="swal2-input">' +
+        '<input title="nombre" id="nombre_jornada"  placeholder="Nombre" class="swal2-input" value="' + jorn.nombre_jornada + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
+        `${(jorn.activo.data[0] === 1) ? 'checked' : ''}> activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -81,6 +88,7 @@ export class JornadasComponent implements OnInit {
       },
     }).then(res => {
       this._jornadaService.crearJornada(res.value).subscribe(() => {
+        location.reload();
       });
     });
   }
@@ -89,6 +97,7 @@ export class JornadasComponent implements OnInit {
     const request = {...this.jornadas[index], accion: 2};
     request.activo = request.activo.data;
     this._jornadaService.crearJornada(request).subscribe();
+    location.reload();
   }
   buscar() {
     if (this.carrera) {
