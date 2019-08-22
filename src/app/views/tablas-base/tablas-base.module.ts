@@ -7,10 +7,11 @@ import { NuevaCarreraComponent } from './carreras/nueva-carrera/nueva-carrera.co
 import {AppCommonModule} from '../app-common/app-common.module';
 import {FormsModule} from '@angular/forms';
 import { JornadasComponent } from './jornadas/jornadas.component';
+import { DiasJornadaComponent } from './dias-jornada/dias-jornada.component';
 
 
 @NgModule({
-  declarations: [PensumsComponent, CarrerasComponent, NuevaCarreraComponent, JornadasComponent],
+  declarations: [PensumsComponent, CarrerasComponent, NuevaCarreraComponent, JornadasComponent, DiasJornadaComponent],
   imports: [
     CommonModule,
     TablasBaseRoutes,
