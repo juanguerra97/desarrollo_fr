@@ -4,12 +4,22 @@
       <div class="h3">Jornadas</div>
     </div>
     <div class="card-body">
-      <button type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Jornada')"
-              data-toggle="modal" data-target="#modal-container"
-      >
-        <em class="fa fa-check mr-2"></em>
-        Nuevo
-      </button>
+      <div class="row">
+        <div class="col-md-6">
+          <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="carrera" (ngModelChange)="buscar()">
+            <option selected>Seleccione Carrera</option>
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Jornada')"
+                  data-toggle="modal" data-target="#modal-container"
+          >
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
       <table class="table table-bordered">
         <thead>
         <tr>

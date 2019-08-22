@@ -9,13 +9,12 @@ declare var $: any;
   styleUrls: ['./jornadas.component.scss']
 })
 export class JornadasComponent implements OnInit {
-
   public jornadas: any;
   public carreras: any;
+  public carrera: any;
   constructor(private _jornadaService: JornadasService, private _carrerasService: CarrerasService) { }
 
   ngOnInit() {
-    this._jornadaService.listJornadas().subscribe(res => { this.jornadas = res; });
     this._carrerasService.listCarreras().subscribe(res => { this.carreras = res; });
   }
   // nuevo modelo
@@ -48,7 +47,6 @@ export class JornadasComponent implements OnInit {
       },
     }).then(res => {
       this._jornadaService.crearJornada(res.value).subscribe(() => {
-        this._jornadaService.listJornadas().subscribe(resp => { this.jornadas = resp; });
       });
     });
   }
@@ -83,7 +81,6 @@ export class JornadasComponent implements OnInit {
       },
     }).then(res => {
       this._jornadaService.crearJornada(res.value).subscribe(() => {
-        this._jornadaService.listJornadas().subscribe(resp => { this.jornadas = resp; });
       });
     });
   }
@@ -92,5 +89,10 @@ export class JornadasComponent implements OnInit {
     const request = {...this.jornadas[index], accion: 2};
     request.activo = request.activo.data;
     this._jornadaService.crearJornada(request).subscribe();
+  }
+  buscar() {
+    if (this.carrera) {
+      this._jornadaService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
+    }
   }
 }

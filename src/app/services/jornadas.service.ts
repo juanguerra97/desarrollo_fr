@@ -17,8 +17,8 @@ export class JornadasService {
     return this.http.post(url, carrera);
   }
 
-  listJornadas() {
-    const url = `${this.urlComponente}`;
+  listJornadas(carrera) {
+    const url = `${this.urlComponente}/${carrera}`;
     return this.http.get(url);
   }
 
