@@ -11,13 +11,13 @@ export class DiasJornadaService {
   private urlComponente =  `${this.urlApi}cruds/dias`;
   constructor(private http: HttpClient) { }
 
-  crearDia(carrera) {
+  crearDia(dia) {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera);
+    return this.http.post(url, dia);
   }
 
-  listDias(carrera) {
-    const url = `${this.urlComponente}/${carrera}`;
+  listDias(carrera, jornada) {
+    const url = `${this.urlComponente}/${carrera}/${jornada}`;
     return this.http.get(url);
   }
 

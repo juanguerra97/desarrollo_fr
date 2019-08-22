@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CarrerasService} from '../../../../services/carreras.service';
 import Swal from 'sweetalert2';
 import {DiasJornadaService} from '../../../services/dias-jornada.service';
+import {JornadasService} from '../../../services/jornadas.service';
 declare var $: any;
 
 @Component({
@@ -12,8 +13,11 @@ declare var $: any;
 export class DiasJornadaComponent implements OnInit {
   public dias: any;
   public carreras: any;
+  public jornadas: any;
   public carrera: any;
-  constructor(private _diaService: DiasJornadaService, private _carrerasService: CarrerasService) { }
+  public jornada: any;
+  constructor(private _diaService: DiasJornadaService, private _carrerasService: CarrerasService,
+              private _jornadasService: JornadasService) { }
 
   ngOnInit() {
     this._carrerasService.listCarreras().subscribe(res => { this.carreras = res; });
@@ -27,22 +31,33 @@ export class DiasJornadaComponent implements OnInit {
         options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
       }
     }
+    let optionsJornada = '';
+    for (const key in this.jornadas) {
+      if (this.jornadas.hasOwnProperty(key)) {
+        const jornada = this.jornadas[key];
+        optionsJornada = optionsJornada + '<option value="' + jornada.za_jornada + '"> ' + jornada.nombre_jornada + '</option>';
+      }
+    }
     Swal.fire({
       title: 'Nueva Dia',
       html:
         '<form id="modal-form">' +
-        'Carrera: <select id="za_carrera" placeholder="Carrera" class="swal2-select">' +
-        options +
+        'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
+        (this.carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
+        '</input>' +
+        'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
+        optionsJornada +
         '</select>' +
-        '<input id="nombre_dia"  placeholder="Nombre" class="swal2-input">' +
+        '<input id="nombre_jornada"  placeholder="Dia" class="swal2-input">' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
           za_dia: 0,
           activo: true,
+          za_jornada: $('#za_jornada').val(),
           za_carrera: $('#za_carrera').val(),
-          nombre_dia:  $('#nombre_dia').val(),
+          nombre_jornada:  $('#nombre_jornada').val(),
           accion: 1
         };
       },
@@ -100,9 +115,14 @@ export class DiasJornadaComponent implements OnInit {
     this._diaService.crearDia(request).subscribe();
     location.reload();
   }
-  buscar() {
+  buscarCarrera() {
     if (this.carrera) {
-      this._diaService.listDias(this.carrera).subscribe(res => { this.dias = res; });
+      this._jornadasService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
+    }
+  }
+  buscar() {
+    if (this.jornada) {
+      this._diaService.listDias(this.carrera, this.jornada).subscribe(res => { this.dias = res; });
     }
   }
 }

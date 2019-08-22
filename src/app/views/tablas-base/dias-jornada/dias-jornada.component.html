@@ -5,10 +5,16 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
-          <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="carrera" (ngModelChange)="buscar()">
+        <div class="col-md-3">
+          <select class="custom-select"  [(ngModel)]="carrera" (ngModelChange)="buscarCarrera()">
             <option selected>Seleccione Carrera</option>
             <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="custom-select"  [(ngModel)]="jornada" (ngModelChange)="buscar()">
+            <option selected>Seleccione Jornada</option>
+            <option *ngFor="let jornada of jornadas" value="{{jornada.za_jornada}}">{{jornada.nombre_jornada}}</option>
           </select>
         </div>
         <div class="col-md-6">
@@ -24,7 +30,6 @@
         <thead>
         <tr>
           <th scope="col">id</th>
-          <th scope="col">Carrera</th>
           <th scope="col">nombre</th>
           <th scope="col">activo</th>
           <th scope="col">accion</th>
@@ -33,8 +38,7 @@
         <tbody>
         <tr *ngFor="let dia of dias; let i = index">
           <th scope="row">{{dia.za_dia}}</th>
-          <td>{{dia.za_carrera}}</td>
-          <td>{{dia.nombre_dia}}</td>
+          <td>{{dia.dia}}</td>
           <td>{{dia.activo.data}}</td>
           <td>
             <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
