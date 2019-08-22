@@ -9,7 +9,7 @@ import {JornadaInterface} from '../views/interfaces/jornada-interface';
 })
 export class JornadasService {
   private urlApi = environment.apiURL;
-  private urlComponente =  `${this.urlApi}/cruds/jornadas`;
+  private urlComponente =  `${this.urlApi}cruds/jornadas`;
   constructor(private http: HttpClient) { }
 
   crearJornada(carrera: JornadaInterface) {

@@ -37,8 +37,11 @@ export class JornadasComponent implements OnInit {
       focusConfirm: false,
       preConfirm: () => {
         return {
+          za_jornada: 0,
+          activo: true,
           za_carrera: $('#za_carrera').val(),
-          nombre_jornada:  $('#nombre_jornada').val()
+          nombre_jornada:  $('#nombre_jornada').val(),
+          accion: 1
         };
       },
     }).then(res => {
