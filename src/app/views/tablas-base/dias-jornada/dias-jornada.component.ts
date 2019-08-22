@@ -24,13 +24,6 @@ export class DiasJornadaComponent implements OnInit {
   }
   // nuevo modelo
   openModal(id: string) {
-    let options = '';
-    for (const key in this.carreras) {
-      if (this.carreras.hasOwnProperty(key)) {
-        const carrera = this.carreras[key];
-        options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
-      }
-    }
     let optionsJornada = '';
     for (const key in this.jornadas) {
       if (this.jornadas.hasOwnProperty(key)) {
@@ -69,15 +62,15 @@ export class DiasJornadaComponent implements OnInit {
   }
 
   editar(index) {
-    let options = '';
-    const jorn = this.dias[index];
-    for (const key in this.carreras) {
-      if (this.carreras.hasOwnProperty(key)) {
-        const carrera = this.carreras[key];
-        if (jorn.za_carrera === carrera.za_carrera) {
-          options = options + '<option value="' + carrera.za_carrera + '" selected> ' + carrera.nombre_carrera + '</option>';
+    const dia = this.dias[index]
+    let optionsJornada = '';
+    for (const key in this.jornadas) {
+      if (this.jornadas.hasOwnProperty(key)) {
+        const jornada = this.jornadas[key];
+        if (dia.za_jornada === jornada.za_jornada) {
+          optionsJornada = optionsJornada + '<option value="' + jornada.za_jornada + '" selected> ' + jornada.nombre_jornada + '</option>';
         } else {
-          options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
+          optionsJornada = optionsJornada + '<option value="' + jornada.za_jornada + '"> ' + jornada.nombre_jornada + '</option>';
         }
       }
     }
@@ -85,19 +78,23 @@ export class DiasJornadaComponent implements OnInit {
       title: 'Editar Dia',
       html:
         '<form id="modal-form">' +
-        'dia <select id="za_carrera" placeholder="Dia" class="swal2-select">' +
-        options +
+        'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
+        this.carrera + '" class="swal2-input">' +
+        '</input>' +
+        'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
+        optionsJornada +
         '</select>' +
-        '<input title="nombre" id="nombre_dia"  placeholder="Nombre" class="swal2-input" value="' + jorn.nombre_dia + '">' +
+        '<input id="dia"  placeholder="Dia" class="swal2-input">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(jorn.activo.data[0] === 1) ? 'checked' : ''}> activo` +
+        `${(dia.activo.data[0] === 1) ? 'checked' : ''}> activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
           za_dia: this.dias[index].za_dia,
           za_carrera: $('#za_carrera').val(),
-          nombre_dia:  $('#nombre_dia').val(),
+          za_jornada: $('#za_jornada').val(),
+          dia:  $('#dia').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
           accion: 1
         };
