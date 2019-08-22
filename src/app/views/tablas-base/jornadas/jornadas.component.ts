@@ -10,18 +10,27 @@ declare var $: any;
 })
 export class JornadasComponent implements OnInit {
 
-  constructor(private _jornadaService: JornadasService) { }
+  public carreras: any;
+  constructor(private _jornadaService: JornadasService, private _carrerasService: CarrerasService) { }
 
   ngOnInit() {
+    this._carrerasService.listCarreras().subscribe(res => { this.carreras = res; });
   }
+  // nuevo modelo
   openModal(id: string) {
+    let options = '';
+    for (const key in this.carreras) {
+      if (this.carreras.hasOwnProperty(key)) {
+        const carrera = this.carreras[key];
+        options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
+      }
+    }
     Swal.fire({
       title: 'Nueva Jornada',
       html:
         '<form id="modal-form">' +
         '<select id="za_carrera" placeholder="Carrera" class="swal2-select">' +
-          '<option>Uno</option>' +
-          '<option>Dos</option>' +
+          options +
         '</select>' +
         '<input id="nombre_jornada"  placeholder="Nombre" class="swal2-input">' +
         '</form>',
