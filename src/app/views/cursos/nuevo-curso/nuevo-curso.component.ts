@@ -1,7 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { ICurso } from '../../../models/icurso.model';
+
+declare var $: any;
 
 @Component({
   selector: 'app-nuevo-curso',
@@ -17,15 +23,38 @@ export class NuevoCursoComponent implements OnInit {
     nombre: new FormControl(''),
   });
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
 
   }
 
-  onSubmit(){
+  showNewCurso(){
+    // $('#new-curso-modal').modal('show');
+  }
+
+  openModal(content) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: "lg",
+      windowClass:"animated bounceIn"
+    });
+    // .result.then((result) => {
+    //   this.closeResult = `Closed with: ${result}`;
+    // }, (reason) => {
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    // });
+  }
+
+  onSubmit(modal:any){
+    modal.close('');
+
     this.oninsert.emit(this.formCurso.value);
     this.formCurso.reset();
+
+    // Swal.fire('Se ingresó un nuevo curso');
+    
   }
 
 }

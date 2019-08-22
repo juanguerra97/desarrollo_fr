@@ -1,10 +1,12 @@
 <div class="animated fadeIn">
     <div class="card">
-        <app-nuevo-curso (oninsert)="onNuevoCurso($event)"></app-nuevo-curso>
-    </div>
-
-    <div class="card">
-      <app-listacursos (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"></app-listacursos>
+        <div class="card-header">
+            <div class="h3">Cursos</div>
+        </div>
+        <div class="card-body">
+            <app-nuevo-curso (oninsert)="onNuevoCurso($event)"></app-nuevo-curso>
+            <app-listacursos (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"></app-listacursos>
+        </div>
     </div>
     
   </div>

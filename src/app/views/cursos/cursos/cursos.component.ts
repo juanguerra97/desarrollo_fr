@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
 import { CursosService } from '../../../services/cursos.service';
 import { ICurso } from '../../../models/icurso.model';
 
@@ -24,6 +26,7 @@ export class CursosComponent implements OnInit {
 
   onNuevoCurso(nuevoCurso:ICurso){
     this.cursos.push(nuevoCurso);
+    
   }
 
   onBorrarCurso(curso:ICurso){
