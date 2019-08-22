@@ -13,24 +13,23 @@
       <table class="table table-bordered">
         <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">id</th>
+          <th scope="col">Carrera</th>
+          <th scope="col">nombre</th>
+          <th scope="col">activo</th>
+          <th scope="col">accion</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+        <tr *ngFor="let jornada of jornadas; let i = index">
+          <th scope="row">{{jornada.za_jornada}}</th>
+          <td>{{jornada.za_carrera}}</td>
+          <td>{{jornada.nombre_jornada}}</td>
+          <td>{{jornada.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
         </tr>
         </tbody>
       </table>

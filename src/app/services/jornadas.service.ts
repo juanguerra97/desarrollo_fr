@@ -14,6 +14,12 @@ export class JornadasService {
 
   crearJornada(carrera: JornadaInterface) {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera).subscribe(res => {alert(res); });
+    return this.http.post(url, carrera);
   }
+
+  listJornadas() {
+    const url = `${this.urlComponente}`;
+    return this.http.get(url);
+  }
+
 }

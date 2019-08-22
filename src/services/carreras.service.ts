@@ -18,7 +18,7 @@ export class CarrerasService {
 
   listCarreras() {
     const url = `${this.urlComponente}`;
-    return this.http.get<String>(url);
+    return this.http.get(url);
   }
 
   eliminarCarrera(carrera: CarreraInterface) {
