@@ -13,6 +13,7 @@ import { ICurso } from '../../../models/icurso.model';
 export class CursosComponent implements OnInit {
 
   private cursos:ICurso[];
+  private cursoSeleccionado:ICurso=null;
 
   constructor(
     private cursosService:CursosService
@@ -22,6 +23,10 @@ export class CursosComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  onCambioCursoSeleccionado(curso:ICurso){
+    this.cursoSeleccionado = curso;
   }
 
   onNuevoCurso(nuevoCurso:ICurso){

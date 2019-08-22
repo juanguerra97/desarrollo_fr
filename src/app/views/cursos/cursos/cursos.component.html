@@ -4,10 +4,32 @@
             <div class="h3">Cursos</div>
         </div>
         <div class="card-body">
-            <app-nuevo-curso (oninsert)="onNuevoCurso($event)"></app-nuevo-curso>
-            <app-listacursos (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"></app-listacursos>
+
+            <app-nuevo-curso 
+                (oninsert)="onNuevoCurso($event)">
+            </app-nuevo-curso>
+
+            <button 
+                [disabled]="cursoSeleccionado == null"
+                class="btn btn-secondary pull-right mr-2 mb-3">
+                <em class="fa fa-edit mr-2"></em>
+                Editar
+            </button>
+
+            <button 
+                [disabled]="cursoSeleccionado == null"
+                class="btn btn-danger pull-right mr-2 mb-3">
+                <em class="fa fa-remove mr-2"></em>
+                Eliminar
+            </button>
+            
+
+            
+            <app-listacursos 
+                (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"
+                (onselectionchange)="onCambioCursoSeleccionado($event)">
+            </app-listacursos>
         </div>
     </div>
-    
-  </div>
-  
+
+</div>
