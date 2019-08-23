@@ -17,9 +17,10 @@ export class ModalConfirmacionService {
     textoBtnConfirmar: string = 'Confirmar',
     textoBtnCancelar: string = 'Cancelar',
     dialogSize: 'sm'|'lg' = 'sm'): Promise<boolean> {
-      
+
     const modalRef = this.modalService.open(ModalConfirmacionComponent, { 
       size: dialogSize,
+      centered: true,
       windowClass:"animated bounceIn" 
     });
 
