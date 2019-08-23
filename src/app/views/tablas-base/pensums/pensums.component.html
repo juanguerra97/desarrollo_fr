@@ -1,31 +1,35 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-header">
-      <div class="h3">Pensum</div>
+      <div class="h3">Pensums</div>
     </div>
     <div class="card-body">
-      <button class="pull-right btn btn-primary mb-3"><em class="fa fa-check mr-2"></em>Nuevo</button>
+      <button type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Pensum')"
+              data-toggle="modal" data-target="#modal-container"
+      >
+        <em class="fa fa-check mr-2"></em>
+        Nuevo
+      </button>
       <table class="table table-bordered">
         <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Id</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+        <tr *ngFor="let pensum of pensums; let i = index">
+          <th scope="row">{{pensum.za_pensum}}</th>
+          <td>{{pensum.codigo_pensum}}</td>
+          <td>{{pensum.nombre_pensum}}</td>
+          <td>{{pensum.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
         </tr>
         </tbody>
       </table>
