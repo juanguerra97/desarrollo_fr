@@ -54,6 +54,6 @@ export class PensumsComponent implements OnInit {
   }
 
   guardar() {
-    console.log(this.form);
+    this._pensumService.crearPensum(this.form).subscribe(() => {debugger;});
   }
 }

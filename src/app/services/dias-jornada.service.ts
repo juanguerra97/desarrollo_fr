@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 export class DiasJornadaService {
 
   private urlApi = environment.apiURL;
-  private urlComponente =  `${this.urlApi}cruds/dias`;
+  private urlComponente =  `${this.urlApi}cruds/diasjornadas`;
   constructor(private http: HttpClient) { }
 
   crearDia(dia) {
