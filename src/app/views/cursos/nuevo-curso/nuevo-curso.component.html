@@ -1,26 +1,63 @@
-<div class="card-header">
-    <div class="h3">Nuevo curso</div>
-</div>
-<div class="card-body">
-    <!-- <button class="pull-right btn btn-primary mb-3"><em class="fa fa-check mr-2"></em>Cancelar</button> -->
-    <form [formGroup]="formCurso" (ngSubmit)="onSubmit()">
-        <div class="form-row">
-            <div class="col-sm-5">
-                <input formControlName="codigo" type="number" class="form-control" placeholder="Codigo">
+
+
+<button (click)="openModal(content)" 
+    class="btn btn-primary pull-right mb-3">
+        <em class="fa fa-plus mr-2"></em>
+        Nuevo
+</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="new-curso-title">Nuevo curso</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form id="form-new-curso" [formGroup]="formCurso" (ngSubmit)="onSubmit(modal)" class="was-validated">
+            <div class="form-group">
+                <input formControlName="codigo" type="number" class="form-control form-control-lg" placeholder="Codigo" required>
             </div>
-            <div class="col">
-                <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre">
+            <div class="form-group">
+                <input formControlName="nombre" type="text" class="form-control form-control-lg" placeholder="Nombre" required>
             </div>
-            <div class="col-auto">
-                <input type="submit" value="Guardar" class="btn btn-primary">
-                <input type="reset" value="Cancelar" class="btn btn-danger">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <input [disabled]="!formCurso.valid" form="form-new-curso" type="submit" value="Guardar" class="btn btn-primary btn-lg">
+    </div>
+</ng-template>
+
+
+<!-- <div class="card-header">
+
+
+
+    <div class="h3">Nuevo Curso</div>
+    <div class="card-body">
+        <button class="pull-right btn btn-primary mb-3"><em class="fa fa-check mr-2"></em>Cancelar</button>
+        <form [formGroup]="formCurso" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="col-sm-5">
+                    <input formControlName="codigo" type="number" class="form-control" placeholder="Codigo">
+                </div>
+                <div class="col">
+                    <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Guardar" class="btn btn-primary">
+                    <input type="reset" value="Cancelar" class="btn btn-danger">
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-<!-- <div class="card-footer">
+        </form>
+    </div>
+
+
+    <div class="card-footer">
     <p>Total: {{cursos.length}}</p>
     <a routerLink="/" class="btn btn-secondary pull-left">
             <i class="fa fa-close" aria-hidden="true"></i> Regresar
         </a>
+</div>
+
 </div> -->
