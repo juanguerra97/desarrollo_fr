@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,15 +18,20 @@ export class NuevoCursoComponent implements OnInit {
 
   @Output('oninsert') oninsert = new EventEmitter<ICurso>();
 
-  formCurso = new FormGroup({
-    codigo: new FormControl(''),
-    nombre: new FormControl(''),
+  private formCurso = new FormGroup({
+    codigo: new FormControl('',[
+      Validators.required,
+      Validators.pattern('[0-9]+')
+    ]),
+    nombre: new FormControl('',[
+      Validators.required
+    ]),
   });
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-
+    
   }
 
   showNewCurso(){
