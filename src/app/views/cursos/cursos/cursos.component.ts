@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
 import { CursosService } from '../../../services/cursos.service';
 import { ICurso } from '../../../models/icurso.model';
 
+import { ModalConfirmacionService } from '../../../services/modal-confirmacion.service';
+ 
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -11,9 +15,11 @@ import { ICurso } from '../../../models/icurso.model';
 export class CursosComponent implements OnInit {
 
   private cursos:ICurso[];
+  private cursoSeleccionado:ICurso=null;
 
   constructor(
-    private cursosService:CursosService
+    private cursosService:CursosService,
+    private modalConfirmacion:ModalConfirmacionService
   ) { 
     this.cursos = this.cursosService.getAll();
   }
@@ -22,13 +28,39 @@ export class CursosComponent implements OnInit {
     
   }
 
-  onNuevoCurso(nuevoCurso:ICurso){
-    this.cursos.push(nuevoCurso);
+  onCambioCursoSeleccionado(curso:ICurso){
+    this.cursoSeleccionado = curso;
   }
 
-  onBorrarCurso(curso:ICurso){
-    let indexCurso = this.cursos.findIndex(c=>c.codigo === curso.codigo);
-    this.cursos.splice(indexCurso,1);
+  onNuevoCurso(nuevoCurso:ICurso){
+    // this.cursosService.insert(nuevoCurso);
+    this.cursos.push(nuevoCurso);
+    
+  }
+
+  onUpdateCurso(cursoActualizado:ICurso){
+    // this.cursosService.update(this.cursoSeleccionado,cursoActualizado);
+    this.cursoSeleccionado.nombre = cursoActualizado.nombre;
+  }
+
+  onBorrarCurso():void{
+    if(this.cursoSeleccionado == null) return;
+
+    this.modalConfirmacion.mostrar(
+      'Confirmar',
+      "¿Seguro quiere eliminar el curso '" + this.cursoSeleccionado.nombre + "'?",
+      'Confirmar',
+      'Cancelar',
+      'lg'
+    ).then((confirmacion)=>{
+      if(confirmacion == true){
+        // this.cursosService.delete(this.cursoSeleccionado);
+        let index = this.cursos.findIndex(curso=>curso.codigo==this.cursoSeleccionado.codigo);
+        this.cursos.splice(index,1);
+        this.cursoSeleccionado = null;
+      }
+    }).catch(()=>{});
+
   }
 
 }
