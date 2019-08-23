@@ -19,6 +19,7 @@ export class PensumsComponent implements OnInit {
     accion: 1
   };
   public carreras: any;
+  public za_carrera: 0;
 
 
   constructor(private _pensumService: PensumService, private modalService: NgbModal, private _carreraService: CarrerasService) {
@@ -27,10 +28,7 @@ export class PensumsComponent implements OnInit {
 
 
   ngOnInit() {
-    this._pensumService.listPensums().subscribe(res => {
-      this.pensums = res;
-      this.pensum = {};
-    });
+    this.getPensums();
   }
 
   editar(index) {
@@ -55,5 +53,9 @@ export class PensumsComponent implements OnInit {
 
   guardar() {
     this._pensumService.crearPensum(this.form).subscribe(() => {debugger;});
+  }
+
+  getPensums() {
+    this._pensumService.listPensums(this.za_carrera).subscribe((res) => {this.pensums = res; });
   }
 }

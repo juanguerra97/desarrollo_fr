@@ -4,11 +4,21 @@
       <div class="h3">Pensums</div>
     </div>
     <div class="card-body">
-      <button (click)="openModal(content)"
-              class="btn btn-primary pull-right mb-3">
-        <em class="fa fa-check mr-2"></em>
-        Nuevo
-      </button>
+      <div class="row">
+        <div class="col-md-6">
+          <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()">
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button (click)="openModal(content)"
+                  class="btn btn-primary pull-right mb-3">
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
+
       <table class="table table-bordered">
         <thead>
         <tr>

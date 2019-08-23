@@ -14,8 +14,8 @@ export class PensumService {
 
   constructor(private http: HttpClient) { }
 
-  listPensums() {
-    const url = `${this.urlComponente}`;
+  listPensums(carrera) {
+    const url = `${this.urlComponente}${carrera}`;
     return this.http.get(url);
   }
 
