@@ -7,7 +7,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ICurso } from '../../../models/icurso.model';
 
-declare var $: any;
 
 @Component({
   selector: 'app-nuevo-curso',

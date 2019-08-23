@@ -33,8 +33,14 @@ export class CursosComponent implements OnInit {
   }
 
   onNuevoCurso(nuevoCurso:ICurso){
+    // this.cursosService.insert(nuevoCurso);
     this.cursos.push(nuevoCurso);
     
+  }
+
+  onUpdateCurso(cursoActualizado:ICurso){
+    // this.cursosService.update(this.cursoSeleccionado,cursoActualizado);
+    this.cursoSeleccionado.nombre = cursoActualizado.nombre;
   }
 
   onBorrarCurso():void{
@@ -47,8 +53,8 @@ export class CursosComponent implements OnInit {
       'Cancelar',
       'lg'
     ).then((confirmacion)=>{
-      console.log("Confirmado",confirmacion);
       if(confirmacion == true){
+        // this.cursosService.delete(this.cursoSeleccionado);
         let index = this.cursos.findIndex(curso=>curso.codigo==this.cursoSeleccionado.codigo);
         this.cursos.splice(index,1);
         this.cursoSeleccionado = null;

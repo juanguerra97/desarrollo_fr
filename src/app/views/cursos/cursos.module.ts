@@ -8,14 +8,16 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CursosComponent } from './cursos/cursos.component';
 import { CursosRoutes } from './cursos.routes';
 import { ListacursosComponent } from './listacursos/listacursos.component';
-import { NuevoCursoComponent } from './nuevo-curso/nuevo-curso.component'
+import { NuevoCursoComponent } from './nuevo-curso/nuevo-curso.component';
+import { EditCursoComponent } from './edit-curso/edit-curso.component'
 
 
 @NgModule({
   declarations: [
     CursosComponent,
     ListacursosComponent,
-    NuevoCursoComponent
+    NuevoCursoComponent,
+    EditCursoComponent
   ],
   imports: [
     CommonModule,
