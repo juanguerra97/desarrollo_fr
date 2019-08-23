@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import { CursosService } from '../../../services/cursos.service';
 import { ICurso } from '../../../models/icurso.model';
 
+import { ModalConfirmacionService } from '../../../services/modal-confirmacion.service';
+ 
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -16,7 +18,8 @@ export class CursosComponent implements OnInit {
   private cursoSeleccionado:ICurso=null;
 
   constructor(
-    private cursosService:CursosService
+    private cursosService:CursosService,
+    private modalConfirmacion:ModalConfirmacionService
   ) { 
     this.cursos = this.cursosService.getAll();
   }
@@ -34,9 +37,24 @@ export class CursosComponent implements OnInit {
     
   }
 
-  onBorrarCurso(curso:ICurso){
-    let indexCurso = this.cursos.findIndex(c=>c.codigo === curso.codigo);
-    this.cursos.splice(indexCurso,1);
+  onBorrarCurso():void{
+    if(this.cursoSeleccionado == null) return;
+
+    this.modalConfirmacion.mostrar(
+      'Confirmar',
+      "¿Seguro quiere eliminar el curso '" + this.cursoSeleccionado.nombre + "'?",
+      'Confirmar',
+      'Cancelar',
+      'lg'
+    ).then((confirmacion)=>{
+      console.log("Confirmado",confirmacion);
+      if(confirmacion == true){
+        let index = this.cursos.findIndex(curso=>curso.codigo==this.cursoSeleccionado.codigo);
+        this.cursos.splice(index,1);
+        this.cursoSeleccionado = null;
+      }
+    }).catch(()=>{});
+
   }
 
 }

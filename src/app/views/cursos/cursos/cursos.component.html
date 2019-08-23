@@ -17,6 +17,7 @@
             </button>
 
             <button 
+                (click)="onBorrarCurso()"
                 [disabled]="cursoSeleccionado == null"
                 class="btn btn-danger pull-right mr-2 mb-3">
                 <em class="fa fa-remove mr-2"></em>
@@ -26,7 +27,7 @@
 
             
             <app-listacursos 
-                (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"
+                [cursos]="cursos"
                 (onselectionchange)="onCambioCursoSeleccionado($event)">
             </app-listacursos>
         </div>
