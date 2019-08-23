@@ -1,11 +1,41 @@
 <div class="animated fadeIn">
     <div class="card">
-        <app-nuevo-curso (oninsert)="onNuevoCurso($event)"></app-nuevo-curso>
+        <div class="card-header">
+            <div class="h3">Cursos</div>
+        </div>
+        <div class="card-body">
+
+            <app-nuevo-curso 
+                (oninsert)="onNuevoCurso($event)">
+            </app-nuevo-curso>
+
+            <!-- <button 
+                [disabled]="cursoSeleccionado == null"
+                class="btn btn-secondary pull-right mr-2 mb-3">
+                <em class="fa fa-edit mr-2"></em>
+                Editar
+            </button> -->
+
+            <app-edit-curso
+                [curso]="cursoSeleccionado"
+                (onupdate)="onUpdateCurso($event)">
+            </app-edit-curso>
+
+            <button 
+                (click)="onBorrarCurso()"
+                [disabled]="cursoSeleccionado == null"
+                class="btn btn-danger pull-right mr-2 mb-3">
+                <em class="fa fa-remove mr-2"></em>
+                Eliminar
+            </button>
+            
+
+            
+            <app-listacursos 
+                [cursos]="cursos"
+                (onselectionchange)="onCambioCursoSeleccionado($event)">
+            </app-listacursos>
+        </div>
     </div>
 
-    <div class="card">
-      <app-listacursos (ondeletecurso)="onBorrarCurso($event)" [cursos]="cursos"></app-listacursos>
-    </div>
-    
-  </div>
-  
+</div>

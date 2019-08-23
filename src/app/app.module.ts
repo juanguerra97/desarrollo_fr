@@ -43,6 +43,11 @@ import { ChartsModule } from 'ng2-charts';
 
 import { CursosService } from './services/cursos.service';
 
+import { ModalConfirmacionComponent } from './views/modal-confirmacion/modal-confirmacion.component';
+import { ModalConfirmacionService } from './services/modal-confirmacion.service';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -58,6 +63,7 @@ import { CursosService } from './services/cursos.service';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    NgbModule
   ],
   declarations: [
     AppComponent,
@@ -65,13 +71,21 @@ import { CursosService } from './services/cursos.service';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ModalConfirmacionComponent
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   },
-    CursosService
+    ModalConfirmacionService,
+    CursosService,
+  ],
+  exports:[
+    ModalConfirmacionComponent
+  ],
+  entryComponents:[
+    ModalConfirmacionComponent
   ],
   bootstrap: [ AppComponent ]
 })
