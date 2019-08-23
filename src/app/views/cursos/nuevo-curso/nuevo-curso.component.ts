@@ -30,10 +30,9 @@ export class NuevoCursoComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    
   }
 
-  showNewCurso(){
+  showNewCurso() {
     // $('#new-curso-modal').modal('show');
   }
 
@@ -58,7 +57,6 @@ export class NuevoCursoComponent implements OnInit {
     this.formCurso.reset();
 
     // Swal.fire('Se ingresó un nuevo curso');
-    
   }
 
 }
