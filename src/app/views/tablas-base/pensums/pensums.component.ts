@@ -10,7 +10,14 @@ import {CarrerasService} from '../../../../services/carreras.service';
 })
 export class PensumsComponent implements OnInit {
   public pensums: any;
-  public pensum: {};
+  public pensum: any;
+  public form = {
+    za_carrera: 0,
+    ano_pensum: 1990,
+    codigo_pensum: '',
+    activo: true,
+    accion: 1
+  };
   public carreras: any;
 
 
@@ -44,5 +51,9 @@ export class PensumsComponent implements OnInit {
       size: 'lg',
       windowClass: 'animated bounceIn'
     });
+  }
+
+  guardar() {
+    console.log(this.form);
   }
 }
