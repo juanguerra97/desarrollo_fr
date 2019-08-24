@@ -40,9 +40,18 @@ export class CatedraticosComponent implements OnInit {
 
   ngOnInit() {
     this.getCatedraticos();
+
   }
 
-  editar(index) {
+  editar(index, content) {
+    this.form = this.catedraticos[index];
+    this.form.accion = 1;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
   }
 
   eliminar(index) {
