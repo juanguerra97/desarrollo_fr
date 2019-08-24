@@ -88,7 +88,7 @@ export class JornadasComponent implements OnInit {
       },
     }).then(res => {
       this._jornadaService.crearJornada(res.value).subscribe(() => {
-        location.reload();
+        this.buscar()
       });
     });
   }
@@ -96,8 +96,7 @@ export class JornadasComponent implements OnInit {
   eliminar(index) {
     const request = {...this.jornadas[index], accion: 2};
     request.activo = request.activo.data;
-    this._jornadaService.crearJornada(request).subscribe();
-    location.reload();
+    this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
   }
   buscar() {
     if (this.carrera) {

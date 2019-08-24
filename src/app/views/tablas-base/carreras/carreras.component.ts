@@ -51,7 +51,8 @@ export class CarrerasComponent implements OnInit {
   eliminar(index) {
     const request = {...this.carreras[index], accion: 2};
     request.activo = request.activo.data;
-    this._carreraService.crearCarrera(request).subscribe();
+    this._carreraService.crearCarrera(request).subscribe(() =>
+      this._carreraService.listCarreras().subscribe(res => { this.carreras = res; }));
   }
 
   openModal(id: string) {

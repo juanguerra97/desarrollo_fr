@@ -5,9 +5,10 @@ import {TablasBaseRoutes} from './tablas_base.routes';
 import { CarrerasComponent } from './carreras/carreras.component';
 import { NuevaCarreraComponent } from './carreras/nueva-carrera/nueva-carrera.component';
 import {AppCommonModule} from '../app-common/app-common.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JornadasComponent } from './jornadas/jornadas.component';
 import { DiasJornadaComponent } from './dias-jornada/dias-jornada.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { DiasJornadaComponent } from './dias-jornada/dias-jornada.component';
     CommonModule,
     TablasBaseRoutes,
     AppCommonModule,
+    ReactiveFormsModule,
+    NgbModule,
     FormsModule
   ],
 entryComponents: [NuevaCarreraComponent]

@@ -17,7 +17,7 @@ export class ListacursosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
   private onBorrarCurso(curso:ICurso){
@@ -33,8 +33,6 @@ export class ListacursosComponent implements OnInit {
       this.selected = {codigo:-1,nombre:""};
       this.onselection.emit(null);
     }
-
-    
   }
 
 }
