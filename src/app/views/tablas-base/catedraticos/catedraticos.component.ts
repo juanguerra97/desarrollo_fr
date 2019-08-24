@@ -57,7 +57,7 @@ export class CatedraticosComponent implements OnInit {
   eliminar(index) {
     const request = {...this.catedraticos[index], accion: 2};
     request.activo = request.activo.data;
-    this._catedraticoService.crearCatedratico(request).subscribe();
+    this._catedraticoService.crearCatedratico(request).subscribe(() => this.getCatedraticos());
   }
 
   openModal(content) {
