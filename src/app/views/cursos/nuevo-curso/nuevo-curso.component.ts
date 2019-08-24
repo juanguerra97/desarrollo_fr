@@ -1,12 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-// import Swal from 'sweetalert2';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ICurso } from '../../../models/icurso.model';
-
+import {CursosService} from '../../../services/cursos.service';
 
 @Component({
   selector: 'app-nuevo-curso',
@@ -15,19 +11,25 @@ import { ICurso } from '../../../models/icurso.model';
 })
 export class NuevoCursoComponent implements OnInit {
 
-  @Output('oninsert') oninsert = new EventEmitter<ICurso>();
-
   private formCurso = new FormGroup({
-    codigo: new FormControl('',[
+    codigo: new FormControl('', [
       Validators.required,
       Validators.pattern('[0-9]+')
     ]),
-    nombre: new FormControl('',[
+    nombre: new FormControl('', [
       Validators.required
     ]),
+    usa_laboratorio: new FormControl('', [
+      Validators.required
+    ]),
+    activo: new FormControl('', [
+      Validators.required
+    ]),
+    accion: new FormControl(1, [ Validators.required ])
   });
+  public curso = null;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private _cursoService: CursosService) { }
 
   ngOnInit() {
   }
@@ -40,8 +42,7 @@ export class NuevoCursoComponent implements OnInit {
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
-      size: "lg",
-      windowClass:"animated bounceIn"
+      windowClass: 'animated bounceIn'
     });
     // .result.then((result) => {
     //   this.closeResult = `Closed with: ${result}`;
@@ -50,10 +51,9 @@ export class NuevoCursoComponent implements OnInit {
     // });
   }
 
-  onSubmit(modal:any){
+  onSubmit(modal: any) {
     modal.close('');
-
-    this.oninsert.emit(this.formCurso.value);
+    this._cursoService.crearCurso(this.formCurso.value);
     this.formCurso.reset();
 
     // Swal.fire('Se ingresó un nuevo curso');

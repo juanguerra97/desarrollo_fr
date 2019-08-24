@@ -6,7 +6,7 @@ import { CursosService } from '../../../services/cursos.service';
 import { ICurso } from '../../../models/icurso.model';
 
 import { ModalConfirmacionService } from '../../../services/modal-confirmacion.service';
- 
+
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -14,53 +14,31 @@ import { ModalConfirmacionService } from '../../../services/modal-confirmacion.s
 })
 export class CursosComponent implements OnInit {
 
-  private cursos:ICurso[];
-  private cursoSeleccionado:ICurso=null;
+  private cursos: [];
+  private cursoSeleccionado: null;
 
   constructor(
-    private cursosService:CursosService,
-    private modalConfirmacion:ModalConfirmacionService
-  ) { 
-    this.cursos = this.cursosService.getAll();
+    private cursosService: CursosService,
+    private modalConfirmacion: ModalConfirmacionService
+  ) {
   }
 
   ngOnInit() {
-    
   }
 
-  onCambioCursoSeleccionado(curso:ICurso){
+  onCambioCursoSeleccionado(curso) {
     this.cursoSeleccionado = curso;
   }
 
-  onNuevoCurso(nuevoCurso:ICurso){
+  onNuevoCurso(nuevoCurso) {
     // this.cursosService.insert(nuevoCurso);
-    this.cursos.push(nuevoCurso);
-    
   }
 
-  onUpdateCurso(cursoActualizado:ICurso){
+  onUpdateCurso(cursoActualizado) {
     // this.cursosService.update(this.cursoSeleccionado,cursoActualizado);
-    this.cursoSeleccionado.nombre = cursoActualizado.nombre;
   }
 
-  onBorrarCurso():void{
-    if(this.cursoSeleccionado == null) return;
-
-    this.modalConfirmacion.mostrar(
-      'Confirmar',
-      "¿Seguro quiere eliminar el curso '" + this.cursoSeleccionado.nombre + "'?",
-      'Confirmar',
-      'Cancelar',
-      'lg'
-    ).then((confirmacion)=>{
-      if(confirmacion == true){
-        // this.cursosService.delete(this.cursoSeleccionado);
-        let index = this.cursos.findIndex(curso=>curso.codigo==this.cursoSeleccionado.codigo);
-        this.cursos.splice(index,1);
-        this.cursoSeleccionado = null;
-      }
-    }).catch(()=>{});
-
+  onBorrarCurso() {
   }
 
 }

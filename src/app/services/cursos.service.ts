@@ -2,42 +2,21 @@ import { Injectable } from '@angular/core';
 import { ICurso } from '../models/icurso.model';
 import { HttpClient } from '@angular/common/http';
 import { SERVER_URLS } from '../serverurls';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CursosService {
+  private urlApi = environment.apiURL;
+  private urlComponente =  `${this.urlApi}cruds/cursos`;
 
-  private cursos: ICurso[] = [];
+  constructor( private http: HttpClient ) {}
 
-  constructor(
-    private http: HttpClient
-  ) {
-    this.http.get<ICurso[]>(SERVER_URLS['GET_ALL_CURSOS'])
-      .subscribe((cursos: ICurso[]) => {
-        this.cursos.push(...cursos);
-      });
+  crearCurso(curso) {
+    const url = `${this.urlComponente}`;
+    return this.http.post(url, curso);
   }
 
-
-  getAll(){
-    return this.cursos;
-  }
-
-  getByCodigo(codigoCurso:number){
-
-  }
-
-  insert(nuevoCurso:ICurso) {
-    this.cursos.push(nuevoCurso);
-  }
-
-  delete(curso:ICurso){
-
-  }
-
-  update(oldCurso:ICurso,newCurso:ICurso){
-
-  }
 
 }

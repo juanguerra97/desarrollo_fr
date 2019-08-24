@@ -46,9 +46,7 @@ export class JornadasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._jornadaService.crearJornada(res.value).subscribe(() => {location.reload();
-      }, error => () => { location.reload();
-      });
+      this._jornadaService.crearJornada(res.value).subscribe(() => { this.buscar(); }, error => () => { });
     });
   }
 
@@ -88,7 +86,7 @@ export class JornadasComponent implements OnInit {
       },
     }).then(res => {
       this._jornadaService.crearJornada(res.value).subscribe(() => {
-        this.buscar()
+        this.buscar();
       });
     });
   }
