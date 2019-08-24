@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { CursosService } from '../../../services/cursos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CarrerasService} from '../../../../services/carreras.service';
+import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-cursos',
@@ -17,8 +18,8 @@ export class CursosComponent implements OnInit {
   public form = {
     za_curso: 0,
     nombre_curso: '',
-    usa_laboratorio: '',
-    activo: 1,
+    usa_laboratorio: true,
+    activo: true,
     accion: 1
   };
   public carreras: any;
@@ -27,8 +28,8 @@ export class CursosComponent implements OnInit {
     this.form = {
       za_curso: 0,
       nombre_curso: '',
-      usa_laboratorio: '',
-      activo: 1,
+      usa_laboratorio: true,
+      activo: true,
       accion: 1
     };
   }
@@ -61,7 +62,7 @@ export class CursosComponent implements OnInit {
     this.form.activo = this.form.activo.data;
     this.form.usa_laboratorio = this.form.usa_laboratorio.data;
     const request = {...this.form, accion: 2};
-    this._cursoService.crearCurso(request).subscribe();
+    this._cursoService.crearCurso(request).subscribe(this.getCursos);
   }
 
   openModal(content) {
@@ -77,10 +78,15 @@ export class CursosComponent implements OnInit {
 
   guardar() {
     this.modalService.dismissAll();
-    this._cursoService.crearCurso(this.form).subscribe(() => {this.getCursos(); });
+    this._cursoService.crearCurso(this.form).subscribe(this.getCursos);
   }
 
-  getCursos() {
-    this._cursoService.listCursos().subscribe((res) => {this.cursos = res; });
+  getCursos = () => {
+    setTimeout(() => {
+      this._cursoService.listCursos().subscribe((res) => {
+        this.cursos = res;
+      });
+    }
+    , 1000);
   }
 }
