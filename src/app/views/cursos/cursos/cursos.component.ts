@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
 import { CursosService } from '../../../services/cursos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CarrerasService} from '../../../../services/carreras.service';
-import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-cursos',
@@ -15,6 +14,11 @@ import {timeout} from 'rxjs/operators';
 export class CursosComponent implements OnInit {
   public cursos: any;
   public curso: any;
+  public res: {
+    activo: {
+      data: any
+    }
+  };
   public form = {
     za_curso: 0,
     nombre_curso: '',
@@ -47,8 +51,8 @@ export class CursosComponent implements OnInit {
   editar(content, index) {
     this.form = this.cursos[index];
     this.form.accion = 1;
-    this.form.activo = this.form.activo.data;
-    this.form.usa_laboratorio = this.form.usa_laboratorio.data;
+    this.form.activo = this.form.activo;
+    this.form.usa_laboratorio = this.form.usa_laboratorio;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -59,8 +63,8 @@ export class CursosComponent implements OnInit {
 
   eliminar(index) {
     this.form = this.cursos[index];
-    this.form.activo = this.form.activo.data;
-    this.form.usa_laboratorio = this.form.usa_laboratorio.data;
+    this.form.activo = this.form.activo;
+    this.form.usa_laboratorio = this.form.usa_laboratorio;
     const request = {...this.form, accion: 2};
     this._cursoService.crearCurso(request).subscribe(this.getCursos);
   }

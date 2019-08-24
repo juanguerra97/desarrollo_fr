@@ -71,6 +71,11 @@ export const navItems: NavData[] = [
         name: 'Cursos',
         url: '/cursos',
         icon: 'icon-drop'
+      },
+      {
+        name: 'Pensum Curso',
+        url: '/pensum-cursos',
+        icon: 'icon-drop'
       }
     ]
   },
