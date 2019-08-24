@@ -74,7 +74,7 @@ export const navItems: NavData[] = [
       },
       {
         name: 'Pensum Curso',
-        url: '/pensum-cursos',
+        url: '/bases/pensum_curso',
         icon: 'icon-drop'
       }
     ]

@@ -1,1 +1,119 @@
-<p>pensum-curso works!</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Pensums Cursos</div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()">
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <select class="custom-select" [(ngModel)]="za_pensum" (change)="getConexion()">
+            <option *ngFor="let pensum of pensums" value="{{pensum.ano_pensum}}">{{pensum.codigo_pensum}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <select class="custom-select" [(ngModel)]="za_curso" (change)="getConexion()">
+            <option *ngFor="let curso of cursos" value="{{curso.za_curso}}">{{curso.nombre_curso}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button (click)="openModal(content)"
+                  class="btn btn-primary pull-right mb-3">
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let conect of conexiones; let i = index">
+          <th scope="row">{{conect.za_pensum}}</th>
+          <td>{{conect.codigo_pensum}}</td>
+          <td>{{conect.nombre_pensum}}</td>
+          <td>{{conect.activo}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="!pensum" class="modal-title" >Nueva Conexión</h4>
+    <h4 *ngIf="pensum" class="modal-title" >Editar Conexión</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+      <label for="carrera" class="col-sm-2 col-form-label pl-3"><strong>Carrera</strong></label>
+      <div class="col-sm-10">
+        <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()" id="carrera">
+          <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="pensum" class="col-sm-2 col-form-label pl-3"><strong>Pensum</strong></label>
+      <div class="col-sm-10">
+        <select class="custom-select" [(ngModel)]="form.ano_pensum" (change)="getConexion()" id="pensum">
+          <option *ngFor="let pensum of pensums" value="{{pensum.ano_pensum}}">{{pensum.codigo_pensum}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="curso" class="col-sm-2 col-form-label pl-3"><strong>Curso</strong></label>
+      <div class="col-sm-10">
+        <select class="custom-select" [(ngModel)]="form.za_curso" (change)="getConexion()" id="curso">
+          <option *ngFor="let curso of cursos" value="{{curso.za_curso}}">{{curso.nombre_curso}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="ciclo" class="col-sm-2 col-form-label"><strong>Ciclo</strong></label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="ciclo" placeholder="Ciclo" [(ngModel)]="form.ciclo">
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="activo" [(ngModel)]="form.activo">
+      <label class="custom-control-label" for="activo">Activo</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="!pensum" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
+    </button>
+    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg">
+      <em class="fa fa-pencil mr-3"></em>
+      Editar
+    </button>
+  </div>
+</ng-template>
+

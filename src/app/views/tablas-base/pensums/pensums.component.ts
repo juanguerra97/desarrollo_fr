@@ -61,7 +61,7 @@ export class PensumsComponent implements OnInit {
   }
 
   guardar() {
-    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums()} );
+    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums(); } );
     this.modalService.dismissAll();
   }
 
