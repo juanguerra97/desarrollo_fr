@@ -43,12 +43,24 @@ export class CursosComponent implements OnInit {
     this.getCursos();
   }
 
-  editar(index) {
+  editar(content, index) {
+    this.form = this.cursos[index];
+    this.form.accion = 1;
+    this.form.activo = this.form.activo.data;
+    this.form.usa_laboratorio = this.form.usa_laboratorio.data;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
   }
 
   eliminar(index) {
-    const request = {...this.cursos[index], accion: 2};
-    request.activo = request.activo.data;
+    this.form = this.cursos[index];
+    this.form.activo = this.form.activo.data;
+    this.form.usa_laboratorio = this.form.usa_laboratorio.data;
+    const request = {...this.form, accion: 2};
     this._cursoService.crearCurso(request).subscribe();
   }
 
@@ -64,6 +76,7 @@ export class CursosComponent implements OnInit {
   }
 
   guardar() {
+    this.modalService.dismissAll();
     this._cursoService.crearCurso(this.form).subscribe(() => {this.getCursos(); });
   }
 
