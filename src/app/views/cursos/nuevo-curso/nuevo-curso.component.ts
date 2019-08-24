@@ -53,7 +53,7 @@ export class NuevoCursoComponent implements OnInit {
 
   onSubmit(modal: any) {
     modal.close('');
-    this._cursoService.crearCurso(this.formCurso.value);
+    this._cursoService.crearCurso(this.formCurso.value).subscribe();
     this.formCurso.reset();
 
     // Swal.fire('Se ingresó un nuevo curso');

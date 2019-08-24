@@ -14,7 +14,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <form id="form-new-curso" [formGroup]="formCurso" (ngSubmit)="onSubmit(modal)" class="was-validated">
+        <form id="form-new-curso" [formGroup]="formCurso" class="was-validated">
 
           <div class="form-group row">
             <label for="codigo" class="col-sm-2 col-form-label"><strong>Codigo</strong></label>
@@ -41,7 +41,7 @@
         </form>
     </div>
     <div class="modal-footer">
-      <button *ngIf="!curso" value="Guardar" class="btn btn-success btn-lg" >
+      <button *ngIf="!curso" value="Guardar" class="btn btn-success btn-lg" (click)="onSubmit(modal)">
         <em class="fa fa-save mr-3"></em>
         Guardar
       </button>
