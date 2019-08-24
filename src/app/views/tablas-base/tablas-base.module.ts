@@ -9,10 +9,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JornadasComponent } from './jornadas/jornadas.component';
 import { DiasJornadaComponent } from './dias-jornada/dias-jornada.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PensumCursoComponent } from './pensum-curso/pensum-curso.component';
+import { CatedraticosComponent } from './catedraticos/catedraticos.component';
 
 
 @NgModule({
-  declarations: [PensumsComponent, CarrerasComponent, NuevaCarreraComponent, JornadasComponent, DiasJornadaComponent],
+  declarations: [PensumsComponent, CarrerasComponent, NuevaCarreraComponent, JornadasComponent, DiasJornadaComponent, PensumCursoComponent, CatedraticosComponent],
   imports: [
     CommonModule,
     TablasBaseRoutes,

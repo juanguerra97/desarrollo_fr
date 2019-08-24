@@ -4,6 +4,8 @@ import {PensumsComponent} from './pensums/pensums.component';
 import {CarrerasComponent} from './carreras/carreras.component';
 import {JornadasComponent} from './jornadas/jornadas.component';
 import {DiasJornadaComponent} from './dias-jornada/dias-jornada.component';
+import {PensumCursoComponent} from './pensum-curso/pensum-curso.component';
+import {CatedraticosComponent} from './catedraticos/catedraticos.component';
 
 export const TABLAS_BASES_ROUTES: Routes = [
   {
@@ -33,6 +35,20 @@ export const TABLAS_BASES_ROUTES: Routes = [
       title: 'dias'
     },
     component: DiasJornadaComponent
+  },
+  {
+    path: 'pensum_curso',
+    data: {
+      title: 'pensum-curso'
+    },
+    component: PensumCursoComponent
+  },
+  {
+    path: 'catedraticos',
+    data: {
+      title: 'catedraticos'
+    },
+    component: CatedraticosComponent
   }
 ];
 

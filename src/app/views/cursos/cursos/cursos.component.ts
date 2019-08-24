@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 
 import { CursosService } from '../../../services/cursos.service';
-import { ICurso } from '../../../models/icurso.model';
-
-import { ModalConfirmacionService } from '../../../services/modal-confirmacion.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CarrerasService} from '../../../../services/carreras.service';
 
 @Component({
   selector: 'app-cursos',
@@ -13,31 +12,85 @@ import { ModalConfirmacionService } from '../../../services/modal-confirmacion.s
   styleUrls: ['./cursos.component.scss']
 })
 export class CursosComponent implements OnInit {
-
-  private cursos: any;
-  private cursoSeleccionado: null;
-
-  constructor(
-    private _cursoService: CursosService
-  ) {
+  public cursos: any;
+  public curso: any;
+  public res: {
+    activo: {
+      data: any
+    }
+  };
+  public form = {
+    za_curso: 0,
+    nombre_curso: '',
+    usa_laboratorio: true,
+    activo: true,
+    accion: 1
+  };
+  public carreras: any;
+  public za_carrera: 0;
+  vaciarForm() {
+    this.form = {
+      za_curso: 0,
+      nombre_curso: '',
+      usa_laboratorio: true,
+      activo: true,
+      accion: 1
+    };
   }
+
+
+  constructor(private _cursoService: CursosService, private modalService: NgbModal, private _carreraService: CarrerasService) {
+    this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
+  }
+
 
   ngOnInit() {
-    this._cursoService.listCursos().subscribe((res) => this.cursos = res);
+    this.getCursos();
   }
 
-  onCambioCursoSeleccionado(curso) {
-    this.cursoSeleccionado = curso;
+  editar(content, index) {
+    this.form = this.cursos[index];
+    this.form.accion = 1;
+    this.form.activo = this.form.activo;
+    this.form.usa_laboratorio = this.form.usa_laboratorio;
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
   }
 
-  onNuevoCurso(nuevoCurso) {
-    this._cursoService.listCursos().subscribe((res) => this.cursos = res);
+  eliminar(index) {
+    this.form = this.cursos[index];
+    this.form.activo = this.form.activo;
+    this.form.usa_laboratorio = this.form.usa_laboratorio;
+    const request = {...this.form, accion: 2};
+    this._cursoService.crearCurso(request).subscribe(this.getCursos);
   }
 
-  onUpdateCurso(cursoActualizado) {
+  openModal(content) {
+    this.curso = null;
+    this.vaciarForm();
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
   }
 
-  onBorrarCurso() {
+  guardar() {
+    this.modalService.dismissAll();
+    this._cursoService.crearCurso(this.form).subscribe(this.getCursos);
   }
 
+  getCursos = () => {
+    setTimeout(() => {
+      this._cursoService.listCursos().subscribe((res) => {
+        this.cursos = res;
+      });
+    }
+    , 1000);
+  }
 }
