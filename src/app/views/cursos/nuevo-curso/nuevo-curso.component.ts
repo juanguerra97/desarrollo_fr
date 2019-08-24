@@ -10,8 +10,12 @@ import {CursosService} from '../../../services/cursos.service';
   styleUrls: ['./nuevo-curso.component.scss']
 })
 export class NuevoCursoComponent implements OnInit {
+  @Output() oninsert = new EventEmitter<boolean>();
 
   private formCurso = new FormGroup({
+    za_curso: new FormControl(0, [
+      Validators.required,
+    ]),
     codigo: new FormControl('', [
       Validators.required,
       Validators.pattern('[0-9]+')
@@ -53,7 +57,7 @@ export class NuevoCursoComponent implements OnInit {
 
   onSubmit(modal: any) {
     modal.close('');
-    this._cursoService.crearCurso(this.formCurso.value).subscribe();
+    this._cursoService.crearCurso(this.formCurso.value).subscribe(() => this.oninsert.emit(true));
     this.formCurso.reset();
 
     // Swal.fire('Se ingresó un nuevo curso');

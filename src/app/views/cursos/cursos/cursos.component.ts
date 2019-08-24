@@ -14,16 +14,16 @@ import { ModalConfirmacionService } from '../../../services/modal-confirmacion.s
 })
 export class CursosComponent implements OnInit {
 
-  private cursos: [];
+  private cursos: any;
   private cursoSeleccionado: null;
 
   constructor(
-    private cursosService: CursosService,
-    private modalConfirmacion: ModalConfirmacionService
+    private _cursoService: CursosService
   ) {
   }
 
   ngOnInit() {
+    this._cursoService.listCursos().subscribe((res) => this.cursos = res);
   }
 
   onCambioCursoSeleccionado(curso) {
@@ -31,11 +31,10 @@ export class CursosComponent implements OnInit {
   }
 
   onNuevoCurso(nuevoCurso) {
-    // this.cursosService.insert(nuevoCurso);
+    this._cursoService.listCursos().subscribe((res) => this.cursos = res);
   }
 
   onUpdateCurso(cursoActualizado) {
-    // this.cursosService.update(this.cursoSeleccionado,cursoActualizado);
   }
 
   onBorrarCurso() {

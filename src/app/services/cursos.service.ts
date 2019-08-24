@@ -18,5 +18,8 @@ export class CursosService {
     return this.http.post(url, curso);
   }
 
-
+  listCursos() {
+    const url = `${this.urlComponente}`;
+    return this.http.get(url);
+  }
 }

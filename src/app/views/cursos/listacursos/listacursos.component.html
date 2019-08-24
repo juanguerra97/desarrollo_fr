@@ -3,21 +3,21 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="col-auto">Codigo</th>
+                <th scope="col-auto">Id</th>
                 <th scope="col">Nombre</th>
-                <!-- <th></th> -->
+                <th scope="col">Laboratorio</th>
+                <th scope="col">Activo</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let curso of cursos" (click)="onCursoClicked(curso)"
-                [ngClass]="{'bg-info text-dark': curso.codigo == selected.codigo }">
-                <td>{{ curso.codigo }}</td>
-                <td>{{ curso.nombre }}</td>
-                <!-- <td>
-                    <button (click)="onBorrarCurso(curso)" type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </td> -->
+            <tr *ngFor="let curso of cursos" >
+                <td>{{ curso.za_curso }}</td>
+                <td>{{ curso.nombre_curso }}</td>
+                <td>{{ curso.usa_laboratorio.data }}</td>
+                <td>{{ curso.activo.data }}</td>
+                <td>
+                </td>
             </tr>
         </tbody>
     </table>
