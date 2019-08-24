@@ -14,17 +14,19 @@
         <thead>
         <tr>
           <th scope="col">Id</th>
-          <th scope="col">Codigo</th>
-          <th scope="col">Nombre</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Profesión</th>
           <th scope="col">Activo</th>
           <th scope="col">Accion</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let catedratico of catedraticos; let i = index">
-          <th scope="row">{{catedratico.za_catedratico}}</th>
-          <td>{{catedratico.codigo_catedratico}}</td>
-          <td>{{catedratico.nombre_catedratico}}</td>
+          <th scope="row">{{catedratico.za_profesor}}</th>
+          <td>{{catedratico.nombres}}</td>
+          <td>{{catedratico.apellidos}}</td>
+          <td>{{catedratico.profesion}}</td>
           <td>{{catedratico.activo.data}}</td>
           <td>
             <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
