@@ -23,6 +23,15 @@ export class CursosComponent implements OnInit {
   };
   public carreras: any;
   public za_carrera: 0;
+  vaciarForm() {
+    this.form = {
+      za_curso: 0,
+      nombre_curso: '',
+      usa_laboratorio: '',
+      activo: 1,
+      accion: 1
+    };
+  }
 
 
   constructor(private _cursoService: CursosService, private modalService: NgbModal, private _carreraService: CarrerasService) {
@@ -45,6 +54,7 @@ export class CursosComponent implements OnInit {
 
   openModal(content) {
     this.curso = null;
+    this.vaciarForm();
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,

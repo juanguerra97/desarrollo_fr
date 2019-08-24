@@ -21,6 +21,15 @@ export class PensumsComponent implements OnInit {
   public carreras: any;
   public za_carrera: 0;
 
+  clearForm() {
+    this.form = {
+      za_carrera: 0,
+      ano_pensum: 1990,
+      codigo_pensum: '',
+      activo: true,
+      accion: 1
+    };
+  }
 
   constructor(private _pensumService: PensumService, private modalService: NgbModal, private _carreraService: CarrerasService) {
     this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
@@ -42,7 +51,7 @@ export class PensumsComponent implements OnInit {
 
   openModal(content) {
     this.pensum = null;
-    console.log(this.pensum);
+    this.clearForm();
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -52,7 +61,8 @@ export class PensumsComponent implements OnInit {
   }
 
   guardar() {
-    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums()});
+    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums()} );
+    this.modalService.dismissAll();
   }
 
   getPensums() {
