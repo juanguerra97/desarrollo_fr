@@ -1,20 +1,84 @@
 <div class="animated fadeIn">
-    <div class="card">
-        <div class="card-header">
-            <div class="h3">Cursos</div>
-        </div>
-        <div class="card-body">
-
-            <app-nuevo-curso
-                (oninsert)="onNuevoCurso($event)">
-            </app-nuevo-curso>
-
-            <app-listacursos
-                [cursos]="cursos"
-                (onselectionchange)="onCambioCursoSeleccionado($event)">
-            </app-listacursos>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Cursos</div>
     </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <button (click)="openModal(content)"
+                  class="btn btn-primary pull-right mb-3">
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
 
-
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let curso of cursos; let i = index">
+          <th scope="row">{{curso.za_curso}}</th>
+          <td>{{curso.codigo_curso}}</td>
+          <td>{{curso.nombre_curso}}</td>
+          <td>{{curso.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
+  </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="!curso" class="modal-title" >Nuevo Curso</h4>
+    <h4 *ngIf="curso" class="modal-title" >Editar Curso</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+      <label for="anio" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
+      <div class="col-sm-10">
+        <input class="form-control" id="anio" placeholder="Nombre" [(ngModel)]="form.nombre_curso">
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="laboratorio" [(ngModel)]="form.usa_laboratorio">
+      <label class="custom-control-label" for="laboratorio">Usa Laboratorio</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="activo" [(ngModel)]="form.activo">
+      <label class="custom-control-label" for="activo">Activo</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="!curso" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
+    </button>
+    <button *ngIf="curso" value="Editar" class="btn btn-warning btn-lg">
+      <em class="fa fa-pencil mr-3"></em>
+      Editar
+    </button>
+  </div>
+</ng-template>
+

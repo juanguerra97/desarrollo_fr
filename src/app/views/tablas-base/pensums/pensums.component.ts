@@ -52,7 +52,7 @@ export class PensumsComponent implements OnInit {
   }
 
   guardar() {
-    this._pensumService.crearPensum(this.form).subscribe(() => {debugger;});
+    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums()});
   }
 
   getPensums() {
