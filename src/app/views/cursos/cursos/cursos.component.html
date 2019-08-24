@@ -5,37 +5,16 @@
         </div>
         <div class="card-body">
 
-            <app-nuevo-curso 
+            <app-nuevo-curso
                 (oninsert)="onNuevoCurso($event)">
             </app-nuevo-curso>
 
-            <!-- <button 
-                [disabled]="cursoSeleccionado == null"
-                class="btn btn-secondary pull-right mr-2 mb-3">
-                <em class="fa fa-edit mr-2"></em>
-                Editar
-            </button> -->
-
-            <app-edit-curso
-                [curso]="cursoSeleccionado"
-                (onupdate)="onUpdateCurso($event)">
-            </app-edit-curso>
-
-            <button 
-                (click)="onBorrarCurso()"
-                [disabled]="cursoSeleccionado == null"
-                class="btn btn-danger pull-right mr-2 mb-3">
-                <em class="fa fa-remove mr-2"></em>
-                Eliminar
-            </button>
-            
-
-            
-            <app-listacursos 
+            <app-listacursos
                 [cursos]="cursos"
                 (onselectionchange)="onCambioCursoSeleccionado($event)">
             </app-listacursos>
         </div>
     </div>
+
 
 </div>

@@ -11,6 +11,7 @@ export class ListacursosComponent implements OnInit {
   @Input() cursos: any;
   @Output('ondeletecurso') ondelete = new EventEmitter<ICurso>();
   @Output('onselectionchange') onselection = new EventEmitter<ICurso>();
+  public cursoSeleccionado: any;
 
   constructor() { }
 
@@ -18,11 +19,14 @@ export class ListacursosComponent implements OnInit {
 
   }
 
-  private onBorrarCurso() {
+  editar(index) {
+    this.cursoSeleccionado = this.cursos[index];
   }
 
-  private onCursoClicked(curso){
-    // no hay curso seleccionado o seleccion nueva
+  eliminar(index) {
   }
 
+  onUpdateCurso() {
+
+  }
 }

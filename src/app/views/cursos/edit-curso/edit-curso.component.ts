@@ -3,21 +3,31 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ICurso } from '../../../models/icurso.model';
 import { CursosService } from '../../../services/cursos.service';
 
+declare var $: any;
 @Component({
   selector: 'app-edit-curso',
   templateUrl: './edit-curso.component.html',
   styleUrls: ['./edit-curso.component.scss']
 })
+
 export class EditCursoComponent implements OnInit {
 
-  @Input('curso') curso:ICurso;
-  @Output('onupdate') onupdatecurso = new EventEmitter<ICurso>();
+  public _curso: any;
+  @Output() onupdatecurso = new EventEmitter<boolean>();
+
+  @Input()
+  set curso(curso: any) {
+    if (curso) {
+      this._curso = curso;
+      $('#modal-open').trigger('click');
+    }
+  }
+
 
   private formActualizarCurso = new FormGroup({
-    nombre: new FormControl('',[
+    nombre: new FormControl('', [
       Validators.required
     ])
   });
@@ -32,28 +42,17 @@ export class EditCursoComponent implements OnInit {
   }
 
   openModal(content) {
-    this.formActualizarCurso.setValue({nombre:this.curso.nombre});
     this.modalService.open(content, {
       ariaLabelledBy: 'update-curso-title',
       centered: true,
-      size: "lg",
-      windowClass:"animated bounceIn"
+      size: 'lg',
+      windowClass: 'animated bounceIn'
     });
   }
 
-  onSubmit(modal:any){
+  onSubmit(modal: any) {
     modal.close('');
-    
-    if(this.formActualizarCurso.value.nombre != this.curso.nombre){
-      this.onupdatecurso.emit({
-        codigo: this.curso.codigo,
-        nombre:this.formActualizarCurso.value.nombre
-      });
-    }
-    
-
     this.formActualizarCurso.reset();
-    
   }
 
 }

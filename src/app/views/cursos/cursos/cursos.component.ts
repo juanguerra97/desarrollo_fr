@@ -34,10 +34,8 @@ export class CursosComponent implements OnInit {
     this._cursoService.listCursos().subscribe((res) => this.cursos = res);
   }
 
-  onUpdateCurso(cursoActualizado) {
-  }
 
-  onBorrarCurso() {
-  }
+  onUpdateCurso(){
 
+  };
 }

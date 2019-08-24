@@ -20,7 +20,7 @@ export class NuevoCursoComponent implements OnInit {
       Validators.required,
       Validators.pattern('[0-9]+')
     ]),
-    nombre: new FormControl('', [
+    nombre_curso: new FormControl('', [
       Validators.required
     ]),
     usa_laboratorio: new FormControl('', [
@@ -29,13 +29,14 @@ export class NuevoCursoComponent implements OnInit {
     activo: new FormControl('', [
       Validators.required
     ]),
-    accion: new FormControl(1, [ Validators.required ])
+    accion: new FormControl('', [ Validators.required ])
   });
   public curso = null;
 
   constructor(private modalService: NgbModal, private _cursoService: CursosService) { }
 
   ngOnInit() {
+    this.formCurso.get('accion').setValue(1);
   }
 
   showNewCurso() {
