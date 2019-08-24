@@ -109,8 +109,7 @@ export class DiasJornadaComponent implements OnInit {
   eliminar(index) {
     const request = {...this.dias[index], accion: 2};
     request.activo = request.activo.data;
-    this._diaService.crearDia(request).subscribe();
-    location.reload();
+    this._diaService.crearDia(request).subscribe(() => this.buscar());
   }
   buscarCarrera() {
     if (this.carrera) {

@@ -30,7 +30,9 @@
         <thead>
         <tr>
           <th scope="col">id</th>
-          <th scope="col">nombre</th>
+          <th scope="col">Jornada</th>
+          <th scope="col">Carrera</th>
+          <th scope="col">dia</th>
           <th scope="col">activo</th>
           <th scope="col">accion</th>
         </tr>
@@ -38,6 +40,8 @@
         <tbody>
         <tr *ngFor="let dia of dias; let i = index">
           <th scope="row">{{dia.za_dia}}</th>
+          <td>{{dia.za_jornada}}</td>
+          <td>{{dia.za_carrera}}</td>
           <td>{{dia.dia}}</td>
           <td>{{dia.activo.data}}</td>
           <td>
