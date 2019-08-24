@@ -75,7 +75,8 @@ export class PensumCursoComponent implements OnInit {
   }
 
   guardar() {
-    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums(); } );
+    this.form.za_carrera = this.za_carrera;
+    this._conexion.crearPensum(this.form).subscribe(() => {this.getPensums(); } );
     this.modalService.dismissAll();
   }
 
