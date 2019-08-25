@@ -22,18 +22,18 @@
       <table class="table table-bordered">
         <thead>
         <tr>
-          <th scope="col">Id</th>
+          <th scope="col">Carrera</th>
+          <th scope="col">Año Pesum</th>
           <th scope="col">Codigo</th>
-          <th scope="col">Nombre</th>
           <th scope="col">Activo</th>
           <th scope="col">Accion</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let pensum of pensums; let i = index">
-          <th scope="row">{{pensum.za_pensum}}</th>
+          <th scope="row">{{pensum.za_carrera}}</th>
+          <th scope="row">{{pensum.ano_pensum}}</th>
           <td>{{pensum.codigo_pensum}}</td>
-          <td>{{pensum.nombre_pensum}}</td>
           <td>{{pensum.activo.data}}</td>
           <td>
             <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
