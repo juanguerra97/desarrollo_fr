@@ -55,8 +55,7 @@ export class DiasJornadaComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._diaService.crearDia(res.value).subscribe(() => {location.reload();
-      }, error => () => { location.reload();
+      this._diaService.crearDia(res.value).subscribe(() => {this.buscar();
       });
     });
   }
