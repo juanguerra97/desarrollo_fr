@@ -62,7 +62,7 @@ export class DiasJornadaComponent implements OnInit {
   }
 
   editar(index) {
-    const dia = this.dias[index]
+    const dia = this.dias[index];
     let optionsJornada = '';
     for (const key in this.jornadas) {
       if (this.jornadas.hasOwnProperty(key)) {
@@ -84,7 +84,7 @@ export class DiasJornadaComponent implements OnInit {
         'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
         optionsJornada +
         '</select>' +
-        '<input id="dia"  placeholder="Dia" class="swal2-input">' +
+        '<input id="dia"  placeholder="Dia" class="swal2-input" value="' + dia.dia + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
         `${(dia.activo.data[0] === 1) ? 'checked' : ''}> activo` +
         '</form>',
@@ -101,7 +101,7 @@ export class DiasJornadaComponent implements OnInit {
       },
     }).then(res => {
       this._diaService.crearDia(res.value).subscribe(() => {
-        location.reload();
+        this.buscar();
       });
     });
   }
