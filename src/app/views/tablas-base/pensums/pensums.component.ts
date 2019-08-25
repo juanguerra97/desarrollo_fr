@@ -40,7 +40,14 @@ export class PensumsComponent implements OnInit {
     this.getPensums();
   }
 
-  editar(index) {
+  editar(index, content) {
+    this.form = this.pensums[index];
+    this.modalService.open(content, {
+      ariaLabelledBy: 'new-curso-title',
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
   }
 
   eliminar(index) {

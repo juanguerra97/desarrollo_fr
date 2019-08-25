@@ -36,7 +36,7 @@
           <td>{{pensum.codigo_pensum}}</td>
           <td>{{pensum.activo.data}}</td>
           <td>
-            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-warning" (click)="editar(i, content)" title="editar"><em class="fa fa-pencil"></em></button>
             <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
           </td>
         </tr>
@@ -90,7 +90,7 @@
       <em class="fa fa-save mr-3"></em>
       Guardar
     </button>
-    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg">
+    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg" (click)="guardar()">
       <em class="fa fa-pencil mr-3"></em>
       Editar
     </button>
