@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ICurso } from '../models/icurso.model';
 import { HttpClient } from '@angular/common/http';
 import { SERVER_URLS } from '../serverurls';
 import {environment} from '../../environments/environment';
