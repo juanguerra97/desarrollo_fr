@@ -51,8 +51,6 @@ export class CursosComponent implements OnInit {
   editar(content, index) {
     this.form = this.cursos[index];
     this.form.accion = 1;
-    this.form.activo = this.form.activo;
-    this.form.usa_laboratorio = this.form.usa_laboratorio;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -63,10 +61,13 @@ export class CursosComponent implements OnInit {
 
   eliminar(index) {
     this.form = this.cursos[index];
-    this.form.activo = this.form.activo;
-    this.form.usa_laboratorio = this.form.usa_laboratorio;
+    this.form.activo = this.convertTobool(this.form.activo);
     const request = {...this.form, accion: 2};
     this._cursoService.crearCurso(request).subscribe(this.getCursos);
+  }
+
+  convertTobool(obj: any) {
+    return obj.data[0];
   }
 
   openModal(content) {

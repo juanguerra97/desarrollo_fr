@@ -42,6 +42,8 @@ export class PensumsComponent implements OnInit {
 
   editar(index, content) {
     this.form = this.pensums[index];
+    this.form.accion = 1;
+    this.form.activo = this.convertTobool(this.form.activo);
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -52,8 +54,8 @@ export class PensumsComponent implements OnInit {
 
   eliminar(index) {
     const request = {...this.pensums[index], accion: 2};
-    request.activo = request.activo.data;
-    this._pensumService.crearPensum(request).subscribe();
+    request.activo = request.activo.data[0];
+    this._pensumService.crearPensum(request).subscribe(() => this.getPensums());
   }
 
   openModal(content) {
@@ -75,4 +77,10 @@ export class PensumsComponent implements OnInit {
   getPensums() {
     this._pensumService.listPensums(this.za_carrera).subscribe((res) => {this.pensums = res; });
   }
+
+
+  convertTobool(obj: any) {
+    return obj.data[0];
+  }
+
 }
