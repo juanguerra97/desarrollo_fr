@@ -11,11 +11,16 @@
 
       <hr>
 
-        
+
 
       <button class="pull-right btn btn-primary mb-3"><em class="fa fa-check mr-2 mt-2"></em>Nueva</button>
 
+      <app-lista-asig
+      [filtro]="filtro"
+      [asignaciones]="asignaciones"
+      (onchangeselection)="onChangeSelectedAsig($event)">
 
+      </app-lista-asig>
 
     </div>
 
