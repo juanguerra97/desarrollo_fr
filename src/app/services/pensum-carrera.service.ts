@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 export class PensumCarreraService {
 
   private urlApi = environment.apiURL;
-  private urlComponente = `${this.urlApi}cruds/pensums/`;
+  private urlComponente = `${this.urlApi}cruds/cursosPensums/`;
 
 
   constructor(private http: HttpClient) {
