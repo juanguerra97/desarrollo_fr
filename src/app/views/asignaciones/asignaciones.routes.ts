@@ -1,23 +1,24 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {ListaComponent} from './lista/lista.component';
-import {NuevoComponent} from './nuevo/nuevo.component';
+// import {ListaComponent} from './lista/lista.component';
+// import {NuevoComponent} from './nuevo/nuevo.component';
+import { AsignacionesComponent } from './asignaciones/asignaciones.component';
 
 export const ASIGNACIONES_ROUTES: Routes = [
   {
-    path: 'lista',
+    path: '',
     data: {
-      title: 'Lista'
+      title: 'Asignaciones'
     },
-    component: ListaComponent
+    component: AsignacionesComponent
   },
-  {
-    path: 'nuevo',
-    data: {
-      title: 'Nuevo'
-    },
-    component: NuevoComponent
-  }
+  // {
+  //   path: 'nuevo',
+  //   data: {
+  //     title: 'Nuevo'
+  //   },
+  //   component: NuevoComponent
+  // }
 ];
 
 @NgModule({
