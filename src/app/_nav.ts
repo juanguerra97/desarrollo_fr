@@ -41,7 +41,7 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Asignaciones',
-    url: '/asignaciones/lista',
+    url: '/asignaciones',
     icon: 'icon-drop'
   },
   {

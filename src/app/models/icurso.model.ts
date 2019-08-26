@@ -1,5 +1,7 @@
 
 export interface ICurso {
-    codigo:number;
-    nombre:string;
+    za_curso:number;
+    nombre_curso:string;
+    usa_laboratorio:boolean;
+    activo: boolean;
 }

@@ -3,14 +3,21 @@ import { CommonModule } from '@angular/common';
 import { ListaComponent } from './lista/lista.component';
 import { NuevoComponent } from './nuevo/nuevo.component';
 import {AsignacionesRoutes} from './asignaciones.routes';
+import { AsignacionesComponent } from './asignaciones/asignaciones.component';
+import { FiltroAsigComponent } from './filtro-asig/filtro-asig.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ListaAsigComponent } from './lista-asig/lista-asig.component'
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
-  declarations: [ListaComponent, NuevoComponent],
+  declarations: [ListaComponent, NuevoComponent, AsignacionesComponent, FiltroAsigComponent, ListaAsigComponent],
   imports: [
     CommonModule,
-    AsignacionesRoutes
+    AsignacionesRoutes,
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class AsignacionesModule { }
