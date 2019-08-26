@@ -13,7 +13,22 @@
 
 
 
-      <button class="pull-right btn btn-primary mb-3"><em class="fa fa-check mr-2 mt-2"></em>Nueva</button>
+      <button (click)="openModal(content)" class="pull-right btn btn-primary mb-3">
+      <em class="fa fa-check mr-2 mt-2"></em>
+      Nueva
+      </button>
+
+      <button (click)="openModal(content)" class="pull-right btn btn-warning mb-3 mr-2">
+        <em class="fa fa-edit mr-2 mt-2"></em>
+        Editar
+      </button>
+
+      <button (click)="eliminar()" class="pull-right btn btn-danger mb-3 mr-2">
+        <em class="fa fa-times mr-2 mt-2"></em>
+        Eliminar
+      </button>
+
+
 
       <app-lista-asig
       [filtro]="filtro"
@@ -31,3 +46,82 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="!asignacionSeleccionada" class="modal-title" >Nueva Asignacion</h4>
+    <h4 *ngIf="asignacionSeleccionada" class="modal-title" >Editar Asignacion</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAsignacion">
+
+      <div class="form-group row">
+
+        <label for="za-curso" class="col-sm-2 col-form-label"><strong>Curso</strong></label>
+        <div class="col-sm-10">
+          <select formControlName="za_curso" id="za-curso" class="form-control form-control-lg">
+            <option value="0">Seleccione un curso</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+
+        <label for="za-profesor" class="col-sm-2 col-form-label"><strong>Profesor</strong></label>
+        <div class="col-sm-10">
+          <select formControlName="za_profesor" id="za-profesor" class="form-control form-control-lg">
+            <option value="0">Seleccione un profesor</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+
+        <label for="za-dia" class="col-sm-2 col-form-label"><strong>Dia</strong></label>
+        <div class="col-sm-10">
+          <select formControlName="za_dia" id="za-dia" class="form-control form-control-lg">
+            <option value="0">Seleccione un dia</option>
+          </select>
+        </div>
+
+      </div>
+
+
+      <div class="form-group row">
+
+        <div class="col">
+          <label for="hora-inicio" class="col-sm-2 col-form-label"><strong>Inicio</strong></label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="hora_inicio" id="hora-inicio" class="form-control-lg" placeholder="HH:MM">
+          </div>
+        </div>
+
+        <div class="col">
+          <label for="hora-fin" class="col-sm-2 col-form-label"><strong>Fin</strong></label>
+          <div class="col-sm-10">
+            <input type="text" formControlName="hora_fin" id="hora-fin" class="form-control-lg" placeholder="HH:MM">
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="!asignacionSeleccionada" [disabled]="!formAsignacion.valid" class="btn btn-success btn-lg" (click)="guardarNueva()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
+    </button>
+    <button *ngIf="asignacionSeleccionada" (click)="guardarEdicion()" [disabled]="!formAsignacion.valid" class="btn btn-success btn-lg">
+      <em class="fa fa-pencil mr-3"></em>
+      Guardar
+    </button>
+  </div>
+</ng-template>
+

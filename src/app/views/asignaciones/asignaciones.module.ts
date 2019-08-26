@@ -7,6 +7,7 @@ import { AsignacionesComponent } from './asignaciones/asignaciones.component';
 import { FiltroAsigComponent } from './filtro-asig/filtro-asig.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListaAsigComponent } from './lista-asig/lista-asig.component'
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -15,7 +16,8 @@ import { ListaAsigComponent } from './lista-asig/lista-asig.component'
   imports: [
     CommonModule,
     AsignacionesRoutes,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class AsignacionesModule { }
