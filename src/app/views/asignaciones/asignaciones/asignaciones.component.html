@@ -5,37 +5,142 @@
     </div>
     <div class="card-body">
 
-      <app-filtro-asig>
 
-      </app-filtro-asig>
+      <!-- FORMULARIO PARA FILTRAR LAS ASIGNACIONES POR SECCION -->
+      <div class="p-3 border rounded">
+        <form [formGroup]="formFiltro" (ngSubmit)="onFiltrar()" id="form-filtro">
+
+          <div class="form-row">
+
+            <div class="col-7">
+              <div class="form-group">
+
+                <label for="za-carrera">Carrera</label>
+                <select (change)="cargarJornadas()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                  <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
+                </select>
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="ano-pensum">Pensum</label>
+                <input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="za-jornada">Jornada</label>
+                <select formControlName="za_jornada" id="za-jornada" class="custom-select">
+                  <option *ngFor="let j of jornadas" [ngValue]="j.za_jornada">{{j.nombre_jornada}}</option>
+                </select>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="ano">Año</label>
+                <input formControlName="ano" type="text" id="ano" class="form-control" placeholder="Año">
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="no-semestre">Semestre</label>
+                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="No. Semestre" class="form-control">
+  <!--              <select formControlName="no_semestre" id="no-semestre" class="form-control">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>-->
+
+              </div>
+            </div>
+
+            <div class="col">
+
+              <div class="form-group">
+
+                <label for="seccion">Seccion</label>
+                <input formControlName="seccion" type="text" id="seccion" class="form-control" placeholder="Seccion">
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-row">
+            <div class="col">
+              <input [disabled]="!formFiltro.valid" type="submit" value="Filtrar" class="btn btn-primary">
+            </div>
+          </div>
+
+        </form>
+      </div>
+
 
       <hr>
 
 
 
-      <button (click)="openModal(content)" class="pull-right btn btn-primary mb-3">
+      <button (click)="openModal(content)" [disabled]="!formFiltro.valid" class="pull-right btn btn-primary mb-3">
       <em class="fa fa-check mr-2 mt-2"></em>
       Nueva
       </button>
 
-      <button (click)="openModal(content)" class="pull-right btn btn-warning mb-3 mr-2">
+      <button (click)="openModal(content)" [disabled]="!formFiltro.valid || asignacionSeleccionada == null" class="pull-right btn btn-warning mb-3 mr-2">
         <em class="fa fa-edit mr-2 mt-2"></em>
         Editar
       </button>
 
-      <button (click)="eliminar()" class="pull-right btn btn-danger mb-3 mr-2">
+      <button (click)="eliminar()" [disabled]="!formFiltro.valid || asignacionSeleccionada == null" class="pull-right btn btn-danger mb-3 mr-2">
         <em class="fa fa-times mr-2 mt-2"></em>
         Eliminar
       </button>
 
 
+      <!-- TABLA CON LA LISTA DE ASIGNACIONES FILTRADAS POR SECCION -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th scope="col">Dia</th>
+            <th scope="col">Curso</th>
+            <th scope="col">Catedratico</th>
+            <th scope="col">Inicio</th>
+            <th scope="col">Fin</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let asig of asignaciones" (click)="onAsignacionClicked(asig)" [ngClass]="{'bg-info text-dark': asig == asignacionSeleccionada}">
+            <td>{{ asig.dia }}</td>
+            <td>{{ asig.nombre_curso }}</td>
+            <td>{{ asig.nombres  + ' '  + asig.apellidos }}</td>
+            <td>{{ asig.hora_inicio }}</td>
+            <td>{{ asig.hora_fin }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <app-lista-asig
-      [filtro]="filtro"
-      [asignaciones]="asignaciones"
-      (onchangeselection)="onChangeSelectedAsig($event)">
-
-      </app-lista-asig>
 
     </div>
 
@@ -63,8 +168,8 @@
 
         <label for="za-curso" class="col-sm-2 col-form-label"><strong>Curso</strong></label>
         <div class="col-sm-10">
-          <select formControlName="za_curso" id="za-curso" class="form-control form-control-lg">
-            <option value="0">Seleccione un curso</option>
+          <select formControlName="za_curso" id="za-curso" class="custom-select custom-select-lg">
+            <option *ngFor="let cur of cursos" [ngValue]="cur.za_curso">{{ cur.nombre_curso }}</option>
           </select>
         </div>
 
@@ -74,8 +179,8 @@
 
         <label for="za-profesor" class="col-sm-2 col-form-label"><strong>Profesor</strong></label>
         <div class="col-sm-10">
-          <select formControlName="za_profesor" id="za-profesor" class="form-control form-control-lg">
-            <option value="0">Seleccione un profesor</option>
+          <select formControlName="za_profesor" id="za-profesor" class="custom-select custom-select-lg">
+            <option *ngFor="let prof of catedraticos" [ngValue]="prof.za_profesor">{{ prof.nombres + ' ' + prof.apellidos }}</option>
           </select>
         </div>
 
@@ -85,8 +190,8 @@
 
         <label for="za-dia" class="col-sm-2 col-form-label"><strong>Dia</strong></label>
         <div class="col-sm-10">
-          <select formControlName="za_dia" id="za-dia" class="form-control form-control-lg">
-            <option value="0">Seleccione un dia</option>
+          <select formControlName="za_dia" id="za-dia" class="custom-select custom-select-lg">
+            <option *ngFor="let dia of dias" [ngValue]="dia.za_dia">{{ dia.dia }}</option>
           </select>
         </div>
 
