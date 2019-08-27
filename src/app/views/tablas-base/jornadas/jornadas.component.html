@@ -1,0 +1,53 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Jornadas</div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="carrera" (ngModelChange)="buscar()">
+            <option selected>Seleccione Carrera</option>
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Jornada')"
+                  data-toggle="modal" data-target="#modal-container"
+          >
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Carrera</th>
+          <th scope="col">nombre</th>
+          <th scope="col">activo</th>
+          <th scope="col">accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let jornada of jornadas; let i = index">
+          <th scope="row">{{jornada.za_jornada}}</th>
+          <td>{{jornada.za_carrera}}</td>
+          <td>{{jornada.nombre_jornada}}</td>
+          <td>{{jornada.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
+  </div>
+</div>

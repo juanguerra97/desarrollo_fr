@@ -1,0 +1,90 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Catedraticos</div>
+    </div>
+    <div class="card-body">
+          <button (click)="openModal(content)"
+                  class="btn btn-primary pull-right mb-3">
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Profesión</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let catedratico of catedraticos; let i = index">
+          <th scope="row">{{catedratico.za_profesor}}</th>
+          <td>{{catedratico.nombres}}</td>
+          <td>{{catedratico.apellidos}}</td>
+          <td>{{catedratico.profesion}}</td>
+          <td>{{catedratico.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i, content)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="!catedratico" class="modal-title" >Nuevo Catedratico</h4>
+    <h4 *ngIf="catedratico" class="modal-title" >Editar Catedratico</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+      <label for="codigo" class="col-sm-2 col-form-label"><strong>Nombres</strong></label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="codigo" placeholder="Codigo" [(ngModel)]="form.nombres">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="apellidos" class="col-sm-2 col-form-label"><strong>Apellidos</strong></label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="apellidos" placeholder="Codigo" [(ngModel)]="form.apellidos">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="profesion" class="col-sm-2 col-form-label"><strong>Profesión</strong></label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="profesion" placeholder="Codigo" [(ngModel)]="form.profesion">
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="activo" [(ngModel)]="form.activo">
+      <label class="custom-control-label" for="activo">Activo</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="!catedratico" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
+    </button>
+    <button *ngIf="catedratico" value="Editar" class="btn btn-warning btn-lg">
+      <em class="fa fa-pencil mr-3"></em>
+      Editar
+    </button>
+  </div>
+</ng-template>
+

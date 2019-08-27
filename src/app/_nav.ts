@@ -40,235 +40,69 @@ export const navItems: NavData[] = [
     }
   },
   {
-    title: true,
-    name: 'Theme'
-  },
-  {
-    name: 'Colors',
-    url: '/theme/colors',
+    name: 'Asignaciones',
+    url: '/asignaciones',
     icon: 'icon-drop'
   },
   {
-    name: 'Typography',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    title: true,
-    name: 'Components'
-  },
-  {
-    name: 'Base',
-    url: '/base',
-    icon: 'icon-puzzle',
+    name: 'Bases',
     children: [
       {
-        name: 'Cards',
-        url: '/base/cards',
-        icon: 'icon-puzzle'
+        name: 'Carreras',
+        url: '/bases/carreras',
+        icon: 'icon-drop'
       },
       {
-        name: 'Carousels',
-        url: '/base/carousels',
-        icon: 'icon-puzzle'
+        name: 'Jornadas',
+        url: '/bases/jornadas',
+        icon: 'icon-drop'
       },
       {
-        name: 'Collapses',
-        url: '/base/collapses',
-        icon: 'icon-puzzle'
+        name: 'Dias',
+        url: '/bases/dias-jornada',
+        icon: 'icon-drop'
       },
       {
-        name: 'Forms',
-        url: '/base/forms',
-        icon: 'icon-puzzle'
+        name: 'Pensum',
+        url: '/bases/pensum',
+        icon: 'icon-drop'
       },
       {
-        name: 'Pagination',
-        url: '/base/paginations',
-        icon: 'icon-puzzle'
+        name: 'Cursos',
+        url: '/cursos',
+        icon: 'icon-drop'
       },
       {
-        name: 'Popovers',
-        url: '/base/popovers',
-        icon: 'icon-puzzle'
+        name: 'Pensum Curso',
+        url: '/bases/pensum_curso',
+        icon: 'icon-drop'
       },
       {
-        name: 'Progress',
-        url: '/base/progress',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Switches',
-        url: '/base/switches',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Tables',
-        url: '/base/tables',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Tabs',
-        url: '/base/tabs',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Tooltips',
-        url: '/base/tooltips',
-        icon: 'icon-puzzle'
+        name: 'Catedraticos',
+        url: '/bases/catedraticos',
+        icon: 'icon-drop'
       }
     ]
   },
+
   {
-    name: 'Buttons',
-    url: '/buttons',
-    icon: 'icon-cursor',
+    name: 'Reportes',
     children: [
       {
-        name: 'Buttons',
-        url: '/buttons/buttons',
-        icon: 'icon-cursor'
+        name: 'Planificaciones',
+        url: '/reportes/planificacion',
+        icon: 'icon-drop'
       },
       {
-        name: 'Dropdowns',
-        url: '/buttons/dropdowns',
-        icon: 'icon-cursor'
+        name: 'Catedraticos',
+        url: '/reportes/catedraticos',
+        icon: 'icon-pencil'
       },
       {
-        name: 'Brand Buttons',
-        url: '/buttons/brand-buttons',
-        icon: 'icon-cursor'
+        name: 'Cursos',
+        url: '/reportes/cursos',
+        icon: 'icon-pencil'
       }
     ]
   },
-  {
-    name: 'Charts',
-    url: '/charts',
-    icon: 'icon-pie-chart'
-  },
-  {
-    name: 'Icons',
-    url: '/icons',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'CoreUI Icons',
-        url: '/icons/coreui-icons',
-        icon: 'icon-star',
-        badge: {
-          variant: 'success',
-          text: 'NEW'
-        }
-      },
-      {
-        name: 'Flags',
-        url: '/icons/flags',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Font Awesome',
-        url: '/icons/font-awesome',
-        icon: 'icon-star',
-        badge: {
-          variant: 'secondary',
-          text: '4.7'
-        }
-      },
-      {
-        name: 'Simple Line Icons',
-        url: '/icons/simple-line-icons',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Notifications',
-    url: '/notifications',
-    icon: 'icon-bell',
-    children: [
-      {
-        name: 'Alerts',
-        url: '/notifications/alerts',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Badges',
-        url: '/notifications/badges',
-        icon: 'icon-bell'
-      },
-      {
-        name: 'Modals',
-        url: '/notifications/modals',
-        icon: 'icon-bell'
-      }
-    ]
-  },
-  {
-    name: 'Widgets',
-    url: '/widgets',
-    icon: 'icon-calculator',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
-  {
-    divider: true
-  },
-  {
-    title: true,
-    name: 'Extras',
-  },
-  {
-    name: 'Pages',
-    url: '/pages',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'Login',
-        url: '/login',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Register',
-        url: '/register',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 404',
-        url: '/404',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 500',
-        url: '/500',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Disabled',
-    url: '/dashboard',
-    icon: 'icon-ban',
-    badge: {
-      variant: 'secondary',
-      text: 'NEW'
-    },
-    attributes: { disabled: true },
-  },
-  {
-    name: 'Download CoreUI',
-    url: 'http://coreui.io/angular/',
-    icon: 'icon-cloud-download',
-    class: 'mt-auto',
-    variant: 'success',
-    attributes: { target: '_blank', rel: 'noopener' }
-  },
-  {
-    name: 'Try CoreUI PRO',
-    url: 'http://coreui.io/pro/angular/',
-    icon: 'icon-layers',
-    variant: 'danger',
-    attributes: { target: '_blank', rel: 'noopener' }
-  }
 ];

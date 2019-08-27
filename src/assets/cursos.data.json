@@ -1,0 +1,36 @@
+[
+    {
+        "codigo":1,
+        "nombre":"DESARROLLO HUMANO Y PROFESIONAL"
+    },
+    {
+        "codigo":6,
+        "nombre":"MATEMÁTICA DISCRETA"
+    },
+    {
+        "codigo":11,
+        "nombre":"CÁLCULO II"
+    },
+    {
+        "codigo":16,
+        "nombre":"ESTADÍSTICA I"
+    },
+    {
+        "codigo":21,
+        "nombre":"MÉTODOS NUMÉRICOS"
+    },
+    {
+        "codigo":26,
+        "nombre":"INVESTIGACIÓN DE OPERACIONES"
+    }
+    ,
+    {
+        "codigo":31,
+        "nombre":"COMPILADORES"
+    }
+    ,
+    {
+        "codigo":36,
+        "nombre":"ARQUITECTURA DE COMPUTADORAS II"
+    }
+]

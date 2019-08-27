@@ -1,0 +1,99 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Pensums</div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()">
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button (click)="openModal(content)"
+                  class="btn btn-primary pull-right mb-3">
+            <em class="fa fa-check mr-2"></em>
+            Nuevo
+          </button>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Carrera</th>
+          <th scope="col">Año Pesum</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pensum of pensums; let i = index">
+          <th scope="row">{{pensum.za_carrera}}</th>
+          <th scope="row">{{pensum.ano_pensum}}</th>
+          <td>{{pensum.codigo_pensum}}</td>
+          <td>{{pensum.activo.data}}</td>
+          <td>
+            <button class="btn btn-warning" (click)="editar(i, content)" title="editar"><em class="fa fa-pencil"></em></button>
+            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="!pensum" class="modal-title" >Nuevo Pensum</h4>
+    <h4 *ngIf="pensum" class="modal-title" >Editar Pensum</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+      <label for="carrera" class="col-sm-2 col-form-label pl-3"><strong>Carrera</strong></label>
+      <div class="col-sm-10">
+        <select class="custom-select" id="carrera"[(ngModel)]="form.za_carrera">
+          <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="anio" class="col-sm-2 col-form-label"><strong>Año</strong></label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="anio" placeholder="Año" [(ngModel)]="form.ano_pensum">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="codigo" class="col-sm-2 col-form-label"><strong>Codigo</strong></label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="codigo" placeholder="Codigo" [(ngModel)]="form.codigo_pensum">
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="activo" [(ngModel)]="form.activo">
+      <label class="custom-control-label" for="activo">Activo</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="!pensum" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
+    </button>
+    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg" (click)="guardar()">
+      <em class="fa fa-pencil mr-3"></em>
+      Editar
+    </button>
+  </div>
+</ng-template>
+

@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ titulo }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    {{ mensaje }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="cancelar()">{{ textoBtnCancelar }}</button>
+    <button type="button" class="btn btn-primary" (click)="confirmar()">{{ textoBtnConfirmar }}</button>
+</div>

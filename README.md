@@ -22,4 +22,3 @@ cualquier duda me avisan
  <strong>AL TERMINAR </strong>
   1) git flow feature finish nombre_cualquiera
   2)subir devel al servidor con git normal
-
