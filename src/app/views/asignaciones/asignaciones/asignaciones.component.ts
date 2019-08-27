@@ -20,9 +20,10 @@ import {IServerResponse} from '../../../models/iserverresponse.model';
 })
 export class AsignacionesComponent implements OnInit {
 
-  private filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
-  private asignaciones:IAsignacion[]=[];
-  private asignacionSeleccionada:IAsignacion = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
+  public filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
+  public asignaciones:IAsignacion[]=[];
+  public asignacionSeleccionada = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
+
 
   private carreras:any[]=[];
   private jornadas:any[]=[];
