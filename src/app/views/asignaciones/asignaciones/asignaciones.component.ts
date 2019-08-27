@@ -25,16 +25,16 @@ export class AsignacionesComponent implements OnInit {
   public asignacionSeleccionada = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
 
 
-  private carreras:any[]=[];
-  private jornadas:any[]=[];
-  private dias:any[]=[];
-  private catedraticos:any[]=[];
-  private cursos:any[]=[];
+  public carreras:any[]=[];
+  public jornadas:any[]=[];
+  public dias:any[]=[];
+  public catedraticos:any[]=[];
+  public cursos:any[]=[];
 
   private TimeRegex:RegExp = /^([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?$/g;
 
   // formulario para la seccion a filtrar
-  private formFiltro = new FormGroup({
+  public formFiltro = new FormGroup({
     za_carrera: new FormControl('',[
       Validators.required,
       Validators.pattern('[0-9]+')
@@ -62,7 +62,7 @@ export class AsignacionesComponent implements OnInit {
   });
 
   // formulario para editar o ingresar una nueva asignacion
-  private formAsignacion = new FormGroup({
+  public formAsignacion = new FormGroup({
     za_curso: new FormControl('0',[
       Validators.required,
       Validators.pattern('[0-9]+')
@@ -101,7 +101,7 @@ export class AsignacionesComponent implements OnInit {
     this.catedraticosService.listCatedraticos().subscribe((datos:any)=>this.catedraticos=datos);
   }
 
-  private guardarNueva(): void{
+  public guardarNueva(): void{
 
     console.log("Inicio: "+this.strToTime(this.formAsignacion.value.hora_inicio));
     console.log("Fin: "+this.strToTime(this.formAsignacion.value.hora_fin));
@@ -132,7 +132,7 @@ export class AsignacionesComponent implements OnInit {
     this.formAsignacion.reset();
   }
 
-  private guardarEdicion():void{
+  public guardarEdicion():void{
 
     let actualizacion:IAsignacion = {
       za_carrera: this.asignacionSeleccionada.za_carrera,
@@ -163,7 +163,7 @@ export class AsignacionesComponent implements OnInit {
   }
 
   // muestra modal para pedir confirmacion de la asignacion seleccionada
-  private eliminar():void {
+  public eliminar():void {
 
     this.modalConfirmacion.mostrar(
       'Eliminar Asignacion',
@@ -189,7 +189,7 @@ export class AsignacionesComponent implements OnInit {
   }
 
   // metodo que se ejecuta cada vez que se selecciona o deselecciona una asignacion de la lista
-  private onAsignacionClicked(asignacion:IAsignacion):void {
+  public onAsignacionClicked(asignacion:IAsignacion):void {
     if(asignacion == this.asignacionSeleccionada){
       this.asignacionSeleccionada = null;
     }else{
@@ -198,7 +198,7 @@ export class AsignacionesComponent implements OnInit {
   }
 
   // abre el modal par editar o ingresar nueva asignacion
-  private openModal(content):void {
+  public openModal(content):void {
 
     if(this.asignacionSeleccionada != null){ // Edicion
 
@@ -223,7 +223,7 @@ export class AsignacionesComponent implements OnInit {
 
   }
 
-  private onFiltrar():void {
+  public onFiltrar():void {
 
     this.filtro = this.formFiltro.value;
 
@@ -234,7 +234,7 @@ export class AsignacionesComponent implements OnInit {
 
   }
 
-  private cargarAsignaciones():void {
+  public cargarAsignaciones():void {
 
     this.asigService.listAsignaciones(this.filtro)
       .subscribe((res:IServerResponse)=>{
@@ -246,14 +246,14 @@ export class AsignacionesComponent implements OnInit {
 
   }
 
-  private cargarJornadas():void {
+  public cargarJornadas():void {
 
     this.jornadasService.listJornadas(this.formFiltro.value.za_carrera)
       .subscribe((res:any)=>this.jornadas = res);
 
   }
 
-  private cargarDias():void {
+  public cargarDias():void {
 
     this.diasService.listDias(this.filtro.za_carrera,this.filtro.za_jornada)
       .subscribe((res:any)=>this.dias=res);
