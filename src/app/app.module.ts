@@ -47,6 +47,7 @@ import { ModalConfirmacionComponent } from './views/modal-confirmacion/modal-con
 import { ModalConfirmacionService } from './services/modal-confirmacion.service';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AsigService} from './services/asig.service';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   },
     ModalConfirmacionService,
     CursosService,
+    AsigService
   ],
   exports:[
     ModalConfirmacionComponent

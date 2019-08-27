@@ -11,9 +11,13 @@ export interface IAsignacion {
   ano: number;
   no_semestre: number;
   seccion: string;
-  curso: ICurso;
-  catedratico: ICatedratico;
-  dia:IDia;
+  za_curso: number;
+  nombre_curso?: string;
+  za_profesor:number;
+  nombres?:string;
+  apellidos?: string;
+  za_dia: number;
+  dia?: string;
   hora_inicio: string;
   hora_fin: string;
 

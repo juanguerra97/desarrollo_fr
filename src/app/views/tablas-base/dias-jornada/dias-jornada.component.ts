@@ -41,7 +41,7 @@ export class DiasJornadaComponent implements OnInit {
         'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
         optionsJornada +
         '</select>' +
-        '<input id="nombre_jornada"  placeholder="Dia" class="swal2-input">' +
+        '<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -50,7 +50,7 @@ export class DiasJornadaComponent implements OnInit {
           activo: true,
           za_jornada: $('#za_jornada').val(),
           za_carrera: $('#za_carrera').val(),
-          nombre_jornada:  $('#nombre_jornada').val(),
+          dia:  $('#nombre-dia').val(),
           accion: 1
         };
       },
