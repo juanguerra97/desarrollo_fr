@@ -21,8 +21,29 @@ export class AsigService {
     return this.http.post<IServerResponse>(url,asignacion);
   }
 
-  public listAsignaciones(seccion:ISeccion):Observable<IServerResponse> {
-    const url = `${this.urlComponente}?za_carrera=${seccion.za_carrera}&ano_pensum=${seccion.ano_pensum}&za_jornada=${seccion.za_jornada}&ano=${seccion.ano}&no_semestre=${seccion.no_semestre}&seccion=${seccion.seccion}` ;
+  public listAsignaciones(filtro:any):Observable<IServerResponse> {
+    let url = `${this.urlComponente}?`;
+    if(filtro != undefined){
+      if(filtro.za_carrera != undefined){
+          url += `za_carrera=${filtro.za_carrera}&`;
+      }
+      if(filtro.ano_pensum != undefined){
+        url += `ano_pensum=${filtro.ano_pensum}&`;
+      }
+      if(filtro.za_jornada != undefined){
+        url += `za_jornada=${filtro.za_jornada}&`;
+      }
+      if(filtro.ano != undefined){
+        url += `ano=${filtro.ano}&`;
+      }
+      if(filtro.no_semestre != undefined){
+        url += `no_semestre=${filtro.no_semestre}&`;
+      }
+      if(filtro.seccion != undefined){
+        url += `seccion=${filtro.seccion}`;
+      }
+    }
+      // `za_carrera=${filtro.za_carrera}&ano_pensum=${filtro.ano_pensum}&za_jornada=${filtro.za_jornada}&ano=${filtro.ano}&no_semestre=${filtro.no_semestre}&seccion=${filtro.seccion}` ;
     return this.http.get<IServerResponse>(url);
   }
 
