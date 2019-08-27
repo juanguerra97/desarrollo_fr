@@ -13,9 +13,9 @@ import {ModalConfirmacionService} from '../../../services/modal-confirmacion.ser
 })
 export class AsignacionesComponent implements OnInit {
 
-  private filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
-  private asignaciones:IAsignacion[]=[];
-  private asignacionSeleccionada = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
+  public filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
+  public asignaciones:IAsignacion[]=[];
+  public asignacionSeleccionada = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
 
   // formulario para editar o ingresar una nueva asignacion
   private formAsignacion = new FormGroup({

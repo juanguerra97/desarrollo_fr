@@ -12,7 +12,7 @@ export class FiltroAsigComponent implements OnInit {
   @Output('onfiltrar') onfiltrar = new EventEmitter<ISeccion>();
 
   // formulario para la seccion a filtrar
-  private formFiltro = new FormGroup({
+  public formFiltro = new FormGroup({
     za_carrera: new FormControl('-1',[
       Validators.required,
       Validators.pattern('[0-9]+')
