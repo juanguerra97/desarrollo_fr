@@ -1,13 +1,149 @@
-<div class="card">
-  <div class="card-header">
-    <div class="h3">Title</div>
-  </div>
-  <div class="card-body">
-    Content
-  </div>
-  <div class="card-footer">
-    <a routerLink="/" class="btn btn-secondary pull-left">
-      <i class="fa fa-close" aria-hidden="true"></i> Regresar
-    </a>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <div class="h3">Planificacion</div>
+    </div>
+    <div class="card-body">
+
+
+      <!-- FORMULARIO PARA FILTRAR LAS ASIGNACIONES POR SECCION -->
+      <div class="p-3 border rounded">
+        <form [formGroup]="formFiltro" (ngSubmit)="onFiltrar()" id="form-filtro">
+
+          <div class="form-row">
+
+            <div class="col-7">
+              <div class="form-group">
+
+                <label for="za-carrera">Carrera</label>
+                <select (change)="cargarJornadas()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                  <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
+                </select>
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="ano-pensum">Pensum</label>
+                <input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="za-jornada">Jornada</label>
+                <select formControlName="za_jornada" id="za-jornada" class="custom-select">
+                  <option *ngFor="let j of jornadas" [ngValue]="j.za_jornada">{{j.nombre_jornada}}</option>
+                </select>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="ano">Año</label>
+                <input formControlName="ano" type="text" id="ano" class="form-control" placeholder="Año">
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="no-semestre">Semestre</label>
+                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="No. Semestre" class="form-control">
+                <!--              <select formControlName="no_semestre" id="no-semestre" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                              </select>-->
+
+              </div>
+            </div>
+
+            <div class="col">
+
+              <div class="form-group">
+
+                <label for="seccion">Seccion</label>
+                <input formControlName="seccion" type="text" id="seccion" class="form-control" placeholder="Seccion">
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-row">
+            <div class="col">
+              <input [disabled]="!formFiltro.valid" type="submit" value="Ver planificacion" class="btn btn-primary">
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+      <hr>
+
+
+      <!-- TABLA CON LA LISTA DE ASIGNACIONES FILTRADAS POR SECCION -->
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Dia</th>
+            <th scope="col">Horario</th>
+            <th scope="col">Asignacion</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-template ngFor="">
+
+          </ng-template>
+
+          <ng-template ngFor let-dia [ngForOf]="dias">
+            <tr>
+              <td [rowSpan]="asignaciones[dia].length" style="text-align: center; vertical-align: middle;">{{dia}}</td>
+              <td style="text-align: left; vertical-align: middle;">{{ asignaciones[dia][0].hora_inicio | slice:0:5}}-{{asignaciones[dia][0].hora_fin | slice:0:5}}</td>
+              <td>
+                <p>{{ asignaciones[dia][0].nombre_curso}}</p>
+                <p>{{ asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}</p>
+              </td>
+            </tr>
+            <tr *ngFor="let asig of asignaciones[dia].slice(1,asignaciones[dia].length)">
+              <td style="text-align: left; vertical-align: middle;">{{ asig.hora_inicio | slice:0:5 }}-{{asig.hora_fin | slice:0:5 }}</td>
+              <td>
+                <p>{{ asig.nombre_curso }}</p>
+                <p>{{ asig.nombres  + ' '  + asig.apellidos }}</p>
+              </td>
+            </tr>
+          </ng-template>
+
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+    <div class="card-footer">
+      <a routerLink="/" class="btn btn-secondary pull-left">
+        <i class="fa fa-close" aria-hidden="true"></i> Regresar
+      </a>
+    </div>
   </div>
 </div>
