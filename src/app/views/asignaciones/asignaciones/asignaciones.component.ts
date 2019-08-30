@@ -103,9 +103,6 @@ export class AsignacionesComponent implements OnInit {
 
   public guardarNueva(): void{
 
-    console.log("Inicio: "+this.strToTime(this.formAsignacion.value.hora_inicio));
-    console.log("Fin: "+this.strToTime(this.formAsignacion.value.hora_fin));
-
     let nuevaAsignacion: IAsignacion = {
       za_carrera: this.filtro.za_carrera,
       ano_pensum: this.filtro.ano_pensum,
