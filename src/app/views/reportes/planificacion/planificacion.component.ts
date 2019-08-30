@@ -17,7 +17,7 @@ export class PlanificacionComponent implements OnInit {
 
   public filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
   public asignaciones:any={};
-  private dias:any;
+  public dias:any;
   public carreras:any[]=[];
   public jornadas:any[]=[];
 
