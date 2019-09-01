@@ -151,6 +151,9 @@
               <td style="text-align: left; vertical-align: middle;">{{ asignaciones[dia][0].hora_inicio | slice:0:5}}-{{asignaciones[dia][0].hora_fin | slice:0:5}}</td>
               <td>
                 {{ asignaciones[dia][0].za_curso + ' ' +  asignaciones[dia][0].nombre_curso}}
+                <ng-template [ngIf]="asignaciones[dia][0].usa_laboratorio.data == 1">
+                  <span>*</span>
+                </ng-template>
               </td>
               <td>
                 {{ asignaciones[dia][0].za_profesor + ' ' + asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}
@@ -160,6 +163,9 @@
               <td style="text-align: left; vertical-align: middle;">{{ asig.hora_inicio | slice:0:5 }}-{{asig.hora_fin | slice:0:5 }}</td>
               <td>
                 {{ asig.za_curso + ' ' +  asig.nombre_curso }}
+                <ng-template [ngIf]="asig.usa_laboratorio.data == 1">
+                  <span>*</span>
+                </ng-template>
               </td>
               <td>
                 {{ asig.za_profesor + ' ' + asig.nombres  + ' '  + asig.apellidos }}
