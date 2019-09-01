@@ -7,6 +7,7 @@ import {AsigService} from '../../../services/asig.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import { groupBy }  from 'lodash';
  import * as myPDF from 'jspdf';
+import {PensumService} from '../../../services/pensum.service';
 // import 'jspdf-autotable';
 // import html2canvas from 'html2canvas';
 
@@ -27,6 +28,7 @@ export class PlanificacionComponent implements OnInit {
   public asignaciones:any={};
   public dias:any;
   public carreras:any[]=[];
+  public pensums:any[]=[];
   public jornadas:any[]=[];
   public carrera:any;
   public jornada:any;
@@ -63,6 +65,7 @@ export class PlanificacionComponent implements OnInit {
 
   constructor(
     private carrerasService: CarrerasService,
+    private pensumService: PensumService,
     private jornadasService: JornadasService,
     private asigService: AsigService,
   ) { }
@@ -113,6 +116,16 @@ export class PlanificacionComponent implements OnInit {
 
       });
 
+  }
+
+  public onCambioCarrera():void {
+    this.cargarPensums();
+    this.cargarJornadas();
+  }
+
+  public cargarPensums():void {
+    this.pensumService.listPensums(this.formFiltro.value.za_carrera)
+      .subscribe((res:any)=>this.pensums = res);
   }
 
   public cargarJornadas():void {

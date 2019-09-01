@@ -12,6 +12,7 @@ import {JornadasService} from '../../../services/jornadas.service';
 import {CatedraticosService} from '../../../services/catedraticos.service';
 import {CursosService} from '../../../services/cursos.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
+import {PensumService} from '../../../services/pensum.service';
 
 @Component({
   selector: 'app-asignaciones',
@@ -26,6 +27,7 @@ export class AsignacionesComponent implements OnInit {
 
 
   public carreras:any[]=[];
+  public pensums:any[]=[];
   public jornadas:any[]=[];
   public dias:any[]=[];
   public catedraticos:any[]=[];
@@ -87,6 +89,7 @@ export class AsignacionesComponent implements OnInit {
 
   constructor(
     private carrerasService: CarrerasService,
+    private pensumService: PensumService,
     private jornadasService: JornadasService,
     private diasService:DiasJornadaService,
     private catedraticosService:CatedraticosService,
@@ -241,6 +244,16 @@ export class AsignacionesComponent implements OnInit {
 
       });
 
+  }
+
+  public onCambioCarrera():void {
+    this.cargarPensums();
+    this.cargarJornadas();
+  }
+
+  public cargarPensums():void {
+    this.pensumService.listPensums(this.formFiltro.value.za_carrera)
+      .subscribe((res:any)=>this.pensums = res);
   }
 
   public cargarJornadas():void {

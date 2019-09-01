@@ -16,7 +16,7 @@
               <div class="form-group">
 
                 <label for="za-carrera">Carrera</label>
-                <select (change)="cargarJornadas()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                <select (change)="onCambioCarrera()" formControlName="za_carrera" id="za-carrera" class="custom-select">
                   <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
                 </select>
 
@@ -27,8 +27,10 @@
               <div class="form-group">
 
                 <label for="ano-pensum">Pensum</label>
-                <input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">
-
+                <!--<input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">-->
+                <select formControlName="ano_pensum" id="ano-pensum" class="custom-select">
+                  <option *ngFor="let pen of pensums" [ngValue]="pen.ano_pensum">{{pen.ano_pensum}}</option>
+                </select>
               </div>
             </div>
 
