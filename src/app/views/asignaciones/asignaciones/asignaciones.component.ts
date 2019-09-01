@@ -13,6 +13,7 @@ import {CatedraticosService} from '../../../services/catedraticos.service';
 import {CursosService} from '../../../services/cursos.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {PensumService} from '../../../services/pensum.service';
+import {CursoPensumService} from '../../../services/curso-pensum.service';
 
 @Component({
   selector: 'app-asignaciones',
@@ -94,13 +95,14 @@ export class AsignacionesComponent implements OnInit {
     private diasService:DiasJornadaService,
     private catedraticosService:CatedraticosService,
     private cursosService:CursosService,
+    private cursoPensumService:CursoPensumService,
     private asigService: AsigService,
     private modalService: NgbModal, private modalConfirmacion:ModalConfirmacionService
   ) { }
 
   ngOnInit() {
     this.carrerasService.listCarreras().subscribe((datos:any)=>this.carreras=datos);
-    this.cursosService.listCursos().subscribe((datos:any)=>this.cursos=datos);
+    // this.cursosService.listCursos().subscribe((datos:any)=>this.cursos=datos);
     this.catedraticosService.listCatedraticos().subscribe((datos:any)=>this.catedraticos=datos);
   }
 
@@ -227,6 +229,8 @@ export class AsignacionesComponent implements OnInit {
 
     this.filtro = this.formFiltro.value;
 
+    this.cargarCursos();// se cargan los cursos de la carrera,pensum y ciclo establecidos en el filtro
+
     // se cargan los dias de la carrera y jornada a filtrar
     this.cargarDias();
 
@@ -268,6 +272,20 @@ export class AsignacionesComponent implements OnInit {
     this.diasService.listDias(this.filtro.za_carrera,this.filtro.za_jornada)
       .subscribe((res:any)=>this.dias=res);
 
+  }
+
+  public cargarCursos():void {
+    // let campoCarrera = this.formFiltro.get('za_carrera');
+    // let campoAnoPensum = this.formFiltro.get('ano_pensum');
+    // let campoCiclo = this.formFiltro.get('no_semestre');
+      this.cursoPensumService.listCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum,this.formFiltro.value.no_semestre)
+        .subscribe((datos:IServerResponse)=>{
+          if(datos.status == 200){
+            this.cursos = datos.data;
+          }else{
+            this.cursos = [];
+          }
+        });
   }
 
   private strToTime(strTime):string {
