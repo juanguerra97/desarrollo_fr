@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ISeccion} from '../../../models/iseccion.model';
-import {IAsignacion} from '../../../models/iasignacion.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {JornadasService} from '../../../services/jornadas.service';
 import {AsigService} from '../../../services/asig.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import { groupBy }  from 'lodash';
+ import * as myPDF from 'jspdf';
+// import 'jspdf-autotable';
+// import html2canvas from 'html2canvas';
+
+// import 'jspdf';
+// import 'jspdf-autotable';
+// declare let jsPDF;
+
+declare var jsPDF: any;
 
 @Component({
   selector: 'app-planificacion',
@@ -20,6 +28,8 @@ export class PlanificacionComponent implements OnInit {
   public dias:any;
   public carreras:any[]=[];
   public jornadas:any[]=[];
+  public carrera:any;
+  public jornada:any;
 
   // formulario para la seccion a filtrar
   public formFiltro = new FormGroup({
@@ -65,7 +75,31 @@ export class PlanificacionComponent implements OnInit {
 
     this.filtro = this.formFiltro.value;
 
+    this.carrera = this.carreras[this.carreras.findIndex(carr=>carr.za_carrera == this.filtro.za_carrera)];
+    this.jornada = this.jornadas[this.jornadas.findIndex(jor => jor.za_carrera == this.filtro.za_carrera && jor.za_jornada == this.filtro.za_jornada)];
+
     this.cargarAsignaciones();
+
+  }
+
+  public guardarPdf():void {
+
+    /*html2canvas(document.getElementById('tabla-reporte'))
+      .then(canvas => {
+        let pdf = new jsPDF('p','mm','a4');
+        pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0, 208, canvas.height * 208 / canvas.width);
+        pdf.save('planificacion.pdf');
+      });*/
+
+      let pdf = new jsPDF();
+
+      //let p2 = new myPDF();
+      pdf.setFontSize(10);
+      pdf.autoTable({
+        html:'#tabla-reporte', // id de la tabla
+        theme:'grid'
+      });
+      pdf.save('planificacion.pdf');
 
   }
 

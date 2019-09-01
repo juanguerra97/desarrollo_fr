@@ -102,33 +102,67 @@
 
       <!-- TABLA CON LA LISTA DE ASIGNACIONES FILTRADAS POR SECCION -->
       <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
+        <table id="tabla-reporte" class="table table-bordered">
+<!--          <thead>
           <tr>
             <th scope="col">Dia</th>
             <th scope="col">Horario</th>
-            <th scope="col">Asignacion</th>
+            <th scope="col">Curso</th>
+            <th scope="col">Profesor</th>
           </tr>
-          </thead>
+          </thead>-->
           <tbody>
-          <ng-template ngFor="">
+
+          <ng-template [ngIf]="filtro != null">
+            <tr>
+              <td colspan="4">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</td>
+            </tr>
+            <tr>
+              <td colspan="4">CENTRO UNIVERSITARIO DE QUETZALTENANGO</td>
+            </tr>
+            <tr>
+              <td colspan="4">{{ carrera.nombre_carrera }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">Pensum:&nbsp;{{ filtro.ano_pensum}}</td>
+              <td colspan="2">Jornada:&nbsp;{{ jornada.nombre_jornada }}</td>
+            </tr>
+            <tr>
+              <td>Ciclo:&nbsp;{{ filtro.no_semestre }}</td>
+              <td>A&ntilde;o:&nbsp;{{ filtro.ano }}</td>
+              <td colspan="2">Secci&oacute;n:&nbsp;{{ filtro.seccion }}</td>
+            </tr>
+            <tr>
+              <td colspan="4"></td>
+            </tr>
 
           </ng-template>
+
+          <tr>
+            <td>Dia</td>
+            <td>Hora</td>
+            <td>Curso</td>
+            <td>Profesor</td>
+          </tr>
 
           <ng-template ngFor let-dia [ngForOf]="dias">
             <tr>
               <td [rowSpan]="asignaciones[dia].length" style="text-align: center; vertical-align: middle;">{{dia}}</td>
               <td style="text-align: left; vertical-align: middle;">{{ asignaciones[dia][0].hora_inicio | slice:0:5}}-{{asignaciones[dia][0].hora_fin | slice:0:5}}</td>
               <td>
-                <p>{{ asignaciones[dia][0].nombre_curso}}</p>
-                <p>{{ asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}</p>
+                {{ asignaciones[dia][0].za_curso + ' ' +  asignaciones[dia][0].nombre_curso}}
+              </td>
+              <td>
+                {{ asignaciones[dia][0].za_profesor + ' ' + asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}
               </td>
             </tr>
             <tr *ngFor="let asig of asignaciones[dia].slice(1,asignaciones[dia].length)">
               <td style="text-align: left; vertical-align: middle;">{{ asig.hora_inicio | slice:0:5 }}-{{asig.hora_fin | slice:0:5 }}</td>
               <td>
-                <p>{{ asig.nombre_curso }}</p>
-                <p>{{ asig.nombres  + ' '  + asig.apellidos }}</p>
+                {{ asig.za_curso + ' ' +  asig.nombre_curso }}
+              </td>
+              <td>
+                {{ asig.za_profesor + ' ' + asig.nombres  + ' '  + asig.apellidos }}
               </td>
             </tr>
           </ng-template>
@@ -137,10 +171,14 @@
         </table>
       </div>
 
+      <ng-template [ngIf]="filtro != null">
+        <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
+      </ng-template>
 
     </div>
 
     <div class="card-footer">
+
       <a routerLink="/" class="btn btn-secondary pull-left">
         <i class="fa fa-close" aria-hidden="true"></i> Regresar
       </a>
