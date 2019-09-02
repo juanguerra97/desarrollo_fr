@@ -14,29 +14,32 @@
         </div>
       </div>
 
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Usa Laboratorio</th>
-          <th scope="col">Activo</th>
-          <th scope="col">Accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let curso of cursos; let i = index">
-          <th scope="row">{{curso.za_curso}}</th>
-          <td>{{curso.nombre_curso}}</td>
-          <td>{{curso.usa_laboratorio.data}}</td>
-          <td>{{curso.activo.data}}</td>
-          <td>
-            <button class="btn btn-warning" (click)="editar(content, i)" title="editar"><em class="fa fa-pencil"></em></button>
-            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Usa Laboratorio</th>
+            <th scope="col">Activo</th>
+            <th scope="col">Accion</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let curso of cursos; let i = index">
+            <th scope="row">{{curso.za_curso}}</th>
+            <td>{{curso.nombre_curso}}</td>
+            <td>{{curso.usa_laboratorio.data}}</td>
+            <td>{{curso.activo.data}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="editar(content, i)" title="editar"><em class="fa fa-pencil"></em></button>
+              <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
     <div class="card-footer">
       <a routerLink="/" class="btn btn-secondary pull-left">

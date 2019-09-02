@@ -29,29 +29,31 @@
         </div>
       </div>
 
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Codigo</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Activo</th>
-          <th scope="col">Accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let conect of conexiones; let i = index">
-          <th scope="row">{{conect.za_pensum}}</th>
-          <td>{{conect.codigo_pensum}}</td>
-          <td>{{conect.nombre_pensum}}</td>
-          <td>{{conect.activo}}</td>
-          <td>
-            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
-            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Activo</th>
+            <th scope="col">Accion</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let conect of conexiones; let i = index">
+            <th scope="row">{{conect.za_pensum}}</th>
+            <td>{{conect.codigo_pensum}}</td>
+            <td>{{conect.nombre_pensum}}</td>
+            <td>{{conect.activo}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+              <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="card-footer">
       <a routerLink="/" class="btn btn-secondary pull-left">

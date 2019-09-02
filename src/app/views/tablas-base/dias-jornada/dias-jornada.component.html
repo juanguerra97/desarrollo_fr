@@ -7,13 +7,13 @@
       <div class="row">
         <div class="col-md-3">
           <select class="custom-select"  [(ngModel)]="carrera" (ngModelChange)="buscarCarrera()">
-            <option selected>Seleccione Carrera</option>
+<!--            <option value="0" selected>Seleccione Carrera</option>-->
             <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
           </select>
         </div>
         <div class="col-md-3">
           <select class="custom-select"  [(ngModel)]="jornada" (ngModelChange)="buscar()">
-            <option selected>Seleccione Jornada</option>
+<!--            <option value="0" selected>Seleccione Jornada</option>-->
             <option *ngFor="let jornada of jornadas" value="{{jornada.za_jornada}}">{{jornada.nombre_jornada}}</option>
           </select>
         </div>
@@ -26,31 +26,35 @@
           </button>
         </div>
       </div>
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">Jornada</th>
-          <th scope="col">Carrera</th>
-          <th scope="col">dia</th>
-          <th scope="col">activo</th>
-          <th scope="col">accion</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let dia of dias; let i = index">
-          <th scope="row">{{dia.za_dia}}</th>
-          <td>{{dia.za_jornada}}</td>
-          <td>{{dia.za_carrera}}</td>
-          <td>{{dia.dia}}</td>
-          <td>{{dia.activo.data}}</td>
-          <td>
-            <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
-            <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Jornada</th>
+            <th scope="col">Carrera</th>
+            <th scope="col">dia</th>
+            <th scope="col">activo</th>
+            <th scope="col">accion</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let dia of dias; let i = index">
+            <th scope="row">{{dia.za_dia}}</th>
+            <td>{{dia.za_jornada}}</td>
+            <td>{{dia.za_carrera}}</td>
+            <td>{{dia.dia}}</td>
+            <td>{{dia.activo.data}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+              <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
     <div class="card-footer">
       <a routerLink="/" class="btn btn-secondary pull-left">
