@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl} from '@angular/forms';
 
 import {IAsignacion} from '../../../models/iasignacion.model';
 import {ISeccion} from '../../../models/iseccion.model';
@@ -36,6 +36,11 @@ export class AsignacionesComponent implements OnInit {
 
   private TimeRegex:RegExp = /^([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?$/g;
 
+  private horarioInicio = undefined;
+  private horarioFin = undefined;
+  private inicioReval = 0;
+  private finReval = 0;
+
   // formulario para la seccion a filtrar
   public formFiltro = new FormGroup({
     za_carrera: new FormControl('',[
@@ -64,6 +69,18 @@ export class AsignacionesComponent implements OnInit {
     ])
   });
 
+  // private controlHoraInicio = new FormControl('',[
+  //   Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
+  //   Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
+  //   horaInicioLtHoraFin(this.formAsignacion.get('hora_fin')),
+  // ]);
+
+  // private controlHoraFin = new FormControl('',[
+  //   Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
+  //   Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
+  //   horaFinGtHoraInicio(this.formAsignacion.get('hora_inicio'))
+  // ]);
+
   // formulario para editar o ingresar una nueva asignacion
   public formAsignacion = new FormGroup({
     za_curso: new FormControl('0',[
@@ -80,11 +97,13 @@ export class AsignacionesComponent implements OnInit {
     ]),
     hora_inicio: new FormControl('',[
       Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
+      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
+      this.horaInicioLtHoraFin(),
     ]),
     hora_fin: new FormControl('',[
       Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
+      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
+      this.horaFinGtHoraInicio()
     ]),
   });
 
@@ -308,6 +327,91 @@ export class AsignacionesComponent implements OnInit {
     }
 
     return time;
+  }
+
+  private horaInicioLtHoraFin(): ValidatorFn {
+    return (controlIni: AbstractControl): {[key: string]: any} | null => {
+
+      let horaInicio = controlIni.value;
+
+      let error = {'horarioInvalido':{value: horaInicio}};
+
+      if(horaInicio != null && horaInicio.length >= 1){
+        let regex = /^([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?$/g;
+
+        let matchIni=Array.from(horaInicio.matchAll(regex));
+
+        if(matchIni.length > 0){
+          let horaIni = matchIni[0][1]*1;
+          let minutoIni = matchIni[0][3]*1;
+
+
+          if(horaIni != undefined && !Number.isNaN(horaIni)){
+            let inicio = horaIni * 60; // convertir a minutos
+            if(minutoIni != undefined && !Number.isNaN(minutoIni)){
+              inicio += minutoIni;
+            }
+            this.horarioInicio = inicio;
+
+            console.log("INI: " + this.horarioInicio+"-"+this.horarioFin);
+            if(this.horarioFin == undefined || (this.horarioInicio < this.horarioFin)){
+              console.log("INI: Valido");
+
+              //this.formAsignacion.get('hora_fin').updateValueAndValidity({onlySelf: true, emitEvent: false});
+              return null;
+            }else{
+              console.log("INI: Invalido");
+              return error;
+            }
+          }
+        }
+      }
+      this.horarioInicio = undefined;
+      return error;
+
+    };
+  }
+
+  private horaFinGtHoraInicio(): ValidatorFn {
+    return (controlFin: AbstractControl): {[key: string]: any} | null => {
+
+      let horaFin = controlFin.value;
+
+      let error = {'horarioInvalido':{value: horaFin}};
+
+      if(horaFin != null && horaFin.length >= 1){
+        let regex = /^([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?$/g;
+
+        let matchFin=Array.from(horaFin.matchAll(regex));
+
+        if(matchFin.length > 0){
+          let horaFinal = matchFin[0][1]*1;
+          let minutoFinal = matchFin[0][3]*1;
+
+
+          if(horaFinal != undefined && !Number.isNaN(horaFinal)){
+            let fin = horaFinal * 60; // convertir a minutos
+            if(minutoFinal != undefined && !Number.isNaN(minutoFinal)){
+              fin += minutoFinal;
+            }
+            this.horarioFin = fin;
+            console.log("FIN:" + this.horarioInicio+"-"+this.horarioFin);
+
+            if(this.horarioInicio == undefined || ( this.horarioInicio < this.horarioFin)) {
+              console.log("FIN: Valido");
+              //this.formAsignacion.get('hora_inicio').updateValueAndValidity({onlySelf: true, emitEvent: false});
+              return null;
+            } else {
+              console.log("FIN: INVALIDO");
+              return error;
+            }
+          }
+        }
+      }
+      this.horarioFin = undefined;
+      return error;
+
+    };
   }
 
 
