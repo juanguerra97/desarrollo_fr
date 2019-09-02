@@ -353,14 +353,17 @@ export class AsignacionesComponent implements OnInit {
             }
             this.horarioInicio = inicio;
 
-            console.log("INI: " + this.horarioInicio+"-"+this.horarioFin);
+            //console.log("INI: " + this.horarioInicio+"-"+this.horarioFin);
             if(this.horarioFin == undefined || (this.horarioInicio < this.horarioFin)){
-              console.log("INI: Valido");
-
+              //console.log("INI: Valido");
+              let controlFin = this.formAsignacion.get('hora_fin');
+              if(this.horarioFin != undefined && !controlFin.valid){
+                controlFin.updateValueAndValidity();
+              }
               //this.formAsignacion.get('hora_fin').updateValueAndValidity({onlySelf: true, emitEvent: false});
               return null;
             }else{
-              console.log("INI: Invalido");
+              //console.log("INI: Invalido");
               return error;
             }
           }
@@ -395,14 +398,18 @@ export class AsignacionesComponent implements OnInit {
               fin += minutoFinal;
             }
             this.horarioFin = fin;
-            console.log("FIN:" + this.horarioInicio+"-"+this.horarioFin);
+            //console.log("FIN:" + this.horarioInicio+"-"+this.horarioFin);
 
             if(this.horarioInicio == undefined || ( this.horarioInicio < this.horarioFin)) {
-              console.log("FIN: Valido");
+              //console.log("FIN: Valido");
+              let controlIni = this.formAsignacion.get('hora_inicio');
+              if(this.horarioInicio != undefined && !controlIni.valid){
+                controlIni.updateValueAndValidity();
+              }
               //this.formAsignacion.get('hora_inicio').updateValueAndValidity({onlySelf: true, emitEvent: false});
               return null;
             } else {
-              console.log("FIN: INVALIDO");
+              //console.log("FIN: INVALIDO");
               return error;
             }
           }
