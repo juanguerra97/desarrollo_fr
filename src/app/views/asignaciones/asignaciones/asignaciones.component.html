@@ -137,8 +137,8 @@
             <td>{{ asig.dia }}</td>
             <td>{{ asig.nombre_curso }}</td>
             <td>{{ asig.nombres  + ' '  + asig.apellidos }}</td>
-            <td>{{ asig.hora_inicio }}</td>
-            <td>{{ asig.hora_fin }}</td>
+            <td>{{ asig.hora_inicio | slice:0:5 }}</td>
+            <td>{{ asig.hora_fin | slice:0:5 }}</td>
           </tr>
           </tbody>
         </table>

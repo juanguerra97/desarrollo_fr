@@ -80,11 +80,11 @@ export class AsignacionesComponent implements OnInit {
     ]),
     hora_inicio: new FormControl('',[
       Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?')
+      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
     ]),
     hora_fin: new FormControl('',[
       Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?')
+      Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
     ]),
   });
 
@@ -209,8 +209,8 @@ export class AsignacionesComponent implements OnInit {
         za_curso: this.asignacionSeleccionada.za_curso,
         za_profesor: this.asignacionSeleccionada.za_profesor,
         za_dia: this.asignacionSeleccionada.za_dia,
-        hora_inicio: this.asignacionSeleccionada.hora_inicio,
-        hora_fin: this.asignacionSeleccionada.hora_fin
+        hora_inicio: this.asignacionSeleccionada.hora_inicio.substr(0,5),
+        hora_fin: this.asignacionSeleccionada.hora_fin.substr(0,5)
       });
 
     }else{// Nueva
