@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PensumService} from '../../../services/pensum.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CarrerasService} from '../../../../services/carreras.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-pensums',
@@ -53,9 +54,29 @@ export class PensumsComponent implements OnInit {
   }
 
   eliminar(index) {
-    const request = {...this.pensums[index], accion: 2};
-    request.activo = request.activo.data[0];
-    this._pensumService.crearPensum(request).subscribe(() => this.getPensums());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar un pensum',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.pensums[index], accion: 2};
+        request.activo = request.activo.data[0];
+        this._pensumService.crearPensum(request).subscribe(() => this.getPensums());
+
+      }
+
+    });
+
+
+
   }
 
   openModal(content) {
