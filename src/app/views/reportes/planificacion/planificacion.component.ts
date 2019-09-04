@@ -33,6 +33,36 @@ export class PlanificacionComponent implements OnInit {
   public carrera:any;
   public jornada:any;
 
+  private PosicionDia = {
+    'DOMINGO': 1,
+    'LUNES': 2,
+    'MARTES': 3,
+    'MIERCOLES': 4,
+    'JUEVES': 5,
+    'VIERNES': 6,
+    'SABADO': 7,
+    'MIÉRCOLES': 4,
+    'SÁBADO': 4,
+    'domingo': 1,
+    'lunes': 2,
+    'martes': 3,
+    'miercoles': 4,
+    'jueves': 5,
+    'viernes': 6,
+    'sabado': 7,
+    'miércoles':4,
+    'sábado': 7,
+    'Domingo': 1,
+    'Lunes':2,
+    'Martes':3,
+    'Miercoles': 4,
+    'Jueves': 5,
+    'Viernes': 6,
+    'Sabado': 7,
+    'Miércoles': 4,
+    'Sábado': 7
+  };
+
   // formulario para la seccion a filtrar
   public formFiltro = new FormGroup({
     za_carrera: new FormControl('',[
@@ -112,7 +142,7 @@ export class PlanificacionComponent implements OnInit {
       .subscribe((res:IServerResponse)=>{
 
         this.asignaciones = groupBy(res.data,'dia');
-        this.dias = Object.keys(this.asignaciones);
+        this.dias = Object.keys(this.asignaciones).sort((dia1,dia2)=>this.PosicionDia[dia1]-this.PosicionDia[dia2]);
 
       });
 
