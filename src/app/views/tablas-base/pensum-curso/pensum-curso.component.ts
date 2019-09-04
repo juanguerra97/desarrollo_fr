@@ -7,6 +7,9 @@ import {CursosService} from '../../../services/cursos.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CursoPensumService} from '../../../services/curso-pensum.service';
 
+import Swal from 'sweetalert2';
+import {IServerResponse} from '../../../models/iserverresponse.model';
+
 @Component({
   selector: 'app-pensum-curso',
   templateUrl: './pensum-curso.component.html',
@@ -65,12 +68,31 @@ export class PensumCursoComponent implements OnInit {
 
 
   eliminar(index) {
-    const request = {...this.pensumsCursos[index], accion: 2};
-    request.activo = request.activo.data[0];
-    request.curso_activo = request.curso_activo.data[0];
-    request.usa_laboratorio = request.usa_laboratorio.data[0];
-    this._pensumCarreraService.crearPensum(request)
-      .subscribe((res:any)=>this.cargarPensumsCursos());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar un curso del pensum',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.pensumsCursos[index], accion: 2};
+        request.activo = request.activo.data[0];
+        request.curso_activo = request.curso_activo.data[0];
+        request.usa_laboratorio = request.usa_laboratorio.data[0];
+        this._pensumCarreraService.crearPensum(request)
+          .subscribe((res:any)=>{this.cargarPensumsCursos();});
+
+      }
+
+    });
+
+
   }
 
   // abre el modal con el formulario para editar el ciclo de una relacion pensum-curso
