@@ -92,9 +92,27 @@ export class JornadasComponent implements OnInit {
   }
 
   eliminar(index) {
-    const request = {...this.jornadas[index], accion: 2};
-    request.activo = request.activo.data;
-    this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar una jornada',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.jornadas[index], accion: 2};
+        request.activo = request.activo.data;
+        this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
+
+      }
+
+    });
+
   }
   buscar() {
     if (this.carrera) {
