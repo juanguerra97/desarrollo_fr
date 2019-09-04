@@ -1,53 +1,73 @@
 <div class="animated fadeIn">
+
   <div class="card">
+
     <div class="card-header">
       <div class="h3">Pensums Cursos</div>
     </div>
+
     <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()">
-            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <select class="custom-select" [(ngModel)]="za_pensum" (change)="getConexion()">
-            <option *ngFor="let pensum of pensums" value="{{pensum.ano_pensum}}">{{pensum.codigo_pensum}}</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <select class="custom-select" [(ngModel)]="za_curso" (change)="getConexion()">
-            <option *ngFor="let curso of cursos" value="{{curso.za_curso}}">{{curso.nombre_curso}}</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <button (click)="openModal(content)"
-                  class="btn btn-primary pull-right mb-3">
-            <em class="fa fa-check mr-2"></em>
-            Nuevo
-          </button>
-        </div>
+
+      <div class="p-3 border rounded">
+
+        <form [formGroup]="formFiltro" id="form-filtro">
+
+          <div class="form-row">
+
+            <div class="col-7">
+              <div class="form-group">
+
+                <label for="za-carrera">Carrera</label>
+                <select (change)="cargarPensumsCarrera()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                  <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
+                </select>
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+
+                <label for="ano-pensum">Pensum</label>
+                <!-- <input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">-->
+                <select (change)="cargarPensumsCursos()" formControlName="ano_pensum" id="ano-pensum" class="custom-select">
+                  <option *ngFor="let pen of pensumsCarrera" [ngValue]="pen.ano_pensum">{{pen.ano_pensum}}</option>
+                </select>
+
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+
       </div>
 
+      <hr>
+
+      <button (click)="openModalNuevo(contentNuevo)"
+              [disabled]="!formFiltro.valid"
+              class="btn btn-primary pull-right mb-3">
+        <em class="fa fa-check mr-2"></em>
+        Agregar curso</button>
+
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th scope="col">Id</th>
             <th scope="col">Codigo</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Activo</th>
+            <th scope="col">Ciclo</th>
             <th scope="col">Accion</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let conect of conexiones; let i = index">
-            <th scope="row">{{conect.za_pensum}}</th>
-            <td>{{conect.codigo_pensum}}</td>
-            <td>{{conect.nombre_pensum}}</td>
-            <td>{{conect.activo}}</td>
+          <tr *ngFor="let pc of pensumsCursos; let i = index">
+            <th scope="row">{{pc.za_curso}}</th>
+            <td>{{pc.nombre_curso}}</td>
+            <td>{{pc.ciclo}}</td>
             <td>
-              <button class="btn btn-warning" (click)="editar(i)" title="editar"><em class="fa fa-pencil"></em></button>
+              <button class="btn btn-warning" (click)="openModalEdicion(contentEdicion,i)" title="editar"><em class="fa fa-pencil"></em></button>
               <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
             </td>
           </tr>
@@ -55,6 +75,7 @@
         </table>
       </div>
     </div>
+
     <div class="card-footer">
       <a routerLink="/" class="btn btn-secondary pull-left">
         <i class="fa fa-close" aria-hidden="true"></i> Regresar
@@ -63,59 +84,69 @@
   </div>
 </div>
 
-<ng-template #content let-modal>
+<ng-template #contentNuevo let-modalNuevo>
   <div class="modal-header">
-    <h4 *ngIf="!pensum" class="modal-title" >Nueva Conexión</h4>
-    <h4 *ngIf="pensum" class="modal-title" >Editar Conexión</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+    <h4 class="modal-nuevo-title" >Agregar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalNuevo.dismiss('')">
       <em class="fa fa-times"></em>
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group row">
-      <label for="carrera" class="col-sm-2 col-form-label pl-3"><strong>Carrera</strong></label>
-      <div class="col-sm-10">
-        <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()" id="carrera">
-          <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+
+    <form (ngSubmit)="onSubmitNuevo()" [formGroup]="formNewCursoPensum" id="form-new-cursopensum">
+
+      <div class="form-group">
+        <label for="za-curso">Curso</label>
+        <select formControlName="za_curso" id="za-curso" class="custom-select custom-select-lg">
+          <option *ngFor="let c of cursos" [ngValue]="c.za_curso">
+            {{c.nombre_curso}}
+          </option>
         </select>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="pensum" class="col-sm-2 col-form-label pl-3"><strong>Pensum</strong></label>
-      <div class="col-sm-10">
-        <select class="custom-select" [(ngModel)]="form.ano_pensum" (change)="getConexion()" id="pensum">
-          <option *ngFor="let pensum of pensums" value="{{pensum.ano_pensum}}">{{pensum.codigo_pensum}}</option>
-        </select>
+
+      <div class="form-group">
+        <label for="ciclo">Ciclo</label>
+        <input formControlName="ciclo" type="number" id="ciclo" class="form-control form-control-lg">
       </div>
+
+    </form>
+
+    <div class="modal-footer">
+      <button [disabled]="!formNewCursoPensum.valid" form="form-new-cursopensum" class="btn btn-success btn-lg">
+        <em class="fa fa-save mr-3"></em>
+        Guardar
+      </button>
     </div>
-    <div class="form-group row">
-      <label for="curso" class="col-sm-2 col-form-label pl-3"><strong>Curso</strong></label>
-      <div class="col-sm-10">
-        <select class="custom-select" [(ngModel)]="form.za_curso" (change)="getConexion()" id="curso">
-          <option *ngFor="let curso of cursos" value="{{curso.za_curso}}">{{curso.nombre_curso}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="ciclo" class="col-sm-2 col-form-label"><strong>Ciclo</strong></label>
-      <div class="col-sm-10">
-        <input type="number" class="form-control" id="ciclo" placeholder="Ciclo" [(ngModel)]="form.ciclo">
-      </div>
-    </div>
-    <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="activo" [(ngModel)]="form.activo">
-      <label class="custom-control-label" for="activo">Activo</label>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button *ngIf="!pensum" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
-      <em class="fa fa-save mr-3"></em>
-      Guardar
-    </button>
-    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg">
-      <em class="fa fa-pencil mr-3"></em>
-      Editar
-    </button>
+
   </div>
 </ng-template>
+
+
+<ng-template #contentEdicion let-modalEdicion>
+  <div class="modal-header">
+    <h4 class="modal-edicion-title" >Editar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalEdicion.dismiss('')">
+      <em class="fa fa-times"></em>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <form (ngSubmit)="onSubmitEditar()" [formGroup]="formEditarCursoPensum" id="form-editar-cursopensum">
+
+      <div class="form-group">
+        <label for="edit-ciclo">Ciclo</label>
+        <input formControlName="ciclo" type="number" id="edit-ciclo" class="form-control form-control-lg">
+      </div>
+
+    </form>
+
+    <div class="modal-footer">
+      <button [disabled]="!formEditarCursoPensum.valid" form="form-editar-cursopensum" class="btn btn-success btn-lg">
+        <em class="fa fa-save mr-3"></em>
+        Guardar cambios
+      </button>
+    </div>
+  </div>
+</ng-template>
+
 
