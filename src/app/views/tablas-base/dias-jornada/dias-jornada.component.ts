@@ -32,7 +32,7 @@ export class DiasJornadaComponent implements OnInit {
       }
     }
     Swal.fire({
-      title: 'Nueva Dia',
+      title: 'Nuevo Dia',
       html:
         '<form id="modal-form">' +
         'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
@@ -106,9 +106,27 @@ export class DiasJornadaComponent implements OnInit {
   }
 
   eliminar(index) {
-    const request = {...this.dias[index], accion: 2};
-    request.activo = request.activo.data;
-    this._diaService.crearDia(request).subscribe(() => this.buscar());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar un dia',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.dias[index], accion: 2};
+        request.activo = request.activo.data;
+        this._diaService.crearDia(request).subscribe(() => this.buscar());
+
+      }
+
+    });
+
   }
   buscarCarrera() {
     if (this.carrera) {
