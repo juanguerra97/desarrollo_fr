@@ -165,6 +165,13 @@
     </button>
   </div>
   <div class="modal-body">
+
+    <ng-template [ngIf]="errorMsg != null">
+      <div class="alert alert-danger" role="alert">
+        {{errorMsg}}
+      </div>
+    </ng-template>
+
     <form [formGroup]="formAsignacion">
 
       <div class="form-group row">

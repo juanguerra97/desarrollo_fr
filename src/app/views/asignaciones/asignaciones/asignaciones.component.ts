@@ -38,8 +38,8 @@ export class AsignacionesComponent implements OnInit {
 
   private horarioInicio = undefined;
   private horarioFin = undefined;
-  private inicioReval = 0;
-  private finReval = 0;
+
+  private errorMsg = null;
 
   // formulario para la seccion a filtrar
   public formFiltro = new FormGroup({
@@ -144,13 +144,15 @@ export class AsignacionesComponent implements OnInit {
     this.asigService.crearAsignacion(nuevaAsignacion).subscribe((res:IServerResponse)=>{
       if(res.status == 200){ // OK
         this.cargarAsignaciones();
+        this.modalService.dismissAll();
       }else{// Error
         console.error(res);
+        this.errorMsg = res.error;
       }
-      this.modalService.dismissAll();
+
     });
 
-    this.formAsignacion.reset();
+
   }
 
   public guardarEdicion():void{
@@ -174,10 +176,11 @@ export class AsignacionesComponent implements OnInit {
 
         if(res.status == 200){ // actualizacion con exito
           this.cargarAsignaciones();
+          this.modalService.dismissAll();
         }else { // hubo un error con la actualizacion
           console.error(res);
+          this.errorMsg = res.error;
         }
-        this.modalService.dismissAll();
 
       })
 
@@ -221,6 +224,9 @@ export class AsignacionesComponent implements OnInit {
   // abre el modal par editar o ingresar nueva asignacion
   public openModal(content):void {
 
+    this.errorMsg = null;
+    this.formAsignacion.reset();
+
     if(this.asignacionSeleccionada != null){ // Edicion
 
       // se cargan los valores de la asignacion seleccionada en el formulario
@@ -232,8 +238,6 @@ export class AsignacionesComponent implements OnInit {
         hora_fin: this.asignacionSeleccionada.hora_fin.substr(0,5)
       });
 
-    }else{// Nueva
-      this.formAsignacion.reset();
     }
 
     this.modalService.open(content, {
