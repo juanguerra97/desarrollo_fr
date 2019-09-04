@@ -4,7 +4,7 @@ import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl} from '
 import {IAsignacion} from '../../../models/iasignacion.model';
 import {ISeccion} from '../../../models/iseccion.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ModalConfirmacionService} from '../../../services/modal-confirmacion.service';
+//import {ModalConfirmacionService} from '../../../services/modal-confirmacion.service';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {AsigService} from '../../../services/asig.service';
 import {DiasJornadaService} from '../../../services/dias-jornada.service';
@@ -14,6 +14,8 @@ import {CursosService} from '../../../services/cursos.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {PensumService} from '../../../services/pensum.service';
 import {CursoPensumService} from '../../../services/curso-pensum.service';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asignaciones',
@@ -116,7 +118,8 @@ export class AsignacionesComponent implements OnInit {
     private cursosService:CursosService,
     private cursoPensumService:CursoPensumService,
     private asigService: AsigService,
-    private modalService: NgbModal, private modalConfirmacion:ModalConfirmacionService
+    private modalService: NgbModal,
+    //private modalConfirmacion:ModalConfirmacionService
   ) { }
 
   ngOnInit() {
@@ -145,6 +148,13 @@ export class AsignacionesComponent implements OnInit {
       if(res.status == 200){ // OK
         this.cargarAsignaciones();
         this.modalService.dismissAll();
+        Swal.fire({
+          position: 'top',
+          type: 'success',
+          title: res.message + '!',
+          showConfirmButton: false,
+          timer: 1600
+        })
       }else{// Error
         console.error(res);
         this.errorMsg = res.error;
@@ -177,6 +187,13 @@ export class AsignacionesComponent implements OnInit {
         if(res.status == 200){ // actualizacion con exito
           this.cargarAsignaciones();
           this.modalService.dismissAll();
+          Swal.fire({
+            position: 'top',
+            type: 'success',
+            title: res.message + '!',
+            showConfirmButton: false,
+            timer: 1600
+          })
         }else { // hubo un error con la actualizacion
           console.error(res);
           this.errorMsg = res.error;
@@ -189,26 +206,61 @@ export class AsignacionesComponent implements OnInit {
   // muestra modal para pedir confirmacion de la asignacion seleccionada
   public eliminar():void {
 
-    this.modalConfirmacion.mostrar(
-      'Eliminar Asignacion',
-      '¿Está seguro que quiere eliminar la asignacion?')
-      .then(result => {
+    // this.modalConfirmacion.mostrar(
+    //   'Eliminar Asignacion',
+    //   '¿Está seguro que quiere eliminar la asignacion?')
+    //   .then(result => {
+    //
+    //     if(result ==  true){
+    //       this.asigService.eliminarAsignacion(this.asignacionSeleccionada)
+    //         .subscribe((res:IServerResponse)=>{
+    //
+    //         if(res.status == 200){ // OK
+    //           this.cargarAsignaciones();
+    //         }else{ // Error
+    //           console.error(res);
+    //         }
+    //
+    //       });
+    //     }
+    //
+    //   })
+    //   .catch(dismiss=>console.log(dismiss));
 
-        if(result ==  true){
-          this.asigService.eliminarAsignacion(this.asignacionSeleccionada)
-            .subscribe((res:IServerResponse)=>{
+    Swal.fire({
+      title: 'Estas a punto de eliminar una asignacion',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.asigService.eliminarAsignacion(this.asignacionSeleccionada)
+          .subscribe((res:IServerResponse)=>{
 
             if(res.status == 200){ // OK
               this.cargarAsignaciones();
+              Swal.fire({
+                position: 'top',
+                type: 'success',
+                title: 'Eliminacion completada exitosamente!',
+                showConfirmButton: false,
+                timer: 1600
+              })
+              // Swal.fire(
+              //   'Eliminacion completada!',
+              //   'La asignacion se ha eliminado',
+              //   'success'
+              // );
             }else{ // Error
               console.error(res);
             }
-
           });
-        }
-
-      })
-      .catch(dismiss=>console.log(dismiss));
+      }
+    })
 
   }
 
