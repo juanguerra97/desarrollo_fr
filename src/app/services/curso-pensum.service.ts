@@ -18,4 +18,9 @@ export class CursoPensumService {
     const url = `${this.urlComponente}?za_carrera=${za_carrera}&ano_pensum=${ano_pensum}&ciclo=${ciclo}`;
     return this.http.get<IServerResponse>(url);
   }
+
+  public listPensumsCursos(za_carrera:number, ano_pensum:number):Observable<any> {
+    const url = `${this.urlComponente}/${za_carrera}/${ano_pensum}`;
+    return this.http.get(url);
+  }
 }
