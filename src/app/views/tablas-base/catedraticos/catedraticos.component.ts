@@ -70,7 +70,7 @@ export class CatedraticosComponent implements OnInit {
       if (result.value) {
 
         const request = {...this.catedraticos[index], accion: 2};
-        request.activo = request.activo.data;
+        //request.activo = request.activo;
         this._catedraticoService.crearCatedratico(request).subscribe(() => this.getCatedraticos());
 
       }

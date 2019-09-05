@@ -82,9 +82,9 @@ export class PensumCursoComponent implements OnInit {
       if (result.value) {
 
         const request = {...this.pensumsCursos[index], accion: 2};
-        request.activo = request.activo.data[0];
-        request.curso_activo = request.curso_activo.data[0];
-        request.usa_laboratorio = request.usa_laboratorio.data[0];
+        // request.activo = request.activo;
+        // request.curso_activo = request.curso_activo;
+        // request.usa_laboratorio = request.usa_laboratorio;
         this._pensumCarreraService.crearPensum(request)
           .subscribe((res:any)=>{this.cargarPensumsCursos();});
 
@@ -141,7 +141,7 @@ export class PensumCursoComponent implements OnInit {
   public onSubmitEditar():void {
 
     let request = {...this.pensumCurso,accion:1};
-    request.activo = 1;
+    //request.activo = 1;
     request.ciclo = this.formEditarCursoPensum.value.ciclo;
 
     this._pensumCarreraService.crearPensum(request)
