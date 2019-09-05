@@ -52,6 +52,7 @@ export const routes: Routes = [
       title: 'Home'
     },
     canActivateChild:[OnlyLoggedInUsersGuard],
+    canLoad:[OnlyLoggedInUsersGuard],
     children: [
       {
         path: 'base',
