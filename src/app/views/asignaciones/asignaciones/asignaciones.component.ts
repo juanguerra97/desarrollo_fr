@@ -153,7 +153,7 @@ export class AsignacionesComponent implements OnInit {
           type: 'success',
           title: res.message + '!',
           showConfirmButton: false,
-          timer: 1600
+          timer: 1400
         })
       }else{// Error
         console.error(res);
@@ -192,7 +192,7 @@ export class AsignacionesComponent implements OnInit {
             type: 'success',
             title: res.message + '!',
             showConfirmButton: false,
-            timer: 1600
+            timer: 1400
           })
         }else { // hubo un error con la actualizacion
           console.error(res);
@@ -248,7 +248,7 @@ export class AsignacionesComponent implements OnInit {
                 type: 'success',
                 title: 'Eliminacion completada exitosamente!',
                 showConfirmButton: false,
-                timer: 1600
+                timer: 1400
               })
               // Swal.fire(
               //   'Eliminacion completada!',
