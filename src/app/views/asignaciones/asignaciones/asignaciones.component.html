@@ -174,27 +174,29 @@
 
     <form [formGroup]="formAsignacion">
 
-      <div class="form-group row">
+      <ng-template [ngIf]="!asignacionSeleccionada">
+        <div class="form-group row">
 
-        <label for="za-curso" class="col-sm-2 col-form-label"><strong>Curso</strong></label>
-        <div class="col-sm-10">
-          <select formControlName="za_curso" id="za-curso" class="custom-select custom-select-lg">
-            <option *ngFor="let cur of cursos" [ngValue]="cur.za_curso">{{ cur.nombre_curso }}</option>
-          </select>
+          <label for="za-curso" class="col-sm-2 col-form-label"><strong>Curso</strong></label>
+          <div class="col-sm-10">
+            <select formControlName="za_curso" id="za-curso" class="custom-select custom-select-lg">
+              <option *ngFor="let cur of cursos" [ngValue]="cur.za_curso">{{ cur.nombre_curso }}</option>
+            </select>
+          </div>
+
         </div>
 
-      </div>
+        <div class="form-group row">
 
-      <div class="form-group row">
+          <label for="za-profesor" class="col-sm-2 col-form-label"><strong>Profesor</strong></label>
+          <div class="col-sm-10">
+            <select formControlName="za_profesor" id="za-profesor" class="custom-select custom-select-lg">
+              <option *ngFor="let prof of catedraticos" [ngValue]="prof.za_profesor">{{ prof.nombres + ' ' + prof.apellidos }}</option>
+            </select>
+          </div>
 
-        <label for="za-profesor" class="col-sm-2 col-form-label"><strong>Profesor</strong></label>
-        <div class="col-sm-10">
-          <select formControlName="za_profesor" id="za-profesor" class="custom-select custom-select-lg">
-            <option *ngFor="let prof of catedraticos" [ngValue]="prof.za_profesor">{{ prof.nombres + ' ' + prof.apellidos }}</option>
-          </select>
         </div>
-
-      </div>
+      </ng-template>
 
       <div class="form-group row">
 
