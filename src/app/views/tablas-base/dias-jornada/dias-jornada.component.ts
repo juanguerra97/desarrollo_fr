@@ -85,7 +85,7 @@ export class DiasJornadaComponent implements OnInit {
         '</select>' +
         '<input id="dia"  placeholder="Dia" class="swal2-input" value="' + dia.dia + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(dia.activo.data[0] === 1) ? 'checked' : ''}> activo` +
+        `${(dia.activo === 1) ? 'checked' : ''}> activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -120,7 +120,7 @@ export class DiasJornadaComponent implements OnInit {
       if (result.value) {
 
         const request = {...this.dias[index], accion: 2};
-        request.activo = request.activo.data;
+        //request.activo = request.activo;
         this._diaService.crearDia(request).subscribe(() => this.buscar());
 
       }

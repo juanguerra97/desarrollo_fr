@@ -29,8 +29,8 @@
           <tr *ngFor="let curso of cursos; let i = index">
             <th scope="row">{{curso.za_curso}}</th>
             <td>{{curso.nombre_curso}}</td>
-            <td>{{curso.usa_laboratorio.data}}</td>
-            <td>{{curso.activo.data}}</td>
+            <td>{{curso.usa_laboratorio}}</td>
+            <td>{{curso.activo}}</td>
             <td>
               <button class="btn btn-warning" (click)="editar(content, i)" title="editar"><em class="fa fa-pencil"></em></button>
               <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>

@@ -68,7 +68,7 @@ export class PensumsComponent implements OnInit {
       if (result.value) {
 
         const request = {...this.pensums[index], accion: 2};
-        request.activo = request.activo.data[0];
+        //request.activo = request.activo;
         this._pensumService.crearPensum(request).subscribe(() => this.getPensums());
 
       }
@@ -101,7 +101,7 @@ export class PensumsComponent implements OnInit {
 
 
   convertTobool(obj: any) {
-    return obj.data[0];
+    return obj;
   }
 
 }
