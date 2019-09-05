@@ -8,7 +8,7 @@ import {AuthService} from '../../auth/auth.service';
 })
 export class LoginComponent {
 
-  private error:string = null;
+  public error:string = null;
 
   constructor(
     private authService: AuthService

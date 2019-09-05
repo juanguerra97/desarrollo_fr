@@ -17,7 +17,7 @@ export class CatedraticosComponent implements OnInit {
 
   private filtro:any = null;
 
-  constructor(private reporte2Service: Reporte2Service,
+  constructor(public reporte2Service: Reporte2Service,
               private location: Location,
               private catedraticosService:CatedraticosService
   ){
