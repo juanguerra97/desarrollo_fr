@@ -38,10 +38,25 @@ export class DiasJornadaComponent implements OnInit {
         'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
         (this.carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
         '</input>' +
-        'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
+        '<div class="form-group">' +
+        '<label for="za_jornada">Jornada</label>' +
+        '<select id="za_jornada" placeholder="Jornada" class="custom-select custom-select-lg">' +
         optionsJornada +
         '</select>' +
-        '<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
+        '</div>' +
+        '<div class="form-group">' +
+        //'<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
+        '<label for="nombre-dia">Dia:</label> '+
+        '<select id="nombre-dia" class="custom-select custom-select-lg">' +
+          '<option>LUNES</option>' +
+          '<option>MARTES</option>' +
+          '<option>MIERCOLES</option>' +
+          '<option>JUEVES</option>' +
+          '<option>VIERNES</option>' +
+          '<option>SABADO</option>' +
+          '<option>DOMINGO</option>' +
+        '</select>' +
+        '</div>' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
