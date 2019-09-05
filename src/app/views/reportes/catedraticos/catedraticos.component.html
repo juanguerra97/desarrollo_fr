@@ -28,18 +28,45 @@
           </form>
 
       <div class="table-responsive mt-3">
-        <table class="table table-bordered">
-          <thead>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Carrera</th>
-          <th scope="col">Cursos</th>
-          <th scope="col">Hora de Inicio</th>
-          <th scope="col">Hora de fin</th>
-          </thead>
+        <table id="tabla-reporte" class="table table-bordered">
+         <!-- <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Carrera</th>
+            <th scope="col">Cursos</th>
+            <th scope="col">Hora de Inicio</th>
+            <th scope="col">Hora de fin</th>
+          </tr>
+          </thead>-->
 
           <tbody>
+
+          <ng-template [ngIf]="conexiones && conexiones.length > 0">
+            <tr>
+              <td colspan="7">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</td>
+            </tr>
+            <tr>
+              <td colspan="7">CENTRO UNIVERSITARIO DE QUETZALTENANGO</td>
+            </tr>
+            <tr>
+              <td colspan="7">Asignaciones de catedratico</td>
+            </tr>
+            <tr>
+              <td colspan="7">A&ntilde;o {{this.filtro.anio}} &nbsp;&nbsp; Semestre {{this.filtro.no_semestre }}</td>
+            </tr>
+          </ng-template>
+
+          <tr>
+            <td scope="col">#</td>
+            <td scope="col">Nombre</td>
+            <td scope="col">Apellido</td>
+            <td scope="col">Carrera</td>
+            <td scope="col">Cursos</td>
+            <td scope="col">Hora de Inicio</td>
+            <td scope="col">Hora de fin</td>
+          </tr>
 
           <tr *ngFor="let conexion of conexiones;index as i">
             <th scope="row">{{i+1}}</th>
@@ -55,6 +82,11 @@
           </tbody>
         </table>
       </div>
+
+      <ng-template [ngIf]="conexiones && conexiones.length > 0">
+        <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
+      </ng-template>
+
     </div>
 
 
