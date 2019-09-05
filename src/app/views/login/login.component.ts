@@ -12,7 +12,7 @@ export class LoginComponent {
     private authService: AuthService
   ){}
 
-  private formLogin = new FormGroup({
+  public formLogin = new FormGroup({
     usuario: new FormControl('',[
       Validators.required,
       Validators.minLength(4)
