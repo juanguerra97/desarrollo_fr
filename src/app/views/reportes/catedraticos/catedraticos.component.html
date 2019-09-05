@@ -5,9 +5,17 @@
     <div class="card-body">
         <form class="form-rep" #formRep="ngForm" (ngSubmit)="OnEnviar(formRep)" >
             <div class="form-group col-md-6">
-            <label for="Codigo_catedratico">Codigo Catedratico</label>
-              <input type="number" name="Codigo_catedratico" id="Codigo_catedratico" placeholder="Codigo Catedratico" class="form-control"
-              [(ngModel)]="this.reporte2Service.selreporte2.Codigo_catedratico">
+            <label for="Codigo_catedratico">Catedratico</label>
+              <select [(ngModel)]="this.reporte2Service.selreporte2.Codigo_catedratico"
+                name="Codigo_catedratico" id="Codigo_catedratico"
+                      placeholder="Codigo Catedratico" class="custom-select custom-select-lg">
+                <!--<option value="0" [selected]="true">Seleccione catedratico</option>-->
+                <option *ngFor="let c of catedraticos" [ngValue]="c.za_profesor">
+                  {{ c.za_profesor + ' ' + c.nombres + ' ' + c.apellidos}}
+                </option>
+              </select>
+              <!--<input type="number" name="Codigo_catedratico" id="Codigo_catedratico" placeholder="Codigo Catedratico" class="form-control"
+              [(ngModel)]="this.reporte2Service.selreporte2.Codigo_catedratico">-->
             </div>
             <div class="form-row">
                 <div class="form-group col-md-3">

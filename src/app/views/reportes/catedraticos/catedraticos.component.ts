@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {Reporte2Service} from '../../../services/reporte2.Service';
 import { Location } from '@angular/common';
+import {CatedraticosService} from '../../../services/catedraticos.service';
 
 declare var jsPDF: any;
 
@@ -12,16 +13,21 @@ declare var jsPDF: any;
 })
 export class CatedraticosComponent implements OnInit {
   public conexiones;
+  public catedraticos:any[]=[];
 
   private filtro:any = null;
 
   constructor(private reporte2Service: Reporte2Service,
-              private location: Location
+              private location: Location,
+              private catedraticosService:CatedraticosService
   ){
   }
 
   ngOnInit() {
-
+    this.catedraticosService.listCatedraticos()
+      .subscribe((res:any)=>this.catedraticos = res ,
+        (error:any) => this.catedraticos=[]
+      );
   }
   OnEnviar(reporteForm: NgForm ){
     this.filtro = reporteForm.value;
