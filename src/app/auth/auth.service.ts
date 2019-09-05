@@ -50,7 +50,34 @@ export class AuthService {
     return token;
   }
 
-  public logIn(username:string, password:string):void{
+  public logIn(username:string, password:string):Promise<any> {S
+    return new Promise<any>((resolve, reject) => {
+      if(!this.isLoggedIn()){
+
+        this.http.post(this.urlComponente,{usuario:username,contrasena:password})
+          .subscribe((res:any)=>{
+            if(res.status == 200){
+              this.loggedUser = res.data;
+              localStorage.setItem('loggedUser',JSON.stringify(this.loggedUser));
+              this.router.navigateByUrl('/');
+              resolve(this.loggedUser);
+            }else{
+              reject(res);
+            }
+          }, (err)=>{
+              reject({
+                status: err.status,
+                message: err.statusText,
+                error: err.message
+              });
+            });
+
+      }else{
+        reject({status:400,message:'Ya has iniciado sesion',error:'No puedes volver a iniciar sesion'});
+      }
+    });
+
+
     if(!this.isLoggedIn()){
       this.http.post(this.urlComponente,{usuario:username,contrasena:password})
         .subscribe((res:any)=>{
