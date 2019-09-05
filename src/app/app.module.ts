@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -49,6 +49,10 @@ import { ModalConfirmacionService } from './services/modal-confirmacion.service'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AsigService} from './services/asig.service';
 import {CursoPensumService} from './services/curso-pensum.service';
+import {AuthService} from './auth/auth.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TokenInterceptor} from './token-interceptor';
+// import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
   imports: [
@@ -65,7 +69,20 @@ import {CursoPensumService} from './services/curso-pensum.service';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    FormsModule
+    // JwtModule.forRoot({
+    //   config: {
+    //     tokenGetter: ()=>{
+    //       let token = '';
+    //       if(localStorage.getItem('loggedUser')){
+    //         token = JSON.parse(localStorage.getItem('loggedUser')).token;
+    //       }
+    //       return token;
+    //     }
+    //   }
+    // })
   ],
   declarations: [
     AppComponent,
@@ -80,10 +97,12 @@ import {CursoPensumService} from './services/curso-pensum.service';
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     ModalConfirmacionService,
     CursosService,
     AsigService,
-    CursoPensumService
+    CursoPensumService,
+    AuthService
   ],
   exports:[
     ModalConfirmacionComponent

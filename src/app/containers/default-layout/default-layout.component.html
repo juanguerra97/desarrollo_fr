@@ -4,7 +4,8 @@
   [navbarBrandFull]="{src: 'assets/img/brand/umg.jpg', width: 89, height: 25, alt: 'CoreUI Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/logoneg.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
-  [asideMenuToggler]="'lg'">
+  [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Inicio</a>
@@ -17,6 +18,7 @@
     </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
+    <button (click)="this.authService.logOut()" type="button" class="btn btn-primary">Salir</button>
   </ul>
   <!-- Contenido navbar i-->
 </app-header>
