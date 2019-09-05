@@ -7,16 +7,31 @@
     <div class="card-body">
 
       <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-          <th scope="col">#</th>
-          <th scope="col">Codigo Catedratico</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Cursos</th>
-          </thead>
+        <table id="tabla-reporte" class="table table-bordered">
+          <!--<thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Codigo Catedratico</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Cursos</th>
+            </tr>
+          </thead>-->
 
           <tbody>
+
+          <tr>
+            <td colspan="5">Total de cursos por catedratico</td>
+          </tr>
+
+          <tr>
+            <td scope="col">#</td>
+            <td scope="col-auto">Codigo Catedratico</td>
+            <td scope="col">Nombre</td>
+            <td scope="col">Apellido</td>
+            <td scope="col">Cursos</td>
+          </tr>
+
           <tr *ngFor="let reporte of reportes3;index as i">
             <th scope="row">{{i+1}}</th>
             <td>{{reporte.Codigo_Catedratico}}</td>
@@ -28,6 +43,8 @@
           </tbody>
         </table>
       </div>
+
+      <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
 
     </div>
 

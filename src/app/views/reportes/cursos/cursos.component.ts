@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Reporte3Service } from '../../../services/reporte3.Service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+declare var jsPDF: any;
+
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
@@ -18,4 +20,20 @@ constructor(private _cursorepService: Reporte3Service) {}
       err => console.error(err)
     );
   }
+
+  public guardarPdf():void {
+
+
+    let pdf = new jsPDF();
+
+    //let p2 = new myPDF();
+    pdf.setFontSize(10);
+    pdf.autoTable({
+      html:'#tabla-reporte', // id de la tabla
+      theme:'grid'
+    });
+    pdf.save('totalcursosporcatedratico.pdf');
+
+  }
+
 };
