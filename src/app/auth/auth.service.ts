@@ -50,7 +50,7 @@ export class AuthService {
     return token;
   }
 
-  public logIn(username:string, password:string):Promise<any> {S
+  public logIn(username:string, password:string):Promise<any> {
     return new Promise<any>((resolve, reject) => {
       if(!this.isLoggedIn()){
 
@@ -95,6 +95,8 @@ export class AuthService {
   }
 
   public logOut(){
+    if(this.loggedUser)
+      console.log("Adios " + this.loggedUser.usuario);
     localStorage.removeItem('loggedUser');
     this.loggedUser = null;
     this.loggedIn = false;
