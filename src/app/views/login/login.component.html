@@ -10,7 +10,7 @@
                 <form (ngSubmit)="onSubmit()" [formGroup]="formLogin" id="form-login">
                   <h1>Iniciar sesión</h1>
                   <hr>
-                  <div (click)="onCloseErrorAlert()" *ngIf="error" class="alert alert-danger fade show" role="alert">
+                  <div (click)="onCloseErrorAlert()" *ngIf="error" class="alert alert-danger fade show animated fadeIn" role="alert">
                     {{error}}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
