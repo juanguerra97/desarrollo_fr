@@ -70,8 +70,7 @@ export class DiasJornadaComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._diaService.crearDia(res.value).subscribe(() => {this.buscar();
-      });
+      this._diaService.crearDia(res.value).subscribe(() => this.cargarDias());
     });
   }
 
@@ -115,7 +114,7 @@ export class DiasJornadaComponent implements OnInit {
       },
     }).then(res => {
       this._diaService.crearDia(res.value).subscribe(() => {
-        this.buscar();
+        this.cargarDias();
       });
     });
   }
@@ -136,19 +135,28 @@ export class DiasJornadaComponent implements OnInit {
 
         const request = {...this.dias[index], accion: 2};
         //request.activo = request.activo;
-        this._diaService.crearDia(request).subscribe(() => this.buscar());
+        this._diaService.crearDia(request).subscribe(() => this.cargarDias());
 
       }
 
     });
 
   }
-  buscarCarrera() {
+
+  public cambioCarrera(): void{
+    this.jornadas = [];
+    this.dias = [];
+    this.jornada = undefined;
+    this.cargarJornadas();
+  }
+
+  public cargarJornadas():void {
     if (this.carrera) {
       this._jornadasService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
     }
   }
-  buscar() {
+
+  public cargarDias():void {
     if (this.jornada) {
       this._diaService.listDias(this.carrera, this.jornada).subscribe(res => { this.dias = res; });
     }
