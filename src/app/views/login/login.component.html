@@ -7,7 +7,7 @@
             <div class="card p-4">
               <div class="card-body">
 
-                <form (ngSubmit)="onSubmit()" [formGroup]="formLogin">
+                <form (ngSubmit)="onSubmit()" [formGroup]="formLogin" id="form-login">
                   <h1>Iniciar sesión</h1>
                   <hr>
                   <div (click)="onCloseErrorAlert()" *ngIf="error" class="alert alert-danger fade show" role="alert">
@@ -31,7 +31,14 @@
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <input [disabled]="!formLogin.valid"  type="submit" value="Entrar" class="btn btn-primary px-4">
+                      <button  [disabled]="!formLogin.valid || procesandoLogin"
+                               id="btn-login" form="form-login" class="btn btn-primary px-4">
+
+                          <span *ngIf="procesandoLogin" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          {{ textBtnLogin }}
+
+                      </button>
+<!--                      <input id="btn-login" [disabled]="!formLogin.valid"  type="submit" value="Entrar" class="btn btn-primary px-4" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Autenticando" >-->
                     </div>
                   </div>
                 </form>
