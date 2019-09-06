@@ -28,6 +28,8 @@ export class AsignacionesComponent implements OnInit {
   public asignaciones:IAsignacion[]=[];
   public asignacionSeleccionada = null;// asignacion seleccionada en la lista, con un click se selecciona y volviendo a hacer click se deselecciona
 
+  public cargandoAsignaciones:boolean = false;
+  public textoBtnFiltrar:string = 'Filtrar';
 
   public carreras:any[]=[];
   public pensums:any[]=[];
@@ -302,6 +304,9 @@ export class AsignacionesComponent implements OnInit {
 
   public onFiltrar():void {
 
+    this.cargandoAsignaciones = true;
+    this.textoBtnFiltrar = "Cargando...";
+
     this.filtro = this.formFiltro.value;
 
     this.cargarCursos();// se cargan los cursos de la carrera,pensum y ciclo establecidos en el filtro
@@ -321,6 +326,13 @@ export class AsignacionesComponent implements OnInit {
         this.asignacionSeleccionada = null;
         this.asignaciones = res.data
 
+        this.cargandoAsignaciones = false;
+        this.textoBtnFiltrar = "Filtrar";
+
+      }, (error)=>{
+        this.cargandoAsignaciones = false;
+        this.textoBtnFiltrar = "Filtrar";
+        console.error(error);
       });
 
   }

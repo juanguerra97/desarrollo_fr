@@ -92,7 +92,14 @@
 
           <div class="form-row">
             <div class="col">
-              <input [disabled]="!formFiltro.valid" type="submit" value="Filtrar" class="btn btn-primary">
+              <button  [disabled]="!formFiltro.valid || cargandoAsignaciones"
+                       id="btn-login" form="form-filtro" class="btn btn-primary px-4">
+
+                <span *ngIf="cargandoAsignaciones" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                {{ textoBtnFiltrar }}
+
+              </button>
+              <!--<input [disabled]="!formFiltro.valid" type="submit" value="Filtrar" class="btn btn-primary">-->
             </div>
           </div>
 
