@@ -14,7 +14,7 @@
 
           <div class="form-row">
 
-            <div class="col-7">
+            <div class="col-sm-7">
               <div class="form-group">
 
                 <label for="za-carrera">Carrera</label>
@@ -25,7 +25,7 @@
               </div>
             </div>
 
-            <div class="col">
+            <div class="col-sm-5">
               <div class="form-group">
 
                 <label for="ano-pensum">Pensum</label>
@@ -48,25 +48,25 @@
       <button (click)="openModalNuevo(contentNuevo)"
               [disabled]="!formFiltro.valid"
               class="btn btn-primary pull-right mb-3">
-        <em class="fa fa-check mr-2"></em>
+        <em class="fa fa-check"></em>
         Agregar curso</button>
 
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th scope="col">Codigo</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Ciclo</th>
-            <th scope="col">Accion</th>
+            <th scope="col" class="col-sm-2 col-lg-2">Codigo</th>
+            <th scope="col" class="col-sm-6 col-lg-7">Nombre</th>
+            <th scope="col" class="col-sm-2 col-lg-1">Ciclo</th>
+            <th scope="col" class="col-sm-2 col-lg-2">Accion</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let pc of pensumsCursos; let i = index">
-            <th scope="row">{{pc.za_curso}}</th>
-            <td>{{pc.nombre_curso}}</td>
-            <td>{{pc.ciclo}}</td>
-            <td>
+            <td scope="row" class="col-sm-2 col-lg-2">{{pc.za_curso}}</td>
+            <td class="col-sm-6 col-lg-7">{{pc.nombre_curso}}</td>
+            <td class="col-sm-2 col-lg-1">{{pc.ciclo}}</td>
+            <td class="col-sm-2 col-lg-2">
               <button class="btn btn-warning" (click)="openModalEdicion(contentEdicion,i)" title="editar"><em class="fa fa-pencil"></em></button>
               <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
             </td>
