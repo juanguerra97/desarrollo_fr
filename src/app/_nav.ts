@@ -38,7 +38,7 @@ export const navItems: NavData[] = [
   {
     name: 'Asignaciones',
     url: '/asignaciones',
-    icon: 'icon-drop'
+    icon: 'fa fa-university'
   },
   {
     name: 'Bases',
@@ -46,37 +46,37 @@ export const navItems: NavData[] = [
       {
         name: 'Carreras',
         url: '/bases/carreras',
-        icon: 'icon-drop'
+        icon: 'fa fa-graduation-cap'
       },
       {
         name: 'Jornadas',
         url: '/bases/jornadas',
-        icon: 'icon-drop'
+        icon: 'fa fa-calendar-o'
       },
       {
         name: 'Dias',
         url: '/bases/dias-jornada',
-        icon: 'icon-drop'
+        icon: 'icon-calendar'
       },
       {
         name: 'Pensum',
         url: '/bases/pensum',
-        icon: 'icon-drop'
+        icon: 'fa fa-id-card-o'
       },
       {
         name: 'Cursos',
         url: '/cursos',
-        icon: 'icon-drop'
+        icon: 'fa fa-book'
       },
       {
         name: 'Pensum Curso',
         url: '/bases/pensum_curso',
-        icon: 'icon-drop'
+        icon: 'fa fa-table'
       },
       {
         name: 'Catedraticos',
         url: '/bases/catedraticos',
-        icon: 'icon-drop'
+        icon: 'fa fa-address-book'
       }
     ]
   },
@@ -87,17 +87,17 @@ export const navItems: NavData[] = [
       {
         name: 'Planificaciones',
         url: '/reportes/planificacion',
-        icon: 'icon-drop'
+        icon: 'icon-list'
       },
       {
         name: 'Catedraticos',
         url: '/reportes/catedraticos',
-        icon: 'icon-pencil'
+        icon: 'icon-user'
       },
       {
         name: 'Cursos',
         url: '/reportes/cursos',
-        icon: 'icon-pencil'
+        icon: 'fa fa-book'
       }
     ]
   },
