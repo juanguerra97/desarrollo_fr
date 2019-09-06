@@ -125,12 +125,60 @@ export class PlanificacionComponent implements OnInit {
       });*/
 
       let pdf = new jsPDF();
+      let posX = 15, posY = 15;
+      //let o = new myPDF();
+      pdf.setFontSize(20);
+      pdf.fromHTML(`<h1>UNIVERSIDAD MARIANO GALVEZ</h1>`,posX,posY);
+      pdf.setFontSize(17);
 
+      posY += 10;
+      pdf.fromHTML(`<h2>Centro Universitario de Quetzaltenango</h2>`,posX,posY);
+
+      posY += 15;
+      pdf.fromHTML(`<h2>${this.carrera.codigo_carrera}/${this.filtro.ano_pensum}</h2>`,posX,posY);
+
+      posY+= 6;
+      pdf.fromHTML(`<h2>Ingeniería en Sistemas</h2>`,posX,posY);
+
+      pdf.setFontSize(15);
+      posY += 7;
+      pdf.fromHTML(`<h3>${this.jornada.nombre_jornada}</h3>`,posX,posY);
+
+      posY += 5;
+      pdf.fromHTML(`<h4>A&ntilde;o de Pensum ${this.filtro.ano_pensum}</h4>`,posX,posY);
+
+
+      pdf.setFontSize(15);
+      posY += 10;
+      pdf.fromHTML(`<h3>Programaci&oacute;n de cursos</h3>`,posX,posY);
+
+      pdf.setFontSize(15);
+      posY += 6;
+      pdf.fromHTML(`<h4>A&ntilde;o:&nbsp;${this.filtro.ano}</h4>`,posX,posY);
+
+      pdf.fromHTML(`<h4>Ciclo:&nbsp;${this.filtro.no_semestre}</h4>`,posX+25,posY);
+
+      //posY += 7;
+      pdf.fromHTML(`<h4>Secci&oacute;n:&nbsp;${this.filtro.seccion}</h4>`,posX+45,posY);
+
+      posY += 8;
       //let p2 = new myPDF();
       pdf.setFontSize(10);
       pdf.autoTable({
         html:'#tabla-reporte', // id de la tabla
-        theme:'grid'
+        theme:'grid',
+        startY: posY,
+        styles: {
+          lineColor: [3,3,3],
+          textColor: [5,5,5],
+          valign: 'middle',
+          //halign: 'center'
+        }/*,
+        headStyles: {
+          fillColor: null,
+          lineColor: [3,3,3],
+          //lineWidth: 1
+        }*/
       });
       pdf.save('planificacion.pdf');
 

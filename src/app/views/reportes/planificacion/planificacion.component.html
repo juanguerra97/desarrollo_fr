@@ -65,8 +65,8 @@
             <div class="col">
               <div class="form-group">
 
-                <label for="no-semestre">Semestre</label>
-                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="No. Semestre" class="form-control">
+                <label for="no-semestre">Ciclo</label>
+                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="Ciclo" class="form-control">
                 <!--              <select formControlName="no_semestre" id="no-semestre" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -115,7 +115,7 @@
           </thead>-->
           <tbody>
 
-          <ng-template [ngIf]="filtro != null">
+          <!--<ng-template [ngIf]="filtro != null">
             <tr>
               <td colspan="4">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</td>
             </tr>
@@ -138,39 +138,46 @@
               <td colspan="4"></td>
             </tr>
 
-          </ng-template>
+          </ng-template>-->
 
-          <tr>
-            <td>Dia</td>
-            <td>Hora</td>
-            <td>Curso</td>
-            <td>Profesor</td>
-          </tr>
+          <ng-template [ngIf]="filtro != null && this.dias.length > 0">
+            <tr>
+              <td>Dia</td>
+              <td>Hora</td>
+              <td>Curso</td>
+              <td>Profesor</td>
+            </tr>
+          </ng-template>
 
           <ng-template ngFor let-dia [ngForOf]="dias">
             <tr>
               <td [rowSpan]="asignaciones[dia].length" style="text-align: center; vertical-align: middle;">{{dia}}</td>
               <td style="text-align: left; vertical-align: middle;">{{ asignaciones[dia][0].hora_inicio | slice:0:5}}-{{asignaciones[dia][0].hora_fin | slice:0:5}}</td>
               <td>
-                {{ asignaciones[dia][0].za_curso + ' ' +  asignaciones[dia][0].nombre_curso}}
-                <ng-template [ngIf]="asignaciones[dia][0].usa_laboratorio.data == 1">
-                  <span>*</span>
-                </ng-template>
+
+                {{asignaciones[dia][0].za_curso + ' ' + asignaciones[dia][0].nombre_curso}}
+                  <ng-template [ngIf]="asignaciones[dia][0].usa_laboratorio == 1">
+                    <span>*</span>
+                  </ng-template>
+
               </td>
               <td>
-                {{ asignaciones[dia][0].za_profesor + ' ' + asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}
+                {{asignaciones[dia][0].za_profesor + ' ' + asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}
               </td>
             </tr>
             <tr *ngFor="let asig of asignaciones[dia].slice(1,asignaciones[dia].length)">
               <td style="text-align: left; vertical-align: middle;">{{ asig.hora_inicio | slice:0:5 }}-{{asig.hora_fin | slice:0:5 }}</td>
               <td>
-                {{ asig.za_curso + ' ' +  asig.nombre_curso }}
-                <ng-template [ngIf]="asig.usa_laboratorio.data == 1">
-                  <span>*</span>
-                </ng-template>
+
+                {{asig.za_curso + ' ' + asig.nombre_curso }}
+                  <ng-template [ngIf]="asig.usa_laboratorio == 1">
+                    <span>*</span>
+                  </ng-template>
+
               </td>
               <td>
-                {{ asig.za_profesor + ' ' + asig.nombres  + ' '  + asig.apellidos }}
+                {{asig.za_profesor + ' ' + asig.nombres  + ' '  + asig.apellidos }}
+
               </td>
             </tr>
           </ng-template>
@@ -179,7 +186,7 @@
         </table>
       </div>
 
-      <ng-template [ngIf]="filtro != null">
+      <ng-template [ngIf]="filtro != null && dias.length > 0">
         <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
       </ng-template>
 
