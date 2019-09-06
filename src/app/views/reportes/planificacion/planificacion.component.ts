@@ -33,6 +33,12 @@ export class PlanificacionComponent implements OnInit {
   public carrera:any;
   public jornada:any;
 
+  public cargandoPlanificacion:boolean = false;
+  public textoBtnVerPlanificacion:string = 'Ver planificacion';
+
+  public exportandoPdf:boolean = false;
+  public textoBtnExpPdf: string = 'Exportar a PDF';
+
   private PosicionDia = {
     'DOMINGO': 1,
     'LUNES': 2,
@@ -106,6 +112,9 @@ export class PlanificacionComponent implements OnInit {
 
   public onFiltrar():void {
 
+    this.cargandoPlanificacion = true;
+    this.textoBtnVerPlanificacion = 'Cargando...';
+
     this.filtro = this.formFiltro.value;
 
     this.carrera = this.carreras[this.carreras.findIndex(carr=>carr.za_carrera == this.filtro.za_carrera)];
@@ -117,12 +126,8 @@ export class PlanificacionComponent implements OnInit {
 
   public guardarPdf():void {
 
-    /*html2canvas(document.getElementById('tabla-reporte'))
-      .then(canvas => {
-        let pdf = new jsPDF('p','mm','a4');
-        pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0, 208, canvas.height * 208 / canvas.width);
-        pdf.save('planificacion.pdf');
-      });*/
+    this.exportandoPdf = true;
+    this.textoBtnExpPdf = 'Exportando...';
 
       let pdf = new jsPDF();
       let posX = 15, posY = 15;
@@ -182,6 +187,9 @@ export class PlanificacionComponent implements OnInit {
       });
       pdf.save('planificacion.pdf');
 
+    this.exportandoPdf = false;
+    this.textoBtnExpPdf = 'Exportar a PDF';
+
   }
 
   public cargarAsignaciones():void {
@@ -192,6 +200,13 @@ export class PlanificacionComponent implements OnInit {
         this.asignaciones = groupBy(res.data,'dia');
         this.dias = Object.keys(this.asignaciones).sort((dia1,dia2)=>this.PosicionDia[dia1]-this.PosicionDia[dia2]);
 
+        this.cargandoPlanificacion = false;
+        this.textoBtnVerPlanificacion = 'Ver planificacion';
+
+      }, (error:any)=>{
+        this.cargandoPlanificacion = false;
+        this.textoBtnVerPlanificacion = 'Ver planificacion';
+        console.error(error);
       });
 
   }
