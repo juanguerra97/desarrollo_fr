@@ -18,7 +18,7 @@
               <div class="form-group">
 
                 <label for="za-carrera">Carrera</label>
-                <select (change)="cargarPensumsCarrera()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                <select (change)="onCambioCarrera()" formControlName="za_carrera" id="za-carrera" class="custom-select">
                   <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
                 </select>
 

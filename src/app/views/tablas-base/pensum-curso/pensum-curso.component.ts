@@ -154,6 +154,13 @@ export class PensumCursoComponent implements OnInit {
 
   }
 
+  public onCambioCarrera(){
+    this.pensumsCarrera = [];
+    this.pensumsCursos = [];
+    this.formFiltro.get('ano_pensum').reset();
+    this.cargarPensumsCarrera();
+  }
+
   // carga los pensums de la carrera seleccionada
   public cargarPensumsCarrera():void {
     this._pensumService.listPensums(this.formFiltro.value.za_carrera)
@@ -163,8 +170,10 @@ export class PensumCursoComponent implements OnInit {
   // carga las relaciones pensum-curso filtrados por carrera y pensum
   // solo muestra los cursos de la carrera y pensum seleccionados
   public cargarPensumsCursos():void {
-    this.cursoPensumService.listPensumsCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum)
-      .subscribe((res:any)=>this.pensumsCursos = res);
+    if(this.formFiltro.get('za_carrera').valid){
+      this.cursoPensumService.listPensumsCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum)
+        .subscribe((res:any)=>this.pensumsCursos = res);
+    }
   }
 
 }
