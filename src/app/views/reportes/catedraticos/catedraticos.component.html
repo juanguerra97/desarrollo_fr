@@ -1,15 +1,111 @@
-<div class="animated fadeIn">
-  <div class="card">
+<div class="card">
     <div class="card-header">
-      <div class="h3">Title</div>
+      <div class="h3">Catedraticos</div>
     </div>
     <div class="card-body">
-      Content
+        <form class="form-rep" #formRep="ngForm" (ngSubmit)="OnEnviar(formRep)" >
+            <div class="form-group col-md-6">
+            <label for="Codigo_catedratico">Catedratico</label>
+              <select [(ngModel)]="this.reporte2Service.selreporte2.Codigo_catedratico"
+                name="Codigo_catedratico" id="Codigo_catedratico"
+                      placeholder="Codigo Catedratico" class="custom-select custom-select-lg">
+                <!--<option value="0" [selected]="true">Seleccione catedratico</option>-->
+                <option *ngFor="let c of catedraticos" [ngValue]="c.za_profesor">
+                  {{ c.za_profesor + ' ' + c.nombres + ' ' + c.apellidos}}
+                </option>
+              </select>
+              <!--<input type="number" name="Codigo_catedratico" id="Codigo_catedratico" placeholder="Codigo Catedratico" class="form-control"
+              [(ngModel)]="this.reporte2Service.selreporte2.Codigo_catedratico">-->
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="anio">A&ntilde;o</label>
+                      <input type="number" name="anio" id="anio" placeholder="A&ntilde;o" class="form-control"
+                      [(ngModel)]="this.reporte2Service.selreporte2.anio">
+                </div>
+                <div class="form-group col-md-3">
+                        <label for="no_semestre">N&uacute;mero de Semestre</label>
+                  <select [(ngModel)]="this.reporte2Service.selreporte2.no_semestre"
+                          name="no_semestre" id="no_semestre" class="custom-select">
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                  </select>
+                         <!-- <input type="number" name="no_semestre" id="no_semestre" placeholder="N&uacute;mero de Semestre" class="form-control"
+                          [(ngModel)]="this.reporte2Service.selreporte2.no_semestre">-->
+                </div>
+
+            </div>
+            <div>
+              <button class="btn btn-primary" >Consultar</button>
+            </div>
+          </form>
+
+      <div class="table-responsive mt-3">
+        <table id="tabla-reporte" class="table table-bordered">
+         <!-- <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Carrera</th>
+            <th scope="col">Cursos</th>
+            <th scope="col">Hora de Inicio</th>
+            <th scope="col">Hora de fin</th>
+          </tr>
+          </thead>-->
+
+          <tbody>
+
+          <ng-template [ngIf]="conexiones && conexiones.length > 0">
+            <tr>
+              <td colspan="7">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</td>
+            </tr>
+            <tr>
+              <td colspan="7">CENTRO UNIVERSITARIO DE QUETZALTENANGO</td>
+            </tr>
+            <tr>
+              <td colspan="7">Asignaciones de catedratico</td>
+            </tr>
+            <tr>
+              <td colspan="7">A&ntilde;o {{this.filtro.anio}} &nbsp;&nbsp; Semestre {{this.filtro.no_semestre }}</td>
+            </tr>
+          </ng-template>
+
+          <tr>
+            <td scope="col">#</td>
+            <td scope="col">Nombre</td>
+            <td scope="col">Apellido</td>
+            <td scope="col">Carrera</td>
+            <td scope="col">Cursos</td>
+            <td scope="col">Hora de Inicio</td>
+            <td scope="col">Hora de fin</td>
+          </tr>
+
+          <tr *ngFor="let conexion of conexiones;index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{conexion.Nombre}}</td>
+            <td>{{conexion.Apellido}}</td>
+            <td>{{conexion.Carrera}}</td>
+            <td>{{conexion.Curso}}</td>
+            <td>{{conexion.hora_inicio}}</td>
+            <td>{{conexion.hora_fin}}</td>
+          </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template [ngIf]="conexiones && conexiones.length > 0">
+        <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
+      </ng-template>
+
     </div>
+
+
     <div class="card-footer">
       <a routerLink="/" class="btn btn-secondary pull-left">
         <i class="fa fa-close" aria-hidden="true"></i> Regresar
       </a>
     </div>
   </div>
-</div>

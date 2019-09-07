@@ -16,7 +16,7 @@
               <div class="form-group">
 
                 <label for="za-carrera">Carrera</label>
-                <select (change)="cargarJornadas()" formControlName="za_carrera" id="za-carrera" class="custom-select">
+                <select (change)="onCambioCarrera()" formControlName="za_carrera" id="za-carrera" class="custom-select">
                   <option *ngFor="let c of carreras" [ngValue]="c.za_carrera" >{{c.codigo_carrera + ' ' + c.nombre_carrera}}</option>
                 </select>
 
@@ -27,8 +27,10 @@
               <div class="form-group">
 
                 <label for="ano-pensum">Pensum</label>
-                <input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">
-
+                <!--<input formControlName="ano_pensum" type="text" id="ano-pensum" class="form-control" placeholder="Pensum">-->
+                <select formControlName="ano_pensum" id="ano-pensum" class="custom-select">
+                  <option *ngFor="let pen of pensums" [ngValue]="pen.ano_pensum">{{pen.ano_pensum}}</option>
+                </select>
               </div>
             </div>
 
@@ -63,8 +65,8 @@
             <div class="col">
               <div class="form-group">
 
-                <label for="no-semestre">Semestre</label>
-                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="No. Semestre" class="form-control">
+                <label for="no-semestre">Ciclo</label>
+                <input type="number" formControlName="no_semestre" id="no-semestre" placeholder="Ciclo" class="form-control">
                 <!--              <select formControlName="no_semestre" id="no-semestre" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -89,7 +91,14 @@
 
           <div class="form-row">
             <div class="col">
-              <input [disabled]="!formFiltro.valid" type="submit" value="Ver planificacion" class="btn btn-primary">
+              <button  [disabled]="!formFiltro.valid || cargandoPlanificacion"
+                      form="form-filtro" class="btn btn-primary px-4">
+
+                <span *ngIf="cargandoPlanificacion" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                {{ textoBtnVerPlanificacion }}
+
+              </button>
+              <!--<input [disabled]="!formFiltro.valid" type="submit" value="Ver planificacion" class="btn btn-primary">-->
             </div>
           </div>
 
@@ -102,17 +111,49 @@
 
       <!-- TABLA CON LA LISTA DE ASIGNACIONES FILTRADAS POR SECCION -->
       <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
+        <table id="tabla-reporte" class="table table-bordered">
+<!--          <thead>
           <tr>
             <th scope="col">Dia</th>
             <th scope="col">Horario</th>
-            <th scope="col">Asignacion</th>
+            <th scope="col">Curso</th>
+            <th scope="col">Profesor</th>
           </tr>
-          </thead>
+          </thead>-->
           <tbody>
-          <ng-template ngFor="">
 
+          <!--<ng-template [ngIf]="filtro != null">
+            <tr>
+              <td colspan="4">UNIVERSIDAD MARIANO GALVEZ DE GUATEMALA</td>
+            </tr>
+            <tr>
+              <td colspan="4">CENTRO UNIVERSITARIO DE QUETZALTENANGO</td>
+            </tr>
+            <tr>
+              <td colspan="4">{{ carrera.nombre_carrera }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">Pensum:&nbsp;{{ filtro.ano_pensum}}</td>
+              <td colspan="2">Jornada:&nbsp;{{ jornada.nombre_jornada }}</td>
+            </tr>
+            <tr>
+              <td>Ciclo:&nbsp;{{ filtro.no_semestre }}</td>
+              <td>A&ntilde;o:&nbsp;{{ filtro.ano }}</td>
+              <td colspan="2">Secci&oacute;n:&nbsp;{{ filtro.seccion }}</td>
+            </tr>
+            <tr>
+              <td colspan="4"></td>
+            </tr>
+
+          </ng-template>-->
+
+          <ng-template [ngIf]="filtro != null && this.dias && this.dias.length > 0">
+            <tr>
+              <td>Dia</td>
+              <td>Hora</td>
+              <td>Curso</td>
+              <td>Profesor</td>
+            </tr>
           </ng-template>
 
           <ng-template ngFor let-dia [ngForOf]="dias">
@@ -120,15 +161,30 @@
               <td [rowSpan]="asignaciones[dia].length" style="text-align: center; vertical-align: middle;">{{dia}}</td>
               <td style="text-align: left; vertical-align: middle;">{{ asignaciones[dia][0].hora_inicio | slice:0:5}}-{{asignaciones[dia][0].hora_fin | slice:0:5}}</td>
               <td>
-                <p>{{ asignaciones[dia][0].nombre_curso}}</p>
-                <p>{{ asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}</p>
+
+                {{asignaciones[dia][0].za_curso + ' ' + asignaciones[dia][0].nombre_curso}}
+                  <ng-template [ngIf]="asignaciones[dia][0].usa_laboratorio == 1">
+                    <span>*</span>
+                  </ng-template>
+
+              </td>
+              <td>
+                {{asignaciones[dia][0].za_profesor + ' ' + asignaciones[dia][0].nombres  + ' '  + asignaciones[dia][0].apellidos }}
               </td>
             </tr>
             <tr *ngFor="let asig of asignaciones[dia].slice(1,asignaciones[dia].length)">
               <td style="text-align: left; vertical-align: middle;">{{ asig.hora_inicio | slice:0:5 }}-{{asig.hora_fin | slice:0:5 }}</td>
               <td>
-                <p>{{ asig.nombre_curso }}</p>
-                <p>{{ asig.nombres  + ' '  + asig.apellidos }}</p>
+
+                {{asig.za_curso + ' ' + asig.nombre_curso }}
+                  <ng-template [ngIf]="asig.usa_laboratorio == 1">
+                    <span>*</span>
+                  </ng-template>
+
+              </td>
+              <td>
+                {{asig.za_profesor + ' ' + asig.nombres  + ' '  + asig.apellidos }}
+
               </td>
             </tr>
           </ng-template>
@@ -137,10 +193,20 @@
         </table>
       </div>
 
+      <ng-template [ngIf]="filtro != null && dias && dias.length > 0">
+        <button  [disabled]="exportandoPdf" (click)="guardarPdf()" class="btn btn-primary px-4">
+
+          <span *ngIf="exportandoPdf" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          {{ textoBtnExpPdf }}
+
+        </button>
+        <!--<button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>-->
+      </ng-template>
 
     </div>
 
     <div class="card-footer">
+
       <a routerLink="/" class="btn btn-secondary pull-left">
         <i class="fa fa-close" aria-hidden="true"></i> Regresar
       </a>

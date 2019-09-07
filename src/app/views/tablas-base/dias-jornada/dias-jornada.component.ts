@@ -32,16 +32,31 @@ export class DiasJornadaComponent implements OnInit {
       }
     }
     Swal.fire({
-      title: 'Nueva Dia',
+      title: 'Nuevo Dia',
       html:
         '<form id="modal-form">' +
         'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
         (this.carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
         '</input>' +
-        'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
+        '<div class="form-group">' +
+        '<label for="za_jornada">Jornada</label>' +
+        '<select id="za_jornada" placeholder="Jornada" class="custom-select custom-select-lg">' +
         optionsJornada +
         '</select>' +
-        '<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
+        '</div>' +
+        '<div class="form-group">' +
+        //'<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
+        '<label for="nombre-dia">Dia:</label> '+
+        '<select id="nombre-dia" class="custom-select custom-select-lg">' +
+          '<option>LUNES</option>' +
+          '<option>MARTES</option>' +
+          '<option>MIERCOLES</option>' +
+          '<option>JUEVES</option>' +
+          '<option>VIERNES</option>' +
+          '<option>SABADO</option>' +
+          '<option>DOMINGO</option>' +
+        '</select>' +
+        '</div>' +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -55,8 +70,7 @@ export class DiasJornadaComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._diaService.crearDia(res.value).subscribe(() => {this.buscar();
-      });
+      this._diaService.crearDia(res.value).subscribe(() => this.cargarDias());
     });
   }
 
@@ -85,7 +99,7 @@ export class DiasJornadaComponent implements OnInit {
         '</select>' +
         '<input id="dia"  placeholder="Dia" class="swal2-input" value="' + dia.dia + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(dia.activo.data[0] === 1) ? 'checked' : ''}> activo` +
+        `${(dia.activo === 1) ? 'checked' : ''}> activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -100,22 +114,49 @@ export class DiasJornadaComponent implements OnInit {
       },
     }).then(res => {
       this._diaService.crearDia(res.value).subscribe(() => {
-        this.buscar();
+        this.cargarDias();
       });
     });
   }
 
   eliminar(index) {
-    const request = {...this.dias[index], accion: 2};
-    request.activo = request.activo.data;
-    this._diaService.crearDia(request).subscribe(() => this.buscar());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar un dia',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.dias[index], accion: 2};
+        //request.activo = request.activo;
+        this._diaService.crearDia(request).subscribe(() => this.cargarDias());
+
+      }
+
+    });
+
   }
-  buscarCarrera() {
+
+  public cambioCarrera(): void{
+    this.jornadas = [];
+    this.dias = [];
+    this.jornada = undefined;
+    this.cargarJornadas();
+  }
+
+  public cargarJornadas():void {
     if (this.carrera) {
       this._jornadasService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
     }
   }
-  buscar() {
+
+  public cargarDias():void {
     if (this.jornada) {
       this._diaService.listDias(this.carrera, this.jornada).subscribe(res => { this.dias = res; });
     }

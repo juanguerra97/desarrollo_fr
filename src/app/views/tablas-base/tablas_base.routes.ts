@@ -32,21 +32,21 @@ export const TABLAS_BASES_ROUTES: Routes = [
   {
     path: 'dias-jornada',
     data: {
-      title: 'dias'
+      title: 'Dias'
     },
     component: DiasJornadaComponent
   },
   {
     path: 'pensum_curso',
     data: {
-      title: 'pensum-curso'
+      title: 'Pensum Curso'
     },
     component: PensumCursoComponent
   },
   {
     path: 'catedraticos',
     data: {
-      title: 'catedraticos'
+      title: 'Catedraticos'
     },
     component: CatedraticosComponent
   }

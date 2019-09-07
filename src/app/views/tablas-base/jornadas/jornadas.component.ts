@@ -72,7 +72,7 @@ export class JornadasComponent implements OnInit {
         '</select>' +
         '<input title="nombre" id="nombre_jornada"  placeholder="Nombre" class="swal2-input" value="' + jorn.nombre_jornada + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(jorn.activo.data[0] === 1) ? 'checked' : ''}> activo` +
+        `${(jorn.activo === 1) ? 'checked' : ''}> activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
@@ -92,9 +92,27 @@ export class JornadasComponent implements OnInit {
   }
 
   eliminar(index) {
-    const request = {...this.jornadas[index], accion: 2};
-    request.activo = request.activo.data;
-    this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
+
+    Swal.fire({
+      title: 'Estas a punto de eliminar una jornada',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        const request = {...this.jornadas[index], accion: 2};
+        //request.activo = request.activo;
+        this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
+
+      }
+
+    });
+
   }
   buscar() {
     if (this.carrera) {

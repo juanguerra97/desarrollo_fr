@@ -2,14 +2,31 @@
   [navbarBrandRouterLink]="['/dashboard']"
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/umg.jpg', width: 89, height: 25, alt: 'CoreUI Logo'}"
-  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/logoneg.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
-  [asideMenuToggler]="'lg'">
-
+  [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Inicio</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="/#/asignaciones">Asignación</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="https://umg.edu.gt">UMG</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <button (click)="this.authService.logOut()" type="button" class="btn btn-primary"><i class="fa fa-sign-out" aria-hidden="true"></i>
+      Salir</button>
+  </ul>
+  <!-- Contenido navbar i-->
 </app-header>
 <div class="app-body">
-  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar [fixed]="true" [display]="'lg'">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
   <!-- Main content -->
   <main class="main">
@@ -17,24 +34,22 @@
     <!-- breaking change 'cui-breadcrumb' -->
     <cui-breadcrumb>
       <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Inicio</a>
+          <a class="btn" href="/#/reportes/planificacion"><i class="icon-settings"></i> &nbsp;Reportes</a>
+        </div>
+      </li>
     </cui-breadcrumb>
-    <!-- deprecation warning for 'app-breadcrumb' -->
-    <!--<ol class="breadcrumb">-->
-      <!--<app-breadcrumb></app-breadcrumb>-->
-      <!--&lt;!&ndash; Breadcrumb Menu&ndash;&gt;-->
-      <!--<li class="breadcrumb-menu d-md-down-none">-->
-        <!--<div class="btn-group" role="group" aria-label="Button group with nested dropdown">-->
-          <!--<a class="btn" href="#"><i class="icon-speech"></i></a>-->
-          <!--<a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>-->
-          <!--<a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>-->
-        <!--</div>-->
-      <!--</li>-->
-    <!--</ol>-->
+
     <div class="container-fluid">
-      <router-outlet></router-outlet>
-    </div><!-- /.container-fluid -->
+      <router-outlet><h1></h1></router-outlet>
+    </div>
   </main>
+  <app-aside [fixed]="false" [display]="false">
+  </app-aside>
 </div>
+
 <app-footer>
   <span>Ing en Sistemas 8vo semestre</span>
   <span class="ml-auto">Desarrollo Web</span>

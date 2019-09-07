@@ -15,9 +15,7 @@ export class CursosComponent implements OnInit {
   public cursos: any;
   public curso: any;
   public res: {
-    activo: {
-      data: any
-    }
+    activo:number
   };
   public form = {
     za_curso: 0,
@@ -70,7 +68,7 @@ export class CursosComponent implements OnInit {
   }
 
   convertTobool(obj: any) {
-    return obj.data[0];
+    return obj;
   }
 
   openModal(content) {

@@ -4,7 +4,7 @@ import {ReportesRoutes} from './reportes.routes';
 import { PlanificacionComponent } from './planificacion/planificacion.component';
 import { CatedraticosComponent } from './catedraticos/catedraticos.component';
 import { CursosComponent } from './cursos/cursos.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -13,7 +13,8 @@ import {ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     ReportesRoutes,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ReportesModule { }
