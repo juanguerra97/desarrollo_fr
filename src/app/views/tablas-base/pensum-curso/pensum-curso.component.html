@@ -55,18 +55,18 @@
         <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th scope="col" class="col-2">Codigo</th>
-            <th scope="col" class="col-sm-6 col-lg-7">Nombre</th>
-            <th scope="col" class="col-sm-2 col-lg-1">Ciclo</th>
-            <th scope="col" class="col-sm-2 col-lg-2">Accion</th>
+            <th scope="col" >Codigo</th>
+            <th scope="col" >Nombre</th>
+            <th scope="col" >Ciclo</th>
+            <th scope="col">Accion</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let pc of pensumsCursos; let i = index">
-            <td class="col-2">{{pc.za_curso}}</td>
-            <td class="col-sm-6 col-lg-7">{{pc.nombre_curso}}</td>
-            <td class="col-sm-2 col-lg-1">{{pc.ciclo}}</td>
-            <td class="col-sm-2 col-lg-2">
+            <td >{{pc.za_curso}}</td>
+            <td >{{pc.nombre_curso}}</td>
+            <td >{{pc.ciclo}}</td>
+            <td >
               <button class="btn btn-warning" (click)="openModalEdicion(contentEdicion,i)" title="editar"><em class="fa fa-pencil"></em></button>
               <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
             </td>
