@@ -1,6 +1,6 @@
 
 export interface IDia {
-  za_dia: number;
+  za_dia?: number;
   dia: string;
   activo: boolean;
 }
