@@ -5,6 +5,6 @@ export interface ICatedratico {
   nombres: string;
   apellidos: string;
   profesion: string;
-  activo: boolean;
+  activo: number|boolean;
 
 }
