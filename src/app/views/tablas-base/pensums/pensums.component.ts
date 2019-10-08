@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {PensumService} from '../../../services/pensum.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CarrerasService} from '../../../../services/carreras.service';
 import Swal from "sweetalert2";
+
+import {PensumService} from '../../../services/pensum.service';
+import {CarrerasService} from '../../../../services/carreras.service';
+import {ICarrera} from '../../../models/icarrera.model';
+import {IServerResponse} from '../../../models/iserverresponse.model';
 
 @Component({
   selector: 'app-pensums',
@@ -10,6 +13,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./pensums.component.scss']
 })
 export class PensumsComponent implements OnInit {
+
   public pensums: any;
   public pensum: any;
   public form = {
@@ -19,8 +23,8 @@ export class PensumsComponent implements OnInit {
     activo: true,
     accion: 1
   };
-  public carreras: any;
-  public za_carrera: 0;
+  public carreras: ICarrera[] = [];
+  public za_carrera:number = 0;
 
   clearForm() {
     this.form = {
@@ -32,12 +36,25 @@ export class PensumsComponent implements OnInit {
     };
   }
 
-  constructor(private _pensumService: PensumService, private modalService: NgbModal, private _carreraService: CarrerasService) {
-    this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
-  }
+  constructor(
+    private _pensumService: PensumService,
+    private modalService: NgbModal,
+    private _carreraService: CarrerasService)
+  { }
 
 
   ngOnInit() {
+
+    // se cargan las carreras
+    this._carreraService.listCarreras()
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.carreras = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+
     this.getPensums();
   }
 

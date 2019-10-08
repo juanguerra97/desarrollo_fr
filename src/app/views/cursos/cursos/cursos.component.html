@@ -74,11 +74,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!curso" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+    <button *ngIf="!curso" value="Guardar" class="btn btn-success btn-lg" (click)="guardarNuevo()">
       <em class="fa fa-save mr-3"></em>
       Guardar
     </button>
-    <button *ngIf="curso" value="Editar" class="btn btn-warning btn-lg">
+    <button *ngIf="curso" (click)="guardarEdicion()" value="Editar" class="btn btn-warning btn-lg">
       <em class="fa fa-pencil mr-3"></em>
       Editar
     </button>

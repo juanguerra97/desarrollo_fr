@@ -3,6 +3,8 @@ import {CarrerasService} from '../../../../services/carreras.service';
 import Swal from 'sweetalert2';
 import {DiasJornadaService} from '../../../services/dias-jornada.service';
 import {JornadasService} from '../../../services/jornadas.service';
+import {ICarrera} from '../../../models/icarrera.model';
+import {IServerResponse} from '../../../models/iserverresponse.model';
 declare var $: any;
 
 @Component({
@@ -12,15 +14,29 @@ declare var $: any;
 })
 export class DiasJornadaComponent implements OnInit {
   public dias: any;
-  public carreras: any;
+  public carreras: ICarrera[];
   public jornadas: any;
-  public carrera: any;
+  public carrera: ICarrera;
   public jornada: any;
-  constructor(private _diaService: DiasJornadaService, private _carrerasService: CarrerasService,
-              private _jornadasService: JornadasService) { }
+
+  constructor(
+    private _diaService: DiasJornadaService,
+    private _carrerasService: CarrerasService,
+    private _jornadasService: JornadasService
+  ) { }
 
   ngOnInit() {
-    this._carrerasService.listCarreras().subscribe(res => { this.carreras = res; });
+
+    // se cargan las carreras
+    this._carrerasService.listCarreras()
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.carreras = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+
   }
   // nuevo modelo
   openModal(id: string) {

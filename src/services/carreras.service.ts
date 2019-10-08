@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {CarreraInterface} from '../app/views/interfaces/carreraInterface';
+import {Observable} from 'rxjs';
+import {IServerResponse} from '../app/models/iserverresponse.model';
+import {ICarrera} from '../app/models/icarrera.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +11,31 @@ import {CarreraInterface} from '../app/views/interfaces/carreraInterface';
 export class CarrerasService {
   private urlApi = environment.apiURL;
   private urlComponente =  `${this.urlApi}cruds/carreras/`;
+
   constructor(private http: HttpClient) { }
 
-  crearCarrera(carrera: CarreraInterface) {
+  public crearCarrera(carrera: ICarrera):Observable<IServerResponse> {
     const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera);
+    return this.http.post<IServerResponse>(url, carrera);
   }
 
-  listCarreras() {
+  public listCarreras(): Observable<IServerResponse> {
     const url = `${this.urlComponente}`;
-    return this.http.get(url);
+    return this.http.get<IServerResponse>(url);
   }
 
-  eliminarCarrera(carrera: CarreraInterface) {
-    const url = `${this.urlComponente}`;
-    return this.http.post(url, carrera);
+  public selectCarrera(za_carrera:number): Observable<IServerResponse> {
+    const url = `${this.urlComponente}${za_carrera}`;
+    return this.http.get<IServerResponse>(url);
+  }
+
+  public editarCarrera(za_carrera:number, datos:ICarrera): Observable<IServerResponse> {
+    const url = `${this.urlComponente}${za_carrera}`;
+    return this.http.put<IServerResponse>(url,datos);
+  }
+
+  public eliminarCarrera(za_carrera:number): Observable<IServerResponse> {
+    const url = `${this.urlComponente}${za_carrera}`;
+    return this.http.delete<IServerResponse>(url);
   }
 }

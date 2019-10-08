@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { CursosService } from '../../../services/cursos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CarrerasService} from '../../../../services/carreras.service';
+import {IServerResponse} from '../../../models/iserverresponse.model';
+import {ICurso} from '../../../models/icurso.model';
+import {ICarrera} from '../../../models/icarrera.model';
 
 @Component({
   selector: 'app-cursos',
@@ -12,45 +15,50 @@ import {CarrerasService} from '../../../../services/carreras.service';
   styleUrls: ['./cursos.component.scss']
 })
 export class CursosComponent implements OnInit {
-  public cursos: any;
-  public curso: any;
+
+  public cursos: ICurso[] = [];
+  public curso: ICurso = null;
+
   public res: {
     activo:number
   };
-  public form = {
+
+  public form:ICurso = {
     za_curso: 0,
     nombre_curso: '',
     usa_laboratorio: true,
-    activo: true,
-    accion: 1
+    activo: true
   };
-  public carreras: any;
+
+  public carreras: ICarrera[] = [];
   public za_carrera: 0;
-  vaciarForm() {
-    this.form = {
-      za_curso: 0,
-      nombre_curso: '',
-      usa_laboratorio: true,
-      activo: true,
-      accion: 1
-    };
-  }
 
-
-  constructor(private _cursoService: CursosService, private modalService: NgbModal, private _carreraService: CarrerasService) {
-    this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
-  }
+  constructor(
+    private _cursoService: CursosService,
+    private _carreraService: CarrerasService,
+    private modalService: NgbModal,
+  ) { }
 
 
   ngOnInit() {
-    this.getCursos();
+
+    // se cargan las carreras
+    this._carreraService.listCarreras().subscribe((res:IServerResponse) => {
+      if(res.status == 200){
+        this.carreras = res.data;
+      } else {
+        console.error(res);
+      }
+    }, error => console.error(error));
+
+    this.cargarCursos();
   }
 
   editar(content, index) {
-    this.form = this.cursos[index];
-    this.form.accion = 1;
-    this.form.activo = this.convertTobool(this.form.activo);
-    this.form.usa_laboratorio = this.convertTobool(this.form.usa_laboratorio);
+    this.form = JSON.parse(JSON.stringify(this.cursos[index]));
+    this.curso = this.cursos[index];
+    this.form.activo = this.form.activo != 0 ? true : false;
+    this.form.usa_laboratorio = this.form.usa_laboratorio != 0 ? true : false;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -60,11 +68,18 @@ export class CursosComponent implements OnInit {
   }
 
   eliminar(index) {
+
     this.form = this.cursos[index];
-    this.form.activo = this.convertTobool(this.form.activo);
-    this.form.usa_laboratorio = this.convertTobool(this.form.usa_laboratorio);
-    const request = {...this.form, accion: 2};
-    this._cursoService.crearCurso(request).subscribe(this.getCursos);
+    /*this.form.activo = this.convertTobool(this.form.activo);
+    this.form.usa_laboratorio = this.convertTobool(this.form.usa_laboratorio);*/
+    this._cursoService.eliminarCurso(this.cursos[index].za_curso)
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.cargarCursos();
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
   }
 
   convertTobool(obj: any) {
@@ -82,18 +97,56 @@ export class CursosComponent implements OnInit {
     });
   }
 
-  guardar() {
+  public guardarNuevo():void {
+
+    this.form.usa_laboratorio = this.form.usa_laboratorio ? 1 : 0;
+    this.form.activo = this.form.activo ? 1 : 0;
+    this._cursoService.crearCurso(this.form)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarCursos();
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
     this.modalService.dismissAll();
 
-    this._cursoService.crearCurso(this.form).subscribe(this.getCursos);
   }
 
-  getCursos = () => {
-    setTimeout(() => {
-      this._cursoService.listCursos().subscribe((res) => {
-        this.cursos = res;
-      });
-    }
-    , 1000);
+  public guardarEdicion(): void {
+
+    this.form.usa_laboratorio = this.form.usa_laboratorio ? 1 : 0;
+    this.form.activo = this.form.activo ? 1 : 0;
+    this._cursoService.editarCurso(this.form.za_curso,this.form)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarCursos();
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+    this.modalService.dismissAll();
   }
+
+  private cargarCursos():void {
+
+    this._cursoService.listCursos().subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cursos = res.data;
+        } else {
+          console.error(res);
+        }
+    }, error => console.error(error));
+
+  }
+
+  vaciarForm():void {
+
+    this.form.za_curso =  0;
+    this.form.nombre_curso = '';
+    this.form.usa_laboratorio = true;
+    this.form.activo = true;
+
+  }
+
 }

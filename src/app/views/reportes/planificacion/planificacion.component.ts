@@ -1,19 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { groupBy }  from 'lodash';
+
 import {ISeccion} from '../../../models/iseccion.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {JornadasService} from '../../../services/jornadas.service';
 import {AsigService} from '../../../services/asig.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
-import { groupBy }  from 'lodash';
- import * as myPDF from 'jspdf';
 import {PensumService} from '../../../services/pensum.service';
-// import 'jspdf-autotable';
-// import html2canvas from 'html2canvas';
-
-// import 'jspdf';
-// import 'jspdf-autotable';
-// declare let jsPDF;
+import {ICarrera} from '../../../models/icarrera.model';
 
 declare var jsPDF: any;
 
@@ -27,10 +22,10 @@ export class PlanificacionComponent implements OnInit {
   public filtro:ISeccion=null; // seccion a la que deberán pertenecer las asignaciones
   public asignaciones:any={};
   public dias:any;
-  public carreras:any[]=[];
+  public carreras:ICarrera[]=[];
   public pensums:any[]=[];
   public jornadas:any[]=[];
-  public carrera:any;
+  public carrera:ICarrera;
   public jornada:any;
 
   public cargandoPlanificacion:boolean = false;
@@ -107,7 +102,15 @@ export class PlanificacionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carrerasService.listCarreras().subscribe((datos:any)=>this.carreras=datos);
+
+    this.carrerasService.listCarreras().subscribe((res:IServerResponse)=>{
+      if(res.status == 200){
+        this.carreras = res.data;
+      } else {
+        console.error(res);
+      }
+    }, error => console.error(error));
+
   }
 
   public onFiltrar():void {

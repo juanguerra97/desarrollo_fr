@@ -4,7 +4,7 @@
       <div class="h3">Catedraticos</div>
     </div>
     <div class="card-body">
-          <button (click)="openModal(content)"
+          <button (click)="openModalNuevo(content)"
                   class="btn btn-primary pull-right mb-3">
             <em class="fa fa-check mr-2"></em>
             Nuevo
@@ -30,7 +30,7 @@
             <td>{{catedratico.profesion}}</td>
             <td>{{catedratico.activo}}</td>
             <td>
-              <button class="btn btn-warning" (click)="editar(i, content)" title="editar"><em class="fa fa-pencil"></em></button>
+              <button class="btn btn-warning" (click)="openModalEdicion(i, content)" title="editar"><em class="fa fa-pencil"></em></button>
               <button class="btn btn-danger"  (click)="eliminar(i)" title="eliminar"><em class="fa fa-trash"></em></button>
             </td>
           </tr>
@@ -79,11 +79,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!catedratico" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+    <button *ngIf="!catedratico" (click)="guardarNuevo()" value="Guardar" class="btn btn-success btn-lg">
       <em class="fa fa-save mr-3"></em>
       Guardar
     </button>
-    <button *ngIf="catedratico" value="Editar" class="btn btn-warning btn-lg">
+    <button *ngIf="catedratico" (click)="guardarEdicion()" value="Editar" class="btn btn-warning btn-lg">
       <em class="fa fa-pencil mr-3"></em>
       Editar
     </button>

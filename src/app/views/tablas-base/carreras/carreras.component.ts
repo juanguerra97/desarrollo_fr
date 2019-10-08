@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {CarrerasService} from '../../../../services/carreras.service';
+import {IServerResponse} from '../../../models/iserverresponse.model';
+import {ICarrera} from '../../../models/icarrera.model';
 
 declare var $: any;
 
@@ -10,13 +12,14 @@ declare var $: any;
   styleUrls: ['./carreras.component.scss']
 })
 export class CarrerasComponent implements OnInit {
-  public carreras: any;
+  public carreras: ICarrera[] = [];
 
-  constructor(private _carreraService: CarrerasService) {
-  }
+  constructor(
+    private _carreraService: CarrerasService
+  ) { }
 
   ngOnInit() {
-    this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
+    this.cargarCarreras();
   }
 
   editar(index) {
@@ -38,13 +41,17 @@ export class CarrerasComponent implements OnInit {
           codigo_carrera: $('#codigo_carrera').val(),
           nombre_carrera:  $('#nombre_carrera').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
-          accion: 1
         };
       },
     }).then(res => {
-      this._carreraService.crearCarrera(res.value).subscribe(() => {
-        this._carreraService.listCarreras().subscribe(respuesta => { this.carreras = respuesta; });
-      });
+      this._carreraService.editarCarrera(res.value.za_carrera,res.value)
+        .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.cargarCarreras();
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
     });
   }
 
@@ -62,10 +69,14 @@ export class CarrerasComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        const request = {...this.carreras[index], accion: 2};
-        //request.activo = request.activo;
-        this._carreraService.crearCarrera(request).subscribe(() =>
-          this._carreraService.listCarreras().subscribe(res => { this.carreras = res; }));
+        this._carreraService.eliminarCarrera(this.carreras[index].za_carrera)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarCarreras();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
 
       }
 
@@ -87,17 +98,32 @@ export class CarrerasComponent implements OnInit {
           za_carrera: 0,
           codigo_carrera: $('#codigo_carrera').val(),
           nombre_carrera:  $('#nombre_carrera').val(),
-          activo: true,
-          accion: 1
+          activo: 1
 
         };
       },
     }).then(res => {
-      this._carreraService.crearCarrera(res.value).subscribe(
-        () => {
-          this._carreraService.listCarreras().subscribe(respuesta => { this.carreras = respuesta; });
-        }
-      );
+      this._carreraService.crearCarrera(res.value)
+        .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.cargarCarreras();
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
     });
   }
+
+  private cargarCarreras():void {
+
+    this._carreraService.listCarreras().subscribe((res:IServerResponse)=>{
+      if(res.status == 200){
+        this.carreras = res.data;
+      } else {
+        console.error(res);
+      }
+    }, error => console.error(error));
+
+  }
+
 }

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators, ValidatorFn, AbstractControl} from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
 import {IAsignacion} from '../../../models/iasignacion.model';
 import {ISeccion} from '../../../models/iseccion.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-//import {ModalConfirmacionService} from '../../../services/modal-confirmacion.service';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {AsigService} from '../../../services/asig.service';
 import {DiasJornadaService} from '../../../services/dias-jornada.service';
 import {JornadasService} from '../../../services/jornadas.service';
 import {CatedraticosService} from '../../../services/catedraticos.service';
-import {CursosService} from '../../../services/cursos.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {PensumService} from '../../../services/pensum.service';
 import {CursoPensumService} from '../../../services/curso-pensum.service';
-
-import Swal from 'sweetalert2';
+import {ICatedratico} from '../../../models/icatedratico.model';
+import {ICurso} from '../../../models/icurso.model';
 
 @Component({
   selector: 'app-asignaciones',
@@ -35,8 +35,8 @@ export class AsignacionesComponent implements OnInit {
   public pensums:any[]=[];
   public jornadas:any[]=[];
   public dias:any[]=[];
-  public catedraticos:any[]=[];
-  public cursos:any[]=[];
+  public catedraticos:ICatedratico[]=[];
+  public cursos:ICurso[]=[];
 
   private TimeRegex:RegExp = /^([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9])(:([0-5]?[0-9]))?)?$/g;
 
@@ -73,18 +73,6 @@ export class AsignacionesComponent implements OnInit {
     ])
   });
 
-  // private controlHoraInicio = new FormControl('',[
-  //   Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-  //   Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
-  //   horaInicioLtHoraFin(this.formAsignacion.get('hora_fin')),
-  // ]);
-
-  // private controlHoraFin = new FormControl('',[
-  //   Validators.required, //Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?')
-  //   Validators.pattern('([0-1]?[0-9]|2[0-3])(:([0-5]?[0-9]))?'),
-  //   horaFinGtHoraInicio(this.formAsignacion.get('hora_inicio'))
-  // ]);
-
   // formulario para editar o ingresar una nueva asignacion
   public formAsignacion = new FormGroup({
     za_curso: new FormControl('0',[
@@ -117,17 +105,32 @@ export class AsignacionesComponent implements OnInit {
     private jornadasService: JornadasService,
     private diasService:DiasJornadaService,
     private catedraticosService:CatedraticosService,
-    private cursosService:CursosService,
     private cursoPensumService:CursoPensumService,
     private asigService: AsigService,
-    private modalService: NgbModal,
-    //private modalConfirmacion:ModalConfirmacionService
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
-    this.carrerasService.listCarreras().subscribe((datos:any)=>this.carreras=datos);
-    // this.cursosService.listCursos().subscribe((datos:any)=>this.cursos=datos);
-    this.catedraticosService.listCatedraticos().subscribe((datos:any)=>this.catedraticos=datos);
+
+    // se cargan las carreras
+    this.carrerasService.listCarreras().subscribe((res:IServerResponse)=>{
+      if(res.status == 200){
+        this.carreras = res.data;
+      } else {
+        console.error(res);
+      }
+    }, error => console.error(error));
+
+    // se cargan los catedraticos
+    this.catedraticosService.listCatedraticos()
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.catedraticos=res.data
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+
   }
 
   public guardarNueva(): void{
@@ -208,27 +211,6 @@ export class AsignacionesComponent implements OnInit {
   // muestra modal para pedir confirmacion de la asignacion seleccionada
   public eliminar():void {
 
-    // this.modalConfirmacion.mostrar(
-    //   'Eliminar Asignacion',
-    //   '¿Está seguro que quiere eliminar la asignacion?')
-    //   .then(result => {
-    //
-    //     if(result ==  true){
-    //       this.asigService.eliminarAsignacion(this.asignacionSeleccionada)
-    //         .subscribe((res:IServerResponse)=>{
-    //
-    //         if(res.status == 200){ // OK
-    //           this.cargarAsignaciones();
-    //         }else{ // Error
-    //           console.error(res);
-    //         }
-    //
-    //       });
-    //     }
-    //
-    //   })
-    //   .catch(dismiss=>console.log(dismiss));
-
     Swal.fire({
       title: 'Estas a punto de eliminar una asignacion',
       text: "La eliminacion no se puede revertir",
@@ -251,12 +233,7 @@ export class AsignacionesComponent implements OnInit {
                 title: 'Eliminacion completada exitosamente!',
                 showConfirmButton: false,
                 timer: 1400
-              })
-              // Swal.fire(
-              //   'Eliminacion completada!',
-              //   'La asignacion se ha eliminado',
-              //   'success'
-              // );
+              });
             }else{ // Error
               console.error(res);
             }
@@ -362,9 +339,7 @@ export class AsignacionesComponent implements OnInit {
   }
 
   public cargarCursos():void {
-    // let campoCarrera = this.formFiltro.get('za_carrera');
-    // let campoAnoPensum = this.formFiltro.get('ano_pensum');
-    // let campoCiclo = this.formFiltro.get('no_semestre');
+
       this.cursoPensumService.listCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum,this.formFiltro.value.no_semestre)
         .subscribe((datos:IServerResponse)=>{
           if(datos.status == 200){
@@ -373,6 +348,7 @@ export class AsignacionesComponent implements OnInit {
             this.cursos = [];
           }
         });
+
   }
 
   private strToTime(strTime):string {

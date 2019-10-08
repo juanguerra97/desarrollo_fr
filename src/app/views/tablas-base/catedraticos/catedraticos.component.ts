@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CarrerasService} from '../../../../services/carreras.service';
-import {CatedraticosService} from '../../../services/catedraticos.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CarrerasService } from '../../../../services/carreras.service';
+import { CatedraticosService } from '../../../services/catedraticos.service';
 import Swal from "sweetalert2";
+import {IServerResponse} from '../../../models/iserverresponse.model';
+import {ICatedratico} from '../../../models/icatedratico.model';
+import {ICarrera} from '../../../models/icarrera.model';
 
 @Component({
   selector: 'app-catedraticos',
@@ -10,43 +13,43 @@ import Swal from "sweetalert2";
   styleUrls: ['./catedraticos.component.scss']
 })
 export class CatedraticosComponent implements OnInit {
-  public catedraticos: any;
-  public catedratico: any;
-  public form = {
+
+  public catedraticos: ICatedratico[];
+  public catedratico: ICatedratico = null;
+
+  public form:ICatedratico = {
     za_profesor: 0,
     nombres: '',
     apellidos: '',
     profesion: '',
-    activo: true,
-    accion: 1
+    activo: 1
   };
-  public carreras: any;
-  public za_carrera: 0;
 
-  clearForm() {
-    this.form = {
-      za_profesor: 0,
-      nombres: '',
-      apellidos: '',
-      profesion: '',
-      activo: true,
-      accion: 1
-    };
-  }
+  public carreras: ICarrera[];
+  public za_carrera:number = 0;
 
-  constructor(private _catedraticoService: CatedraticosService, private modalService: NgbModal, private _carreraService: CarrerasService) {
-    this._carreraService.listCarreras().subscribe(res => { this.carreras = res; });
-  }
-
+  constructor(
+    private _catedraticoService: CatedraticosService,
+    private modalService: NgbModal,
+    private _carreraService: CarrerasService
+  ) { }
 
   ngOnInit() {
-    this.getCatedraticos();
-
+    this._carreraService.listCarreras()
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.carreras = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+    this.cargarCatedraticos();
   }
 
-  editar(index, content) {
-    this.form = this.catedraticos[index];
-    this.form.accion = 1;
+  // abre el modal para editar un catedratico
+  openModalEdicion(index, content) {
+    this.form = JSON.parse(JSON.stringify(this.catedraticos[index]));
+    this.catedratico = this.catedraticos[index];
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -55,7 +58,8 @@ export class CatedraticosComponent implements OnInit {
     });
   }
 
-  eliminar(index) {
+  // pide confirmacion y luego elimina el catedratico
+  eliminar(index):void {
 
     Swal.fire({
       title: 'Estas a punto de eliminar a un catedratico',
@@ -67,11 +71,19 @@ export class CatedraticosComponent implements OnInit {
       confirmButtonText: 'Eliminar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+
       if (result.value) {
 
-        const request = {...this.catedraticos[index], accion: 2};
-        //request.activo = request.activo;
-        this._catedraticoService.crearCatedratico(request).subscribe(() => this.getCatedraticos());
+        this._catedraticoService.eliminarCatedratico(this.catedraticos[index].za_profesor)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarCatedraticos()
+            } else {
+              console.error(res);
+            }
+          }, error => {
+            console.error(error);
+          });
 
       }
 
@@ -79,7 +91,8 @@ export class CatedraticosComponent implements OnInit {
 
   }
 
-  openModal(content) {
+  // abre el modal para un nuevo catedratico
+  openModalNuevo(content) {
     this.catedratico = null;
     this.clearForm();
     this.modalService.open(content, {
@@ -90,12 +103,55 @@ export class CatedraticosComponent implements OnInit {
     });
   }
 
-  guardar() {
-    this._catedraticoService.crearCatedratico(this.form).subscribe(() => {this.getCatedraticos(); } );
+  // guarda un nuevo catedratico
+  public guardarNuevo():void {
+    this._catedraticoService.crearCatedratico(this.form)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarCatedraticos();
+        }else {
+          console.error(res);
+        }
+      }, error => console.error(error));
     this.modalService.dismissAll();
   }
 
-  getCatedraticos() {
-    this._catedraticoService.listCatedraticos().subscribe((res) => {this.catedraticos = res; });
+  // guarda la actualizacion a los datos de un catedratico
+  public guardarEdicion():void {
+    this._catedraticoService.editarCatedratico(this.form.za_profesor, this.form)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarCatedraticos();
+        }else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+    this.modalService.dismissAll();
   }
+
+  // carga la lista de catedraticos
+  private cargarCatedraticos():void {
+
+    this._catedraticoService.listCatedraticos()
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.catedraticos = res.data;
+        } else {
+          console.error(res);
+        }
+      },
+    error => {
+        console.error(error);
+      });
+  }
+
+  // 'limpia' los valores del formulario
+  clearForm():void {
+    this.form.za_profesor = 0;
+    this.form.nombres = '';
+    this.form.apellidos = '';
+    this.form.profesion = '';
+    this.form.activo = 1;
+  }
+
 }

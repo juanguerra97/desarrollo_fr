@@ -9,6 +9,8 @@ import {CursoPensumService} from '../../../services/curso-pensum.service';
 
 import Swal from 'sweetalert2';
 import {IServerResponse} from '../../../models/iserverresponse.model';
+import {ICarrera} from '../../../models/icarrera.model';
+import {ICurso} from '../../../models/icurso.model';
 
 @Component({
   selector: 'app-pensum-curso',
@@ -18,8 +20,8 @@ import {IServerResponse} from '../../../models/iserverresponse.model';
 export class PensumCursoComponent implements OnInit {
 
   public pensumCurso: any = null;
-  public carreras:any[]=[];
-  public cursos:any[]=[];
+  public carreras:ICarrera[]=[];
+  public cursos:ICurso[]=[];
   public pensumsCarrera:any[]=[];
   public pensumsCursos:any[]=[];
 
@@ -62,8 +64,24 @@ export class PensumCursoComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    this._carreraService.listCarreras().subscribe((res:any) => { this.carreras = res; });
-    this._cursosService.listCursos().subscribe((res:any) => { this.cursos = res; });
+
+    // se cargan las carreras
+    this._carreraService.listCarreras()
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.carreras = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+
+    this._cursosService.listCursos().subscribe((res:IServerResponse) => {
+      if(res.status == 200){
+        this.cursos = res.data;
+      } else {
+        console.error(res);
+      }
+    }, error => console.error(error));
   }
 
 
