@@ -76,6 +76,7 @@ export class CarrerasComponent implements OnInit {
             if(res.status == 200){
               this.cargarCarreras();
             } else {
+              $.notify(res.error, {className:"error", globalPosition: 'top right'});
               console.error(res);
             }
           }, error => console.error(error));
