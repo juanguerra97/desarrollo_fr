@@ -44,14 +44,16 @@ export class CarrerasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._carreraService.editarCarrera(res.value.za_carrera,res.value)
-        .subscribe((res:IServerResponse) => {
-          if(res.status == 200){
-            this.cargarCarreras();
-          } else {
-            console.error(res);
-          }
-        }, error => console.error(error));
+      if(res.value){
+        this._carreraService.editarCarrera(res.value.za_carrera,res.value)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarCarreras();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
+      }
     });
   }
 
@@ -103,14 +105,16 @@ export class CarrerasComponent implements OnInit {
         };
       },
     }).then(res => {
-      this._carreraService.crearCarrera(res.value)
-        .subscribe((res:IServerResponse) => {
-          if(res.status == 200){
-            this.cargarCarreras();
-          } else {
-            console.error(res);
-          }
-        }, error => console.error(error));
+      if(res.value){
+        this._carreraService.crearCarrera(res.value)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarCarreras();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
+      }
     });
   }
 
