@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-
+import Swal from "sweetalert2";
 
 import { CursosService } from '../../../services/cursos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -69,17 +68,36 @@ export class CursosComponent implements OnInit {
 
   eliminar(index) {
 
-    this.form = this.cursos[index];
-    /*this.form.activo = this.convertTobool(this.form.activo);
-    this.form.usa_laboratorio = this.convertTobool(this.form.usa_laboratorio);*/
-    this._cursoService.eliminarCurso(this.cursos[index].za_curso)
-      .subscribe((res:IServerResponse)=>{
-        if(res.status == 200){
-          this.cargarCursos();
-        } else {
-          console.error(res);
-        }
-      }, error => console.error(error));
+    Swal.fire({
+      title: 'Estas a punto de eliminar un curso',
+      text: "La eliminacion no se puede revertir",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+      if (result.value) {
+
+        //this.form = this.cursos[index];
+        /*this.form.activo = this.convertTobool(this.form.activo);
+        this.form.usa_laboratorio = this.convertTobool(this.form.usa_laboratorio);*/
+        this._cursoService.eliminarCurso(this.cursos[index].za_curso)
+          .subscribe((res:IServerResponse)=>{
+            if(res.status == 200){
+              this.cargarCursos();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
+
+      }
+
+    });
+
+
   }
 
   convertTobool(obj: any) {
