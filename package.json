@@ -57,6 +57,7 @@
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^5.0.0",
     "ngx-perfect-scrollbar": "^8.0.0",
+    "notifyjs-browser": "^0.4.2",
     "popper.js": "^1.14.7",
     "rxjs": "^6.5.2",
     "simple-line-icons": "^2.4.1",
