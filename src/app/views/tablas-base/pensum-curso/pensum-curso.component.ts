@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {PensumService} from '../../../services/pensum.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CarrerasService} from '../../../../services/carreras.service';
-import {PensumCarreraService} from '../../../services/pensum-carrera.service';
 import {CursosService} from '../../../services/cursos.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CursoPensumService} from '../../../services/curso-pensum.service';
@@ -59,8 +58,7 @@ export class PensumCursoComponent implements OnInit {
     private modalService: NgbModal,
     private _carreraService: CarrerasService,
     private _cursosService: CursosService,
-    private cursoPensumService: CursoPensumService,
-    private _pensumCarreraService: PensumCarreraService
+    private cursoPensumService: CursoPensumService
   ) {  }
 
   ngOnInit() {
@@ -99,12 +97,15 @@ export class PensumCursoComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        const request = {...this.pensumsCursos[index], accion: 2};
-        // request.activo = request.activo;
-        // request.curso_activo = request.curso_activo;
-        // request.usa_laboratorio = request.usa_laboratorio;
-        this._pensumCarreraService.crearPensum(request)
-          .subscribe((res:any)=>{this.cargarPensumsCursos();});
+        const cursopensum = this.pensumsCursos[index];
+        this.cursoPensumService.eliminarCursoPensum(cursopensum.za_carrera,cursopensum.ano_pensum,cursopensum.za_curso)
+          .subscribe((res:IServerResponse)=>{
+            if(res.status == 200){
+              this.cargarPensumsCursos();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
 
       }
 
@@ -146,10 +147,16 @@ export class PensumCursoComponent implements OnInit {
   // submit del formulario para agregar una nueva relacion pensum-curso
   public onSubmitNuevo(): void{
 
-    let request = {...this.formFiltro.value,...this.formNewCursoPensum.value, activo: 1, accion: 1};
+    let cursopensum = {...this.formFiltro.value,...this.formNewCursoPensum.value, activo: 1};
 
-    this._pensumCarreraService.crearPensum(request)
-      .subscribe((res:any) => this.cargarPensumsCursos());
+    this.cursoPensumService.crearCursoPensum(cursopensum)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarPensumsCursos()
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
 
     this.modalService.dismissAll();
 
@@ -158,15 +165,18 @@ export class PensumCursoComponent implements OnInit {
   // submit del formulario de edicion
   public onSubmitEditar():void {
 
-    let request = {...this.pensumCurso,accion:1};
-    //request.activo = 1;
-    request.ciclo = this.formEditarCursoPensum.value.ciclo;
+    let cursopensum = this.pensumCurso;
+    cursopensum.ciclo = this.formEditarCursoPensum.value.ciclo;
 
-    this._pensumCarreraService.crearPensum(request)
-      .subscribe((res:any) => {
-        this.cargarPensumsCursos();
-        this.pensumCurso = null;
-      });
+    this.cursoPensumService.editarCursoPensum(cursopensum.za_carrera,cursopensum.ano_pensum,cursopensum.za_curso,cursopensum)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarPensumsCursos();
+          this.pensumCurso = null;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
 
     this.modalService.dismissAll();
 
@@ -190,7 +200,13 @@ export class PensumCursoComponent implements OnInit {
   public cargarPensumsCursos():void {
     if(this.formFiltro.get('za_carrera').valid){
       this.cursoPensumService.listPensumsCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum)
-        .subscribe((res:any)=>this.pensumsCursos = res);
+        .subscribe((res:IServerResponse)=>{
+          if(res.status == 200){
+            this.pensumsCursos = res.data;
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
     }
   }
 

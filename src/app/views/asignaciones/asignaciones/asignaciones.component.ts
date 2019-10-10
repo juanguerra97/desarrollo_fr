@@ -348,13 +348,14 @@ export class AsignacionesComponent implements OnInit {
   public cargarCursos():void {
 
       this.cursoPensumService.listCursos(this.formFiltro.value.za_carrera,this.formFiltro.value.ano_pensum,this.formFiltro.value.no_semestre)
-        .subscribe((datos:IServerResponse)=>{
-          if(datos.status == 200){
-            this.cursos = datos.data;
+        .subscribe((res:IServerResponse)=>{
+          if(res.status == 200){
+            this.cursos = res.data;
           }else{
             this.cursos = [];
+            console.error(res);
           }
-        });
+        }, error => console.error(error));
 
   }
 
