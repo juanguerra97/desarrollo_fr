@@ -6,7 +6,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="carrera" (ngModelChange)="buscar()">
+          <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="za_carrera" (ngModelChange)="cargarJornadas()">
 <!--            <option value="0" selected>Seleccione Carrera</option>-->
             <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
           </select>

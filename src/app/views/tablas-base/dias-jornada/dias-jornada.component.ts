@@ -5,6 +5,7 @@ import {DiasJornadaService} from '../../../services/dias-jornada.service';
 import {JornadasService} from '../../../services/jornadas.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
+import {IJornada} from '../../../models/ijornada';
 declare var $: any;
 
 @Component({
@@ -14,10 +15,10 @@ declare var $: any;
 })
 export class DiasJornadaComponent implements OnInit {
   public dias: any;
-  public carreras: ICarrera[];
-  public jornadas: any;
-  public carrera: ICarrera;
-  public jornada: any;
+  public carreras: ICarrera[] = [];
+  public jornadas: IJornada[] = [];
+  public za_carrera: number = null;
+  public jornada: IJornada = null;
 
   constructor(
     private _diaService: DiasJornadaService,
@@ -52,7 +53,7 @@ export class DiasJornadaComponent implements OnInit {
       html:
         '<form id="modal-form">' +
         'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
-        (this.carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
+        (this.za_carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
         '</input>' +
         '<div class="form-group">' +
         '<label for="za_jornada">Jornada</label>' +
@@ -108,7 +109,7 @@ export class DiasJornadaComponent implements OnInit {
       html:
         '<form id="modal-form">' +
         'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
-        this.carrera + '" class="swal2-input">' +
+        this.za_carrera + '" class="swal2-input">' +
         '</input>' +
         'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
         optionsJornada +
@@ -167,14 +168,21 @@ export class DiasJornadaComponent implements OnInit {
   }
 
   public cargarJornadas():void {
-    if (this.carrera) {
-      this._jornadasService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
+    if (this.za_carrera) {
+      this._jornadasService.listJornadas(this.za_carrera)
+        .subscribe((res:IServerResponse)=>{
+          if(res.status == 200){
+            this.jornadas = res.data;
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
     }
   }
 
   public cargarDias():void {
     if (this.jornada) {
-      this._diaService.listDias(this.carrera, this.jornada).subscribe(res => { this.dias = res; });
+      this._diaService.listDias(this.za_carrera, this.jornada).subscribe(res => { this.dias = res; });
     }
   }
 }

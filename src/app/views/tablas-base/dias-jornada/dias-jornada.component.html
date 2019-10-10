@@ -6,7 +6,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-3">
-          <select class="custom-select"  [(ngModel)]="carrera" (ngModelChange)="cambioCarrera()">
+          <select class="custom-select" [(ngModel)]="za_carrera" (ngModelChange)="cambioCarrera()">
 <!--            <option value="0" selected>Seleccione Carrera</option>-->
             <option *ngFor="let carrera of carreras" [ngValue]="carrera.za_carrera" >{{carrera.nombre_carrera}}</option>
           </select>

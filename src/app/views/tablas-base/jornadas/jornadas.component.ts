@@ -5,6 +5,7 @@ import {CarrerasService} from '../../../../services/carreras.service';
 import {JornadasService} from '../../../services/jornadas.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICarrera} from '../../../models/icarrera.model';
+import {IJornada} from '../../../models/ijornada';
 
 declare var $: any;
 
@@ -15,9 +16,9 @@ declare var $: any;
 })
 export class JornadasComponent implements OnInit {
 
-  public jornadas: any;
-  public carreras: ICarrera[];
-  public carrera: ICarrera;
+  public jornadas: IJornada[] = [];
+  public carreras: ICarrera[] = [];
+  public za_carrera: number = null;
 
   constructor(
     private _jornadaService: JornadasService,
@@ -59,14 +60,23 @@ export class JornadasComponent implements OnInit {
       preConfirm: () => {
         return {
           za_jornada: 0,
-          activo: true,
+          activo: 1,
           za_carrera: $('#za_carrera').val(),
-          nombre_jornada:  $('#nombre_jornada').val(),
-          accion: 1
+          nombre_jornada:  $('#nombre_jornada').val()
         };
       },
     }).then(res => {
-      this._jornadaService.crearJornada(res.value).subscribe(() => { this.buscar(); }, error => () => { });
+      if(res.value){
+        this._jornadaService.crearJornada(res.value)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarJornadas();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
+      }
+
     });
   }
 
@@ -101,13 +111,20 @@ export class JornadasComponent implements OnInit {
           za_carrera: $('#za_carrera').val(),
           nombre_jornada:  $('#nombre_jornada').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
-          accion: 1
         };
       },
     }).then(res => {
-      this._jornadaService.crearJornada(res.value).subscribe(() => {
-        this.buscar();
-      });
+      if(res.value){
+        this._jornadaService.editarJornada(res.value.za_carrera,res.value.za_jornada,res.value)
+          .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.cargarJornadas();
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
+      }
+
     });
   }
 
@@ -125,18 +142,35 @@ export class JornadasComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        const request = {...this.jornadas[index], accion: 2};
-        //request.activo = request.activo;
-        this._jornadaService.crearJornada(request).subscribe(() => this.buscar());
+        const jornada = this.jornadas[index];
+        this._jornadaService.eliminarJornada(jornada.za_carrera,jornada.za_jornada)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarJornadas();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error))
 
       }
 
     });
 
   }
-  buscar() {
-    if (this.carrera) {
-      this._jornadaService.listJornadas(this.carrera).subscribe(res => { this.jornadas = res; });
+
+  public cargarJornadas() {
+    if (this.za_carrera) {
+      this._jornadaService.listJornadas(this.za_carrera)
+        .subscribe((res:IServerResponse)=>{
+          if(res.status == 200){
+            this.jornadas = res.data;
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
+    } else {
+      this.jornadas = [];
     }
   }
+
 }

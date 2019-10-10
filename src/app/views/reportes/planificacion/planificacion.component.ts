@@ -9,6 +9,7 @@ import {AsigService} from '../../../services/asig.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {PensumService} from '../../../services/pensum.service';
 import {ICarrera} from '../../../models/icarrera.model';
+import {IJornada} from '../../../models/ijornada';
 
 declare var jsPDF: any;
 
@@ -24,9 +25,9 @@ export class PlanificacionComponent implements OnInit {
   public dias:any;
   public carreras:ICarrera[]=[];
   public pensums:any[]=[];
-  public jornadas:any[]=[];
+  public jornadas:IJornada[]=[];
   public carrera:ICarrera;
-  public jornada:any;
+  public jornada:IJornada = null;
 
   public cargandoPlanificacion:boolean = false;
   public textoBtnVerPlanificacion:string = 'Ver planificacion';
@@ -227,7 +228,13 @@ export class PlanificacionComponent implements OnInit {
   public cargarJornadas():void {
 
     this.jornadasService.listJornadas(this.formFiltro.value.za_carrera)
-      .subscribe((res:any)=>this.jornadas = res);
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.jornadas = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
 
   }
 
