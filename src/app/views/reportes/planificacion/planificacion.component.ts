@@ -10,6 +10,7 @@ import {IServerResponse} from '../../../models/iserverresponse.model';
 import {PensumService} from '../../../services/pensum.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IJornada} from '../../../models/ijornada';
+import {IPensum} from '../../../models/ipensum';
 
 declare var jsPDF: any;
 
@@ -24,7 +25,7 @@ export class PlanificacionComponent implements OnInit {
   public asignaciones:any={};
   public dias:any;
   public carreras:ICarrera[]=[];
-  public pensums:any[]=[];
+  public pensums:IPensum[]=[];
   public jornadas:IJornada[]=[];
   public carrera:ICarrera;
   public jornada:IJornada = null;
@@ -222,7 +223,13 @@ export class PlanificacionComponent implements OnInit {
 
   public cargarPensums():void {
     this.pensumService.listPensums(this.formFiltro.value.za_carrera)
-      .subscribe((res:any)=>this.pensums = res);
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.pensums = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
   }
 
   public cargarJornadas():void {

@@ -192,7 +192,13 @@ export class PensumCursoComponent implements OnInit {
   // carga los pensums de la carrera seleccionada
   public cargarPensumsCarrera():void {
     this._pensumService.listPensums(this.formFiltro.value.za_carrera)
-      .subscribe((res:any)=>this.pensumsCarrera = res);
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.pensumsCarrera = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
   }
 
   // carga las relaciones pensum-curso filtrados por carrera y pensum

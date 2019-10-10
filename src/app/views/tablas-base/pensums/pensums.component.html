@@ -6,12 +6,12 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <select class="custom-select" [(ngModel)]="za_carrera" (change)="getPensums()">
+          <select class="custom-select" [(ngModel)]="za_carrera" (change)="cargarPensums()">
             <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <button (click)="openModal(content)"
+          <button (click)="openModalNuevo(content)"
                   class="btn btn-primary pull-right mb-3">
             <em class="fa fa-check mr-2"></em>
             Nuevo
@@ -89,13 +89,13 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!pensum" value="Guardar" class="btn btn-success btn-lg" (click)="guardar()">
+    <button *ngIf="!pensum" value="Guardar" class="btn btn-success btn-lg" (click)="guardarNuevo()">
       <em class="fa fa-save mr-3"></em>
       Guardar
     </button>
-    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg" (click)="guardar()">
-      <em class="fa fa-pencil mr-3"></em>
-      Editar
+    <button *ngIf="pensum" value="Editar" class="btn btn-warning btn-lg" (click)="guardarEdicion()">
+      <em class="fa fa-save mr-3"></em>
+      Guardar
     </button>
   </div>
 </ng-template>

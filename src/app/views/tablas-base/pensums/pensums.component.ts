@@ -6,6 +6,7 @@ import {PensumService} from '../../../services/pensum.service';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
+import {IPensum} from '../../../models/ipensum';
 
 @Component({
   selector: 'app-pensums',
@@ -14,8 +15,8 @@ import {IServerResponse} from '../../../models/iserverresponse.model';
 })
 export class PensumsComponent implements OnInit {
 
-  public pensums: any;
-  public pensum: any;
+  public pensums: IPensum[] = [];
+  public pensum: IPensum = null;
   public form = {
     za_carrera: 0,
     ano_pensum: 1990,
@@ -55,13 +56,14 @@ export class PensumsComponent implements OnInit {
         }
       }, error => console.error(error));
 
-    this.getPensums();
+    this.cargarPensums();
   }
 
   editar(index, content) {
-    this.form = this.pensums[index];
+    this.pensum = JSON.parse(JSON.stringify(this.pensums[index]));
+    this.form = JSON.parse(JSON.stringify(this.pensums[index]));
     this.form.accion = 1;
-    this.form.activo = this.convertTobool(this.form.activo);
+    this.form.activo = this.pensum.activo != 0;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -84,9 +86,15 @@ export class PensumsComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        const request = {...this.pensums[index], accion: 2};
-        //request.activo = request.activo;
-        this._pensumService.crearPensum(request).subscribe(() => this.getPensums());
+        const p = this.pensums[index];
+        this._pensumService.eliminarPensum(p.za_carrera,p.ano_pensum)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarPensums();
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
 
       }
 
@@ -96,7 +104,7 @@ export class PensumsComponent implements OnInit {
 
   }
 
-  openModal(content) {
+  public openModalNuevo(content):void {
     this.pensum = null;
     this.clearForm();
     this.modalService.open(content, {
@@ -107,13 +115,46 @@ export class PensumsComponent implements OnInit {
     });
   }
 
-  guardar() {
-    this._pensumService.crearPensum(this.form).subscribe(() => {this.getPensums(); } );
+  public guardarNuevo():void {
+    const p = JSON.parse(JSON.stringify(this.form));
+    p.activo = p.activo ? 1 : 0;
+    this._pensumService.crearPensum(p)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.cargarPensums();
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
     this.modalService.dismissAll();
   }
 
-  getPensums() {
-    this._pensumService.listPensums(this.za_carrera).subscribe((res) => {this.pensums = res; });
+  public guardarEdicion(): void {
+
+    const p = JSON.parse(JSON.stringify(this.form));
+    p.activo = p.activo ? 1 : 0;
+
+    this._pensumService.editarPensum(this.pensum.za_carrera,this.pensum.ano_pensum,p)
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.cargarPensums();
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
+
+    this.modalService.dismissAll();
+  }
+
+  public cargarPensums():void {
+    this._pensumService.listPensums(this.za_carrera)
+      .subscribe((res:IServerResponse) => {
+        if(res.status == 200){
+          this.pensums = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
   }
 
 

@@ -17,6 +17,7 @@ import {CursoPensumService} from '../../../services/curso-pensum.service';
 import {ICatedratico} from '../../../models/icatedratico.model';
 import {ICurso} from '../../../models/icurso.model';
 import {IJornada} from '../../../models/ijornada';
+import {IPensum} from '../../../models/ipensum';
 
 @Component({
   selector: 'app-asignaciones',
@@ -33,7 +34,7 @@ export class AsignacionesComponent implements OnInit {
   public textoBtnFiltrar:string = 'Filtrar';
 
   public carreras:any[]=[];
-  public pensums:any[]=[];
+  public pensums:IPensum[]=[];
   public jornadas:IJornada[]=[];
   public dias:any[]=[];
   public catedraticos:ICatedratico[]=[];
@@ -322,7 +323,13 @@ export class AsignacionesComponent implements OnInit {
 
   public cargarPensums():void {
     this.pensumService.listPensums(this.formFiltro.value.za_carrera)
-      .subscribe((res:any)=>this.pensums = res);
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.pensums = res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
   }
 
   public cargarJornadas():void {
