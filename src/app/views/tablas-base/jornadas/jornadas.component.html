@@ -8,11 +8,11 @@
         <div class="col-md-6">
           <select class="custom-select" id="inputGroupSelect02" [(ngModel)]="za_carrera" (ngModelChange)="cargarJornadas()">
 <!--            <option value="0" selected>Seleccione Carrera</option>-->
-            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.codigo_carrera + ' ' + carrera.nombre_carrera}}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <button type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Jornada')"
+          <button [disabled]="!za_carrera" type="button" class="pull-right btn btn-primary mb-3" (click)="openModal('Nueva Jornada')"
                   data-toggle="modal" data-target="#modal-container"
           >
             <em class="fa fa-check mr-2"></em>
@@ -22,20 +22,20 @@
       </div>
 
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th scope="col">id</th>
-            <th scope="col">Carrera</th>
-            <th scope="col">nombre</th>
-            <th scope="col">activo</th>
-            <th scope="col">accion</th>
+            <th scope="col">ID</th>
+           <!-- <th scope="col">Carrera</th>-->
+            <th scope="col">Nombre</th>
+            <th scope="col">Activo</th>
+            <th scope="col">Acciones</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let jornada of jornadas; let i = index">
             <th scope="row">{{jornada.za_jornada}}</th>
-            <td>{{jornada.za_carrera}}</td>
+            <!--<td>{{jornada.za_carrera}}</td>-->
             <td>{{jornada.nombre_jornada}}</td>
             <td>{{jornada.activo}}</td>
             <td>
