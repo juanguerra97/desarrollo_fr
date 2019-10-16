@@ -18,6 +18,7 @@ import {ICatedratico} from '../../../models/icatedratico.model';
 import {ICurso} from '../../../models/icurso.model';
 import {IJornada} from '../../../models/ijornada';
 import {IPensum} from '../../../models/ipensum';
+import {IDia} from '../../../models/idia.model';
 
 @Component({
   selector: 'app-asignaciones',
@@ -36,7 +37,7 @@ export class AsignacionesComponent implements OnInit {
   public carreras:any[]=[];
   public pensums:IPensum[]=[];
   public jornadas:IJornada[]=[];
-  public dias:any[]=[];
+  public dias:IDia[]=[];
   public catedraticos:ICatedratico[]=[];
   public cursos:ICurso[]=[];
 
@@ -348,7 +349,13 @@ export class AsignacionesComponent implements OnInit {
   public cargarDias():void {
 
     this.diasService.listDias(this.filtro.za_carrera,this.filtro.za_jornada)
-      .subscribe((res:any)=>this.dias=res);
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          this.dias=res.data;
+        } else {
+          console.error(res);
+        }
+      }, error => console.error(error));
 
   }
 

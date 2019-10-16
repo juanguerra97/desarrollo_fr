@@ -12,7 +12,7 @@
           </select>
         </div>
         <div class="col-md-3">
-          <select class="custom-select"  [(ngModel)]="jornada" (ngModelChange)="cargarDias()">
+          <select class="custom-select" [(ngModel)]="za_jornada" (ngModelChange)="cargarDias()">
 <!--            <option value="0" selected>Seleccione Jornada</option>-->
             <option *ngFor="let jornada of jornadas" [ngValue]="jornada.za_jornada" >{{jornada.nombre_jornada}}</option>
           </select>

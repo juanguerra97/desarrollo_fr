@@ -6,6 +6,7 @@ import {JornadasService} from '../../../services/jornadas.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {IJornada} from '../../../models/ijornada';
+import {IDia} from '../../../models/idia.model';
 declare var $: any;
 
 @Component({
@@ -14,11 +15,11 @@ declare var $: any;
   styleUrls: ['./dias-jornada.component.scss']
 })
 export class DiasJornadaComponent implements OnInit {
-  public dias: any;
+  public dias: IDia[] = [];
   public carreras: ICarrera[] = [];
   public jornadas: IJornada[] = [];
   public za_carrera: number = null;
-  public jornada: IJornada = null;
+  public za_jornada: number = null;
 
   constructor(
     private _diaService: DiasJornadaService,
@@ -79,15 +80,25 @@ export class DiasJornadaComponent implements OnInit {
       preConfirm: () => {
         return {
           za_dia: 0,
-          activo: true,
+          activo: 1,
           za_jornada: $('#za_jornada').val(),
           za_carrera: $('#za_carrera').val(),
-          dia:  $('#nombre-dia').val(),
-          accion: 1
+          dia:  $('#nombre-dia').val()
         };
       },
     }).then(res => {
-      this._diaService.crearDia(res.value).subscribe(() => this.cargarDias());
+
+      if(res.value){
+        this._diaService.crearDia(res.value)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarDias()
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
+      }
+
     });
   }
 
@@ -126,13 +137,22 @@ export class DiasJornadaComponent implements OnInit {
           za_jornada: $('#za_jornada').val(),
           dia:  $('#dia').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
-          accion: 1
         };
       },
     }).then(res => {
-      this._diaService.crearDia(res.value).subscribe(() => {
-        this.cargarDias();
-      });
+
+      if(res.value){
+        const dia = res.value;
+        this._diaService.editarDia(dia.za_carrera,dia.za_jornada,dia.za_dia,dia)
+          .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.cargarDias();
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
+      }
+
     });
   }
 
@@ -148,11 +168,19 @@ export class DiasJornadaComponent implements OnInit {
       confirmButtonText: 'Eliminar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
+
       if (result.value) {
 
-        const request = {...this.dias[index], accion: 2};
+        const dia = this.dias[index];
         //request.activo = request.activo;
-        this._diaService.crearDia(request).subscribe(() => this.cargarDias());
+        this._diaService.eliminarDia(dia.za_carrera,dia.za_jornada,dia.za_dia)
+          .subscribe((res:IServerResponse) => {
+            if(res.status == 200){
+              this.cargarDias()
+            } else {
+              console.error(res);
+            }
+          }, error => console.error(error));
 
       }
 
@@ -163,7 +191,7 @@ export class DiasJornadaComponent implements OnInit {
   public cambioCarrera(): void{
     this.jornadas = [];
     this.dias = [];
-    this.jornada = undefined;
+    this.za_jornada = undefined;
     this.cargarJornadas();
   }
 
@@ -181,8 +209,15 @@ export class DiasJornadaComponent implements OnInit {
   }
 
   public cargarDias():void {
-    if (this.jornada) {
-      this._diaService.listDias(this.za_carrera, this.jornada).subscribe(res => { this.dias = res; });
+    if (this.za_jornada) {
+      this._diaService.listDias(this.za_carrera, this.za_jornada)
+        .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.dias = res.data;
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
     }
   }
 }
