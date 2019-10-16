@@ -51,17 +51,18 @@ export class JornadasComponent implements OnInit {
       title: 'Nueva Jornada',
       html:
         '<form id="modal-form">' +
-        'Carrera: <select id="za_carrera" placeholder="Carrera" class="swal2-select">' +
+        /*'Carrera: <select id="za_carrera" placeholder="Carrera" class="swal2-select">' +
           options +
-        '</select>' +
+        '</select>' +*/
         '<input id="nombre_jornada"  placeholder="Nombre" class="swal2-input">' +
+        `<input type="checkbox" id="activo"  placeholder="Activo" checked class="swal2-checkbox">Activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
           za_jornada: 0,
-          activo: 1,
-          za_carrera: $('#za_carrera').val(),
+          activo: $('#activo').val() ? 1 : 0,
+          za_carrera: this.za_carrera,
           nombre_jornada:  $('#nombre_jornada').val()
         };
       },
@@ -97,18 +98,17 @@ export class JornadasComponent implements OnInit {
       title: 'Editar Jornada',
       html:
         '<form id="modal-form">' +
-        'jornada <select id="za_carrera" placeholder="Jornada" class="swal2-select">' +
-        options +
+        /*'jornada <select id="za_carrera" placeholder="Jornada" class="swal2-select">' +
+        options +*/
         '</select>' +
         '<input title="nombre" id="nombre_jornada"  placeholder="Nombre" class="swal2-input" value="' + jorn.nombre_jornada + '">' +
-        `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(jorn.activo === 1) ? 'checked' : ''}> activo` +
+        `<input type="checkbox" id="activo" class="swal2-checkbox" ${(jorn.activo === 1) ? 'checked' : ''}> Activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
           za_jornada: this.jornadas[index].za_jornada,
-          za_carrera: $('#za_carrera').val(),
+          za_carrera: jorn.za_carrera,
           nombre_jornada:  $('#nombre_jornada').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
         };
