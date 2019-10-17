@@ -5,13 +5,13 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-12 col-md-6">
           <select class="custom-select" [(ngModel)]="za_carrera" (change)="cargarPensums()">
-            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
+            <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.codigo_carrera + ' ' + carrera.nombre_carrera}}</option>
           </select>
         </div>
-        <div class="col-md-6">
-          <button (click)="openModalNuevo(content)"
+        <div class="col-sm-12 col-md-6">
+          <button [disabled]="!za_carrera" (click)="openModalNuevo(content)"
                   class="btn btn-primary pull-right mb-3">
             <em class="fa fa-check mr-2"></em>
             Nuevo
@@ -20,10 +20,10 @@
       </div>
 
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
           <thead>
           <tr>
-            <th scope="col">Carrera</th>
+            <!--<th scope="col">Carrera</th>-->
             <th scope="col">Año Pesum</th>
             <th scope="col">Codigo</th>
             <th scope="col">Activo</th>
@@ -32,7 +32,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let pensum of pensums; let i = index">
-            <th scope="row">{{pensum.za_carrera}}</th>
+            <!--<th scope="row">{{pensum.za_carrera}}</th>-->
             <th scope="row">{{pensum.ano_pensum}}</th>
             <td>{{pensum.codigo_pensum}}</td>
             <td>{{pensum.activo}}</td>
@@ -63,14 +63,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group row">
+    <!--<div class="form-group row">
       <label for="carrera" class="col-sm-2 col-form-label pl-3"><strong>Carrera</strong></label>
       <div class="col-sm-10">
         <select class="custom-select" id="carrera"[(ngModel)]="form.za_carrera">
           <option *ngFor="let carrera of carreras" value="{{carrera.za_carrera}}">{{carrera.nombre_carrera}}</option>
         </select>
       </div>
-    </div>
+    </div>-->
     <div class="form-group row">
       <label for="anio" class="col-sm-2 col-form-label"><strong>Año</strong></label>
       <div class="col-sm-10">

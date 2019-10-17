@@ -21,19 +21,17 @@ export class PensumsComponent implements OnInit {
     za_carrera: 0,
     ano_pensum: 1990,
     codigo_pensum: '',
-    activo: true,
-    accion: 1
+    activo: true
   };
   public carreras: ICarrera[] = [];
-  public za_carrera:number = 0;
+  public za_carrera:number = null;
 
   clearForm() {
     this.form = {
       za_carrera: 0,
       ano_pensum: 1990,
       codigo_pensum: '',
-      activo: true,
-      accion: 1
+      activo: true
     };
   }
 
@@ -62,7 +60,7 @@ export class PensumsComponent implements OnInit {
   editar(index, content) {
     this.pensum = JSON.parse(JSON.stringify(this.pensums[index]));
     this.form = JSON.parse(JSON.stringify(this.pensums[index]));
-    this.form.accion = 1;
+    this.form.za_carrera = this.pensums[index].za_carrera;
     this.form.activo = this.pensum.activo != 0;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
@@ -107,6 +105,7 @@ export class PensumsComponent implements OnInit {
   public openModalNuevo(content):void {
     this.pensum = null;
     this.clearForm();
+    this.form.za_carrera = this.za_carrera;
     this.modalService.open(content, {
       ariaLabelledBy: 'new-curso-title',
       centered: true,
@@ -147,14 +146,16 @@ export class PensumsComponent implements OnInit {
   }
 
   public cargarPensums():void {
-    this._pensumService.listPensums(this.za_carrera)
-      .subscribe((res:IServerResponse) => {
-        if(res.status == 200){
-          this.pensums = res.data;
-        } else {
-          console.error(res);
-        }
-      }, error => console.error(error));
+    if(this.za_carrera){
+      this._pensumService.listPensums(this.za_carrera)
+        .subscribe((res:IServerResponse) => {
+          if(res.status == 200){
+            this.pensums = res.data;
+          } else {
+            console.error(res);
+          }
+        }, error => console.error(error));
+    }
   }
 
 
