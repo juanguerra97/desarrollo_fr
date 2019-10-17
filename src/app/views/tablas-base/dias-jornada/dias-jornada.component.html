@@ -5,19 +5,19 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <select class="custom-select" [(ngModel)]="za_carrera" (ngModelChange)="cambioCarrera()">
 <!--            <option value="0" selected>Seleccione Carrera</option>-->
             <option *ngFor="let carrera of carreras" [ngValue]="carrera.za_carrera" >{{carrera.codigo_carrera + ' ' + carrera.nombre_carrera}}</option>
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <select class="custom-select" [(ngModel)]="za_jornada" (ngModelChange)="cargarDias()">
 <!--            <option value="0" selected>Seleccione Jornada</option>-->
             <option *ngFor="let jornada of jornadas" [ngValue]="jornada.za_jornada" >{{jornada.nombre_jornada}}</option>
           </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <button [disabled]="!za_carrera || !za_jornada" type="button" class="pull-right btn btn-primary mb-3" (click)="openModalNuevo()"
                   data-toggle="modal" data-target="#modal-container">
             <em class="fa fa-check mr-2"></em>
