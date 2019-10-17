@@ -40,13 +40,13 @@ export class JornadasComponent implements OnInit {
   }
   // nuevo modelo
   openModal(id: string) {
-    let options = '';
+    /*let options = '';
     for (const key in this.carreras) {
       if (this.carreras.hasOwnProperty(key)) {
         const carrera = this.carreras[key];
         options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
       }
-    }
+    }*/
     Swal.fire({
       title: 'Nueva Jornada',
       html:
@@ -82,8 +82,8 @@ export class JornadasComponent implements OnInit {
   }
 
   editar(index) {
-    let options = '';
     const jorn = this.jornadas[index];
+    /*let options = '';
     for (const key in this.carreras) {
       if (this.carreras.hasOwnProperty(key)) {
         const carrera = this.carreras[key];
@@ -93,7 +93,7 @@ export class JornadasComponent implements OnInit {
           options = options + '<option value="' + carrera.za_carrera + '"> ' + carrera.nombre_carrera + '</option>';
         }
       }
-    }
+    }*/
     Swal.fire({
       title: 'Editar Jornada',
       html:
