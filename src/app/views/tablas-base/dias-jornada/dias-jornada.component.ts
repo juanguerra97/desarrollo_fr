@@ -41,19 +41,19 @@ export class DiasJornadaComponent implements OnInit {
 
   }
   // nuevo modelo
-  openModal(id: string) {
-    let optionsJornada = '';
+  public openModalNuevo():void {
+    /*let optionsJornada = '';
     for (const key in this.jornadas) {
       if (this.jornadas.hasOwnProperty(key)) {
         const jornada = this.jornadas[key];
         optionsJornada = optionsJornada + '<option value="' + jornada.za_jornada + '"> ' + jornada.nombre_jornada + '</option>';
       }
-    }
+    }*/
     Swal.fire({
       title: 'Nuevo Dia',
       html:
         '<form id="modal-form">' +
-        'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
+        /*'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
         (this.za_carrera || 'seleccione carrera en el menu principal') + '" class="swal2-input">' +
         '</input>' +
         '<div class="form-group">' +
@@ -61,10 +61,10 @@ export class DiasJornadaComponent implements OnInit {
         '<select id="za_jornada" placeholder="Jornada" class="custom-select custom-select-lg">' +
         optionsJornada +
         '</select>' +
-        '</div>' +
+        '</div>' +*/
         '<div class="form-group">' +
         //'<input id="nombre-dia"  placeholder="Dia" class="swal2-input">' +
-        '<label for="nombre-dia">Dia:</label> '+
+        // '<label for="nombre-dia">Dia</label> '+
         '<select id="nombre-dia" class="custom-select custom-select-lg">' +
           '<option>LUNES</option>' +
           '<option>MARTES</option>' +
@@ -75,15 +75,16 @@ export class DiasJornadaComponent implements OnInit {
           '<option>DOMINGO</option>' +
         '</select>' +
         '</div>' +
+        `<input type="checkbox" id="activo"  placeholder="Activo" checked class="swal2-checkbox">Activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
+          za_carrera: this.za_carrera,
+          za_jornada: this.za_jornada,
           za_dia: 0,
-          activo: 1,
-          za_jornada: $('#za_jornada').val(),
-          za_carrera: $('#za_carrera').val(),
-          dia:  $('#nombre-dia').val()
+          dia:  $('#nombre-dia').val(),
+          activo: $('#activo').val() ? 1 : 0,
         };
       },
     }).then(res => {
@@ -102,9 +103,9 @@ export class DiasJornadaComponent implements OnInit {
     });
   }
 
-  editar(index) {
+  public openModalEdicion(index):void {
     const dia = this.dias[index];
-    let optionsJornada = '';
+    /*let optionsJornada = '';
     for (const key in this.jornadas) {
       if (this.jornadas.hasOwnProperty(key)) {
         const jornada = this.jornadas[key];
@@ -114,27 +115,27 @@ export class DiasJornadaComponent implements OnInit {
           optionsJornada = optionsJornada + '<option value="' + jornada.za_jornada + '"> ' + jornada.nombre_jornada + '</option>';
         }
       }
-    }
+    }*/
     Swal.fire({
       title: 'Editar Dia',
       html:
         '<form id="modal-form">' +
-        'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
+        /*'Carrera: <input disabled id="za_carrera" placeholder="Carrera" value="' +
         this.za_carrera + '" class="swal2-input">' +
         '</input>' +
         'Jornada: <select id="za_jornada" placeholder="Jornada" class="swal2-select">' +
         optionsJornada +
-        '</select>' +
+        '</select>' +*/
         '<input id="dia"  placeholder="Dia" class="swal2-input" value="' + dia.dia + '">' +
         `<input type="checkbox" id="activo"  placeholder="Activo" class="swal2-checkbox" ` +
-        `${(dia.activo === 1) ? 'checked' : ''}> activo` +
+        `${(dia.activo === 1) ? 'checked' : ''}> Activo` +
         '</form>',
       focusConfirm: false,
       preConfirm: () => {
         return {
-          za_dia: this.dias[index].za_dia,
-          za_carrera: $('#za_carrera').val(),
-          za_jornada: $('#za_jornada').val(),
+          za_carrera: dia.za_carrera,
+          za_jornada: dia.za_jornada,
+          za_dia: dia.za_dia,
           dia:  $('#dia').val(),
           activo: $('#activo')[0].checked ? 1 : 0,
         };
