@@ -59,7 +59,7 @@ export class CatedraticosComponent implements OnInit {
   }
   OnEnviar(reporteForm: NgForm ){
     this.filtro = reporteForm.value;
-    this.reporte2Service.buscarreporte2(reporteForm.value).subscribe((res:any)=> {this.conexiones = res; console.log(res)});
+    this.reporte2Service.buscarreporte2(reporteForm.value).subscribe((res:any)=> {this.conexiones = res;});
 
   }
 
@@ -73,7 +73,7 @@ export class CatedraticosComponent implements OnInit {
   public onEnviarCorreo():void {
     this.enviandoCorreo = true;
     let pdf = this.crearPdf();
-    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"))
+    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Horarios catedratico','Reporte con los horarios de catedratico','HorariosCatedratico.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
           console.log(res);

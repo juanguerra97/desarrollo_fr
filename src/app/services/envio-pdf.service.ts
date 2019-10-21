@@ -15,9 +15,9 @@ export class EnvioPdfService {
 
   constructor(private http: HttpClient) { }
 
-  public enviarPdf(correo:string,pdf:string): Observable<IServerResponse> {
+  public enviarPdf(correo:string,pdf:string,asunto:string,texto:string,nombrepdf:string): Observable<IServerResponse> {
     const url = `${this.urlComponente}`;
-    return this.http.post<IServerResponse>(url, {correo,pdf});
+    return this.http.post<IServerResponse>(url, {correo,pdf,asunto,texto,nombrepdf});
   }
 
 }

@@ -157,7 +157,7 @@ export class PlanificacionComponent implements OnInit {
   public onEnviarCorreo():void {
     this.enviandoCorreo = true;
     let pdf = this.crearPdf();
-    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"))
+    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Planificacion de cursos','Reporte de planificacion de cursos','Planificacion.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
           console.log(res);

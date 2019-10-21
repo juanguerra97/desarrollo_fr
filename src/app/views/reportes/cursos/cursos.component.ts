@@ -46,7 +46,7 @@ constructor(
 
   public onEnviarCorreo():void {
     let pdf = this.crearPdf();
-    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"))
+    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Cursos por catedratico','Reporte de consumado de cursos por catedratico','TotalCursosPorCatedratico.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
           console.log(res);

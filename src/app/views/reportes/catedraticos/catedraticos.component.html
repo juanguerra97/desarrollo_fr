@@ -98,11 +98,7 @@
 
       <ng-template [ngIf]="conexiones && conexiones.length > 0">
         <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
-        <button (click)="openModalEnvioCorreo(content)" class="btn btn-primary px-4">
-
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          Enviar correo
-        </button>
+        <button (click)="openModalEnvioCorreo(content)" class="btn btn-primary px-4">Enviar correo</button>
       </ng-template>
 
     </div>
