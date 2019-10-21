@@ -12,13 +12,13 @@
           </select>
         </div>
         <div class="col-md-4">
-          <select class="custom-select" [(ngModel)]="za_jornada" (ngModelChange)="cargarDias()">
+          <select class="custom-select mt-2 mt-md-0" [(ngModel)]="za_jornada" (ngModelChange)="cargarDias()">
 <!--            <option value="0" selected>Seleccione Jornada</option>-->
             <option *ngFor="let jornada of jornadas" [ngValue]="jornada.za_jornada" >{{jornada.nombre_jornada}}</option>
           </select>
         </div>
         <div class="col-md-4">
-          <button [disabled]="!za_carrera || !za_jornada" type="button" class="pull-right btn btn-primary mb-3" (click)="openModalNuevo()"
+          <button [disabled]="!za_carrera || !za_jornada" type="button" class="pull-right btn btn-primary mt-3 mt-md-0 mb-3" (click)="openModalNuevo()"
                   data-toggle="modal" data-target="#modal-container">
             <em class="fa fa-check mr-2"></em>
             Nuevo

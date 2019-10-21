@@ -194,14 +194,14 @@
       </div>
 
       <ng-template [ngIf]="filtro != null && dias && dias.length > 0">
-        <button  [disabled]="exportandoPdf" (click)="guardarPdf()" class="btn btn-primary px-4">
+        <button  [disabled]="exportandoPdf" (click)="guardarPdf()" class="btn btn-primary px-4 mt-3 mt-md-0">
 
           <span *ngIf="exportandoPdf" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           {{ textoBtnExpPdf }}
 
         </button>
 
-        <button (click)="openModalEnvioCorreo(content)" [disabled]="exportandoPdf" class="btn btn-primary px-4">
+        <button (click)="openModalEnvioCorreo(content)" [disabled]="exportandoPdf" class="btn btn-primary px-4 mt-3 mt-md-0">
           Enviar correo
         </button>
 

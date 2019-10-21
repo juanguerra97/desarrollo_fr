@@ -44,8 +44,8 @@
         </table>
       </div>
 
-      <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
-      <button (click)="openModalEnvioCorreo(content)" [disabled]="exportandoPdf" class="btn btn-primary px-4">
+      <button (click)="guardarPdf()" class="btn btn-primary mt-3 mt-md-0">Exportar a PDF</button>
+      <button (click)="openModalEnvioCorreo(content)" class="btn btn-primary px-4 mt-3 mt-md-0">
         Enviar correo
       </button>
 
@@ -79,7 +79,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button [disabled]="!formEnvioCorreo.valid || enviandoCorreo" class="btn btn-success btn-lg" (click)="onEnviarCorreo()">
+    <button [disabled]="!formEnvioCorreo.valid" class="btn btn-success btn-lg" (click)="onEnviarCorreo()">
       <em class="fa fa-paper-plane mr-3"></em>
       Enviar
     </button>
