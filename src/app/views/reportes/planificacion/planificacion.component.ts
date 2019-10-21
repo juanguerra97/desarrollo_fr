@@ -11,6 +11,8 @@ import {PensumService} from '../../../services/pensum.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IJornada} from '../../../models/ijornada';
 import {IPensum} from '../../../models/ipensum';
+import {EnvioPdfService} from '../../../services/envio-pdf.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 declare var jsPDF: any;
 
@@ -35,6 +37,8 @@ export class PlanificacionComponent implements OnInit {
 
   public exportandoPdf:boolean = false;
   public textoBtnExpPdf: string = 'Exportar a PDF';
+
+  public enviandoCorreo:boolean = false;
 
   private PosicionDia = {
     'DOMINGO': 1,
@@ -94,13 +98,21 @@ export class PlanificacionComponent implements OnInit {
     ])
   });
 
-
+  // formulario para envio de correo
+  public formEnvioCorreo = new FormGroup({
+    correo: new FormControl('',[
+      Validators.required,
+      Validators.email
+    ]),
+  });
 
   constructor(
     private carrerasService: CarrerasService,
     private pensumService: PensumService,
     private jornadasService: JornadasService,
     private asigService: AsigService,
+    private envioPdfService: EnvioPdfService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -134,66 +146,102 @@ export class PlanificacionComponent implements OnInit {
     this.exportandoPdf = true;
     this.textoBtnExpPdf = 'Exportando...';
 
-      let pdf = new jsPDF();
-      let posX = 15, posY = 15;
-      //let o = new myPDF();
-      pdf.setFontSize(20);
-      pdf.fromHTML(`<h1>UNIVERSIDAD MARIANO GALVEZ</h1>`,posX,posY);
-      pdf.setFontSize(17);
+    let pdf = this.crearPdf();
+    pdf.save('planificacion.pdf');
 
-      posY += 10;
-      pdf.fromHTML(`<h2>Centro Universitario de Quetzaltenango</h2>`,posX,posY);
+    this.exportandoPdf = false;
+    this.textoBtnExpPdf = 'Exportar a PDF';
 
-      posY += 15;
-      pdf.fromHTML(`<h2>${this.carrera.codigo_carrera}/${this.filtro.ano_pensum}</h2>`,posX,posY);
+  }
 
-      posY+= 6;
-      pdf.fromHTML(`<h2>Ingeniería en Sistemas</h2>`,posX,posY);
+  public onEnviarCorreo():void {
+    this.enviandoCorreo = true;
+    let pdf = this.crearPdf();
+    this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"))
+      .subscribe((res:IServerResponse)=>{
+        if(res.status == 200){
+          console.log(res);
+        } else {
+          console.error(res);
+        }
+        this.enviandoCorreo = false;
+      }, error => {
+        console.error(error);
+        this.enviandoCorreo = false;
+      });
+    this.modalService.dismissAll();
+  }
 
-      pdf.setFontSize(15);
-      posY += 7;
-      pdf.fromHTML(`<h3>${this.jornada.nombre_jornada}</h3>`,posX,posY);
+  public openModalEnvioCorreo(content):void {
 
-      posY += 5;
-      pdf.fromHTML(`<h4>A&ntilde;o de Pensum ${this.filtro.ano_pensum}</h4>`,posX,posY);
+    this.modalService.open(content, {
+      centered: true,
+      size: 'lg',
+      windowClass: 'animated bounceIn'
+    });
+
+  }
+
+  private crearPdf(){
+
+    let pdf = new jsPDF();
+    let posX = 15, posY = 15;
+    //let o = new myPDF();
+    pdf.setFontSize(20);
+    pdf.fromHTML(`<h1>UNIVERSIDAD MARIANO GALVEZ</h1>`,posX,posY);
+    pdf.setFontSize(17);
+
+    posY += 10;
+    pdf.fromHTML(`<h2>Centro Universitario de Quetzaltenango</h2>`,posX,posY);
+
+    posY += 15;
+    pdf.fromHTML(`<h2>${this.carrera.codigo_carrera}/${this.filtro.ano_pensum}</h2>`,posX,posY);
+
+    posY+= 6;
+    pdf.fromHTML(`<h2>Ingeniería en Sistemas</h2>`,posX,posY);
+
+    pdf.setFontSize(15);
+    posY += 7;
+    pdf.fromHTML(`<h3>${this.jornada.nombre_jornada}</h3>`,posX,posY);
+
+    posY += 5;
+    pdf.fromHTML(`<h4>A&ntilde;o de Pensum ${this.filtro.ano_pensum}</h4>`,posX,posY);
 
 
-      pdf.setFontSize(15);
-      posY += 10;
-      pdf.fromHTML(`<h3>Programaci&oacute;n de cursos</h3>`,posX,posY);
+    pdf.setFontSize(15);
+    posY += 10;
+    pdf.fromHTML(`<h3>Programaci&oacute;n de cursos</h3>`,posX,posY);
 
-      pdf.setFontSize(15);
-      posY += 6;
-      pdf.fromHTML(`<h4>A&ntilde;o:&nbsp;${this.filtro.ano}</h4>`,posX,posY);
+    pdf.setFontSize(15);
+    posY += 6;
+    pdf.fromHTML(`<h4>A&ntilde;o:&nbsp;${this.filtro.ano}</h4>`,posX,posY);
 
-      pdf.fromHTML(`<h4>Ciclo:&nbsp;${this.filtro.no_semestre}</h4>`,posX+25,posY);
+    pdf.fromHTML(`<h4>Ciclo:&nbsp;${this.filtro.no_semestre}</h4>`,posX+25,posY);
 
-      //posY += 7;
-      pdf.fromHTML(`<h4>Secci&oacute;n:&nbsp;${this.filtro.seccion}</h4>`,posX+45,posY);
+    //posY += 7;
+    pdf.fromHTML(`<h4>Secci&oacute;n:&nbsp;${this.filtro.seccion}</h4>`,posX+45,posY);
 
-      posY += 8;
-      //let p2 = new myPDF();
-      pdf.setFontSize(10);
-      pdf.autoTable({
-        html:'#tabla-reporte', // id de la tabla
-        theme:'grid',
-        startY: posY,
-        styles: {
-          lineColor: [3,3,3],
-          textColor: [5,5,5],
-          valign: 'middle',
-          //halign: 'center'
-        }/*,
+    posY += 8;
+    //let p2 = new myPDF();
+    pdf.setFontSize(10);
+    pdf.autoTable({
+      html:'#tabla-reporte', // id de la tabla
+      theme:'grid',
+      startY: posY,
+      styles: {
+        lineColor: [3,3,3],
+        textColor: [5,5,5],
+        valign: 'middle',
+        //halign: 'center'
+      }/*,
         headStyles: {
           fillColor: null,
           lineColor: [3,3,3],
           //lineWidth: 1
         }*/
-      });
-      pdf.save('planificacion.pdf');
+    });
 
-    this.exportandoPdf = false;
-    this.textoBtnExpPdf = 'Exportar a PDF';
+    return pdf;
 
   }
 

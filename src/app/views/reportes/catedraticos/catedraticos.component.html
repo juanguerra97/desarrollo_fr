@@ -98,6 +98,11 @@
 
       <ng-template [ngIf]="conexiones && conexiones.length > 0">
         <button (click)="guardarPdf()" class="btn btn-primary">Exportar a PDF</button>
+        <button (click)="openModalEnvioCorreo(content)" class="btn btn-primary px-4">
+
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Enviar correo
+        </button>
       </ng-template>
 
     </div>
@@ -109,3 +114,31 @@
       </a>
     </div>
   </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" >Enviar correo</h4>
+  </div>
+  <div class="modal-body">
+
+    <form [formGroup]="formEnvioCorreo">
+
+      <div class="form-group row">
+
+        <label for="correo" class="col-sm-2 col-form-label"><strong>Correo</strong></label>
+        <div class="col-sm-10">
+          <input type="text" formControlName="correo" id="correo" class="form-control">
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button [disabled]="!formEnvioCorreo.valid || enviandoCorreo" class="btn btn-success btn-lg" (click)="onEnviarCorreo()">
+      <em class="fa fa-paper-plane mr-3"></em>
+      Enviar
+    </button>
+  </div>
+</ng-template>
