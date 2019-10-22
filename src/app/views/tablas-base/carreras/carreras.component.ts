@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import {CarrerasService} from '../../../../services/carreras.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICarrera} from '../../../models/icarrera.model';
+import {ToastrService} from 'ngx-toastr';
 
 declare var $: any;
 
@@ -15,7 +16,8 @@ export class CarrerasComponent implements OnInit {
   public carreras: ICarrera[] = [];
 
   constructor(
-    private _carreraService: CarrerasService
+    private _carreraService: CarrerasService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class CarrerasComponent implements OnInit {
             if(res.status == 200){
               this.cargarCarreras();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -76,7 +79,8 @@ export class CarrerasComponent implements OnInit {
             if(res.status == 200){
               this.cargarCarreras();
             } else {
-              $.notify(res.error, {className:"error", globalPosition: 'top right'});
+              //$.notify(res.error, {className:"error", globalPosition: 'top right'});
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -112,6 +116,7 @@ export class CarrerasComponent implements OnInit {
             if(res.status == 200){
               this.cargarCarreras();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -125,7 +130,7 @@ export class CarrerasComponent implements OnInit {
       if(res.status == 200){
         this.carreras = res.data;
       } else {
-        console.error(res);
+        this.toastr.error(res.error, res.message);
       }
     }, error => console.error(error));
 

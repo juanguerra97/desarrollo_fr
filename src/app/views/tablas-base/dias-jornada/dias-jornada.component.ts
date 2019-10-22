@@ -7,6 +7,7 @@ import {ICarrera} from '../../../models/icarrera.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {IJornada} from '../../../models/ijornada';
 import {IDia} from '../../../models/idia.model';
+import {ToastrService} from 'ngx-toastr';
 declare var $: any;
 
 @Component({
@@ -24,7 +25,8 @@ export class DiasJornadaComponent implements OnInit {
   constructor(
     private _diaService: DiasJornadaService,
     private _carrerasService: CarrerasService,
-    private _jornadasService: JornadasService
+    private _jornadasService: JornadasService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class DiasJornadaComponent implements OnInit {
         if(res.status == 200){
           this.carreras = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -95,6 +98,7 @@ export class DiasJornadaComponent implements OnInit {
             if(res.status == 200){
               this.cargarDias()
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -149,6 +153,7 @@ export class DiasJornadaComponent implements OnInit {
           if(res.status == 200){
             this.cargarDias();
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));
@@ -179,6 +184,7 @@ export class DiasJornadaComponent implements OnInit {
             if(res.status == 200){
               this.cargarDias()
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -203,6 +209,7 @@ export class DiasJornadaComponent implements OnInit {
           if(res.status == 200){
             this.jornadas = res.data;
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));
@@ -216,6 +223,7 @@ export class DiasJornadaComponent implements OnInit {
           if(res.status == 200){
             this.dias = res.data;
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));

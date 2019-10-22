@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICarrera} from '../../../models/icarrera.model';
 import {ICurso} from '../../../models/icurso.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-pensum-curso',
@@ -58,7 +59,8 @@ export class PensumCursoComponent implements OnInit {
     private modalService: NgbModal,
     private _carreraService: CarrerasService,
     private _cursosService: CursosService,
-    private cursoPensumService: CursoPensumService
+    private cursoPensumService: CursoPensumService,
+    private toastr: ToastrService,
   ) {  }
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class PensumCursoComponent implements OnInit {
         if(res.status == 200){
           this.carreras = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -77,6 +80,7 @@ export class PensumCursoComponent implements OnInit {
       if(res.status == 200){
         this.cursos = res.data;
       } else {
+        this.toastr.error(res.error, res.message);
         console.error(res);
       }
     }, error => console.error(error));
@@ -103,6 +107,7 @@ export class PensumCursoComponent implements OnInit {
             if(res.status == 200){
               this.cargarPensumsCursos();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -154,6 +159,7 @@ export class PensumCursoComponent implements OnInit {
         if(res.status == 200){
           this.cargarPensumsCursos()
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -174,6 +180,7 @@ export class PensumCursoComponent implements OnInit {
           this.cargarPensumsCursos();
           this.pensumCurso = null;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -196,6 +203,7 @@ export class PensumCursoComponent implements OnInit {
         if(res.status == 200){
           this.pensumsCarrera = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -210,6 +218,7 @@ export class PensumCursoComponent implements OnInit {
           if(res.status == 200){
             this.pensumsCursos = res.data;
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));

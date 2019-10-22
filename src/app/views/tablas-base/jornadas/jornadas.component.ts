@@ -6,6 +6,7 @@ import {JornadasService} from '../../../services/jornadas.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IJornada} from '../../../models/ijornada';
+import {ToastrService} from 'ngx-toastr';
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class JornadasComponent implements OnInit {
 
   constructor(
     private _jornadaService: JornadasService,
-    private _carrerasService: CarrerasService
+    private _carrerasService: CarrerasService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class JornadasComponent implements OnInit {
         if(res.status == 200){
           this.carreras = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -73,6 +76,7 @@ export class JornadasComponent implements OnInit {
             if(res.status == 200){
               this.cargarJornadas();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -120,6 +124,7 @@ export class JornadasComponent implements OnInit {
           if(res.status == 200){
             this.cargarJornadas();
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));
@@ -148,6 +153,7 @@ export class JornadasComponent implements OnInit {
             if(res.status == 200){
               this.cargarJornadas();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error))
@@ -165,6 +171,7 @@ export class JornadasComponent implements OnInit {
           if(res.status == 200){
             this.jornadas = res.data;
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));
