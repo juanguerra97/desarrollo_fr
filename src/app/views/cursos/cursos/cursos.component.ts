@@ -7,6 +7,7 @@ import {CarrerasService} from '../../../../services/carreras.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICurso} from '../../../models/icurso.model';
 import {ICarrera} from '../../../models/icarrera.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-cursos',
@@ -36,6 +37,7 @@ export class CursosComponent implements OnInit {
     private _cursoService: CursosService,
     private _carreraService: CarrerasService,
     private modalService: NgbModal,
+    private toastr: ToastrService,
   ) { }
 
 
@@ -46,6 +48,7 @@ export class CursosComponent implements OnInit {
       if(res.status == 200){
         this.carreras = res.data;
       } else {
+        this.toastr.error(res.error, res.message);
         console.error(res);
       }
     }, error => console.error(error));
@@ -89,6 +92,7 @@ export class CursosComponent implements OnInit {
             if(res.status == 200){
               this.cargarCursos();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -124,6 +128,7 @@ export class CursosComponent implements OnInit {
         if(res.status == 200){
           this.cargarCursos();
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -140,6 +145,7 @@ export class CursosComponent implements OnInit {
         if(res.status == 200){
           this.cargarCursos();
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -152,6 +158,7 @@ export class CursosComponent implements OnInit {
         if(res.status == 200){
           this.cursos = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
     }, error => console.error(error));

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {ICatedratico} from '../../../models/icatedratico.model';
 import {ICarrera} from '../../../models/icarrera.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-catedraticos',
@@ -31,7 +32,8 @@ export class CatedraticosComponent implements OnInit {
   constructor(
     private _catedraticoService: CatedraticosService,
     private modalService: NgbModal,
-    private _carreraService: CarrerasService
+    private _carreraService: CarrerasService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class CatedraticosComponent implements OnInit {
         if(res.status == 200){
           this.carreras = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -79,6 +82,7 @@ export class CatedraticosComponent implements OnInit {
             if(res.status == 200){
               this.cargarCatedraticos()
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => {
@@ -110,6 +114,7 @@ export class CatedraticosComponent implements OnInit {
         if(res.status == 200){
           this.cargarCatedraticos();
         }else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -123,6 +128,7 @@ export class CatedraticosComponent implements OnInit {
         if(res.status == 200){
           this.cargarCatedraticos();
         }else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -137,6 +143,7 @@ export class CatedraticosComponent implements OnInit {
         if(res.status == 200){
           this.catedraticos = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       },

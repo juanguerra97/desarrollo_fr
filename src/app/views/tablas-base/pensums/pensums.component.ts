@@ -7,6 +7,7 @@ import {CarrerasService} from '../../../../services/carreras.service';
 import {ICarrera} from '../../../models/icarrera.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {IPensum} from '../../../models/ipensum';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-pensums',
@@ -38,8 +39,9 @@ export class PensumsComponent implements OnInit {
   constructor(
     private _pensumService: PensumService,
     private modalService: NgbModal,
-    private _carreraService: CarrerasService)
-  { }
+    private _carreraService: CarrerasService,
+    private toastr: ToastrService,
+  ){ }
 
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class PensumsComponent implements OnInit {
         if(res.status == 200){
           this.carreras = res.data;
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -90,6 +93,7 @@ export class PensumsComponent implements OnInit {
             if(res.status == 200){
               this.cargarPensums();
             } else {
+              this.toastr.error(res.error, res.message);
               console.error(res);
             }
           }, error => console.error(error));
@@ -122,6 +126,7 @@ export class PensumsComponent implements OnInit {
         if(res.status == 200){
           this.cargarPensums();
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -138,6 +143,7 @@ export class PensumsComponent implements OnInit {
         if(res.status == 200){
           this.cargarPensums();
         } else {
+          this.toastr.error(res.error, res.message);
           console.error(res);
         }
       }, error => console.error(error));
@@ -152,6 +158,7 @@ export class PensumsComponent implements OnInit {
           if(res.status == 200){
             this.pensums = res.data;
           } else {
+            this.toastr.error(res.error, res.message);
             console.error(res);
           }
         }, error => console.error(error));
