@@ -52,6 +52,7 @@ import {CursoPensumService} from './services/curso-pensum.service';
 import {AuthService} from './auth/auth.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TokenInterceptor} from './token-interceptor';
+import {ToastrModule} from 'ngx-toastr';
 // import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
@@ -71,7 +72,8 @@ import {TokenInterceptor} from './token-interceptor';
     ChartsModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot(),
     // JwtModule.forRoot({
     //   config: {
     //     tokenGetter: ()=>{
