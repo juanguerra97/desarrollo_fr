@@ -35,8 +35,7 @@
               "node_modules/chart.js/dist/Chart.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jspdf/dist/jspdf.min.js",
-              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js",
-              "node_modules/notifyjs-browser/dist/notify.js"
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
             ]
           },
           "configurations": {
