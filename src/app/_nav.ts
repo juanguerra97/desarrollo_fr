@@ -42,6 +42,7 @@ export const navItems: NavData[] = [
   },
   {
     name: 'Bases',
+    icon: 'fa fa-archive',
     children: [
       {
         name: 'Carreras',
@@ -83,6 +84,7 @@ export const navItems: NavData[] = [
 
   {
     name: 'Reportes',
+    icon: 'fa fa-bar-chart',
     children: [
       {
         name: 'Planificaciones',
@@ -100,5 +102,10 @@ export const navItems: NavData[] = [
         icon: 'fa fa-book'
       }
     ]
+  },
+  {
+    name: 'App',
+    url: 'https://dwumg.azurewebsites.net/descargas/android',
+    icon: 'fa fa-android'
   },
 ];
