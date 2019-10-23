@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {EnvioPdfService} from '../../../services/envio-pdf.service';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 declare var jsPDF: any;
 
@@ -27,7 +28,8 @@ export class CursosComponent implements OnInit {
 constructor(
   private _cursorepService: Reporte3Service,
   private envioPdfService: EnvioPdfService,
-  private modalService: NgbModal
+  private modalService: NgbModal,
+  private toastr: ToastrService,
 ) {}
 
   ngOnInit() {
@@ -49,8 +51,9 @@ constructor(
     this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Cursos por catedratico','Reporte de consumado de cursos por catedratico','TotalCursosPorCatedratico.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
-          console.log(res);
+          this.toastr.success('Correo enviado');
         } else {
+          this.toastr.error(res.error);
           console.error(res);
         }
       }, error => {

@@ -13,6 +13,7 @@ import {IJornada} from '../../../models/ijornada';
 import {IPensum} from '../../../models/ipensum';
 import {EnvioPdfService} from '../../../services/envio-pdf.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 declare var jsPDF: any;
 
@@ -112,7 +113,8 @@ export class PlanificacionComponent implements OnInit {
     private jornadasService: JornadasService,
     private asigService: AsigService,
     private envioPdfService: EnvioPdfService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -160,8 +162,9 @@ export class PlanificacionComponent implements OnInit {
     this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Planificacion de cursos','Reporte de planificacion de cursos','Planificacion.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
-          console.log(res);
+          this.toastr.success('Correo enviado');
         } else {
+          this.toastr.error(res.error);
           console.error(res);
         }
         this.enviandoCorreo = false;

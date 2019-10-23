@@ -7,6 +7,7 @@ import {ICatedratico} from '../../../models/icatedratico.model';
 import {IServerResponse} from '../../../models/iserverresponse.model';
 import {EnvioPdfService} from '../../../services/envio-pdf.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 declare var jsPDF: any;
 
@@ -36,7 +37,8 @@ export class CatedraticosComponent implements OnInit {
     private location: Location,
     private catedraticosService:CatedraticosService,
     private envioPdfService: EnvioPdfService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService,
   ){ }
 
   ngOnInit() {
@@ -76,8 +78,9 @@ export class CatedraticosComponent implements OnInit {
     this.envioPdfService.enviarPdf(this.formEnvioCorreo.value.correo,pdf.output("datauristring"),'Horarios catedratico','Reporte con los horarios de catedratico','HorariosCatedratico.pdf')
       .subscribe((res:IServerResponse)=>{
         if(res.status == 200){
-          console.log(res);
+          this.toastr.success('Correo enviado');
         } else {
+          this.toastr.error(res.error);
           console.error(res);
         }
         this.enviandoCorreo = false;
