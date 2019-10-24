@@ -20,6 +20,9 @@ import {IJornada} from '../../../models/ijornada';
 import {IPensum} from '../../../models/ipensum';
 import {IDia} from '../../../models/idia.model';
 
+import * as matchAll from 'string.prototype.matchall';
+matchAll.shim();
+
 @Component({
   selector: 'app-asignaciones',
   templateUrl: './asignaciones.component.html',
