@@ -86,8 +86,8 @@
             <td>{{conexion.Apellido}}</td>
             <td>{{conexion.Carrera}}</td>
             <td>{{conexion.Curso}}</td>
-            <td>{{conexion.hora_inicio}}</td>
-            <td>{{conexion.hora_fin}}</td>
+            <td>{{conexion.hora_inicio | slice:0:5}}</td>
+            <td>{{conexion.hora_fin | slice:0:5}}</td>
           </tr>
 
 
