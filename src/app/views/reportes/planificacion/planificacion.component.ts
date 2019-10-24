@@ -224,7 +224,7 @@ export class PlanificacionComponent implements OnInit {
     //posY += 7;
     pdf.fromHTML(`<h4>Secci&oacute;n:&nbsp;${this.filtro.seccion}</h4>`,posX+45,posY);
 
-    posY += 8;
+    posY += 18;
     //let p2 = new myPDF();
     pdf.setFontSize(10);
     pdf.autoTable({
