@@ -8,6 +8,7 @@
 
 # dependencies
 /node_modules
+/*/node_modules
 #package-lock.json
 
 # IDEs and editors
@@ -43,3 +44,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#cordova
+mobile/platforms
+mobile/plugins
+mobile/www
+mobile/build.txt
+
+# vscode
+.vs/
