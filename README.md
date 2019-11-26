@@ -21,7 +21,8 @@ Esta aplicación permite registrar las asignaciones de horarios de cursos y cate
 
 ![Envio de reporte por correo](https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura08.PNG "Envío de reporte por correo electrónico")
 
-![Reporte por correo](https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura09.png "Reporte por correo electrónico")
+<img src="https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura09.png" width="50%">
+
 
 <strong>INSTRUCCIONES GIT FLOW</strong>
   1) descargan e instalan git flow
