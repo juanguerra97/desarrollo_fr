@@ -11,6 +11,32 @@ Esta aplicación permite registrar las asignaciones de horarios de cursos y cate
 - [CoreUI](https://coreui.io/angular/)
 - [Bootstrap](https://getbootstrap.com/)
 
+
+## Ejecuci&oacute;n de la aplicaci&oacute;n
+
+1. Clonar el repositorio
+    ```
+    git clone https://github.com/juanguerra97/planumg_frontend.git
+    ```
+1. Moverse al directorio del repositorio clonado
+    ```
+    cd planumg_frontend
+    ```
+1. Instalar dependencias
+    ```
+    npm i
+    ```
+1. Ejecutar el servidor
+    > El servidor lo puedes encontrar en el siguiente link: https://github.com/juanguerra97/planumg_backend
+1. Ejecutar la aplicaci&oacute;n web
+    ```
+    npm start
+    ```
+    La aplicaci&oacute;n se ejecutar&aacute; por defecto en el puerto 4200 por lo tanto ve a la direcci&oacute;n http://localhost:4200.
+    
+    > El usuario es **Admin** y la contrase&ntilde;a **Admin**
+
+> La aplicaci&oacute;n se conectar&aacute; al servidor en http://localhost:4000, si est&aacute;s ejecutando el servidor en otra direcci&oacute;n o puerto debes ir al archivo en *src/environments/environment.ts* y en *apiURL* coloca la direcci&oacute;n del servidor.                                                                                                                                                                                                   
 ## Capturas de pantalla
 
 <p float="left">
