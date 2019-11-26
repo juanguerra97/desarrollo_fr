@@ -13,6 +13,7 @@ Esta aplicación permite registrar las asignaciones de horarios de cursos y cate
 
 ## Capturas de pantalla
 
+<p float="left">
 <img alt="Inicio de sesión" src="https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura01.PNG" width="47%">
 
 <img alt="Asignaciones" src="https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura02.PNG" width="47%">
@@ -29,6 +30,7 @@ Esta aplicación permite registrar las asignaciones de horarios de cursos y cate
 
 <img alt="Reporte por correo" src="https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura08.PNG" width="47%">
 
+</p>
 <img alt="Correo con reporte en PDF" src="https://github.com/juanguerra97/planumg_frontend/raw/master/docs/img/captura09.png" height="350px">
 
 
